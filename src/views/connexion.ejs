@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Connexion</title>
+  </head>
+
+  <body>
+    <% include include/header %>
+    <h1>Connexion</h1>
+<section>
+      <form action="/connexion.html" method="post" >
+        <p>
+          <label for="email">Email</label>
+          <input type="text" id="email" name="email" size="18" placeholder="Email" />
+
+          <label for="pw">Password</label>
+          <input type="password" id="pw" name="pw" size="18" placeholder="Password" />
+          </br>
+
+          <input type="submit" value="Valider" />
+
+        </p>
+        <p><a href="/pwd_recup.html">Mot de passe oublie</a></p>
+      </form>
+   </section>
+  </body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Ajout de Recette</title>
+    </head>
+
+<body>
+    <% include include/header %>
+    <h1>Ajout de Recette</h1>
+    <section>
+        <form action="/recettes.html" method="post" >
+            <p>
+                <label for="titre">Titre</label>
+                <input type="text" id="titre" name="titre" size="18" placeholder="Titre" />
+
+                <label for="type">Type</label>
+                <input type="text" id="type" name="type" size="18" placeholder="Type" />
+                </br>
+
+                <label for="description">Description</label></br>
+                <textarea id="description" name="description" placeholder="Description">
+		</textarea>
+		</br>
+
+		<label for="difficulte">Difficultée</label></br>
+		<input type="number" id="difficulte" name="difficulte" min="1" max="5" />
+		</br>
+		
+                <input type="submit" value="Valider" />
+            </p>
+        </form>
+    </section>
+</body>
+
+</html>

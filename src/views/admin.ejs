@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Admin</title>
+  </head>
+
+  <body>
+    <% include include/header %>
+    <h1>Profil : <%= user.prenom %></h1>
+    <section>
+      <form action="/changeuser.html" method="post" >
+	<input type="submit" value="Modifier informations utilisateur" >
+      </form></br>
+      <form action="/changerecette.html" method="post" >
+	<input type="submit"  value="Modifier informations recette" >
+      </form></br>
+      <form action="/changeatelier.html" method="post" >
+	<input type="submit" value="Modifier informations atelier" >
+      </form>
+    </section>
+  </body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Inscription</title>
+    </head>
+
+<body>
+    <% include include/header %>
+    <h1>Inscription</h1>
+    <section>
+        <form action="/inscription.html" method="post" >
+            <p>
+                <label for="mail">Adresse Mail</label></br>
+                <input type="email" id="mail" name="mail" placeholder="Adresse Mail" />
+                </br>
+
+                <label for="mail2">Confirmation Adresse Mail</label></br>
+                <input type="email" id="mail2" name="mail2" placeholder="Adresse Mail" />
+                </br>
+
+                <label for="mdp">Mot de Passe</label></br>
+                <input type="password" id="mdp" name="mdp" placeholder="Mot de Passe" />
+                </br>
+
+                <label for="mdp2">Confirmation Mot de Passe</label></br>
+                <input type="password" id="mdp1" name="mdp2" placeholder="Mot de Passe" />
+                </br>
+                </br>
+                </br>
+
+
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" name="prenom" size="18" placeholder="Prenom" />
+
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="nom" size="18" placeholder="Nom" />
+                </br>
+
+                <label for="adresse">Adresse</label></br>
+                <input type="text" id="adresse" name="adresse" size="45" placeholder="Adresse" /></br>
+
+                <input type="text" id="address_cmpl" name="address_cmpl" size="65" placeholder="Complément de l'adresse" /></br>
+
+                <input type="text" id="cp" name="cp" maxlength="5" placeholder="Code Postal" />
+                <input type="text" id="ville" name="ville" placeholder="Ville" /></br>
+
+                <input type="checkbox" id="accepte" name="accepte" />
+                <label for="accepte">Je déclare avoir lu et accepté les conditions générales.</label>
+                </br>
+
+                <input type="submit" value="Valider" />
+
+            </p>
+        </form>
+    </section>
+</body>
+
+</html>

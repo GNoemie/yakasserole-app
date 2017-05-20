@@ -1,0 +1,44 @@
+<header>
+    <p><a href="../">Accueil</a></p>
+    <%
+	if (user) {
+    %>
+        <p>Hello <%= user.prenom %> !</p>
+	<p><a href="/logout.html">Logout</a></p>
+        <p><a href="/profil.html">Profil</a></p>
+	<p><a href="/ateliers.html">Ateliers</a></p>	
+	<p><a href="/recettes.html">Recettes</a></p>
+
+	      <%
+		if (user.role == "admin") {
+	      %>
+		<p><a href="/admin.html">Admin</a></p>
+	      <%
+	        }
+	      %>
+    <%
+	}
+	else
+	{
+    %>
+	    <p><a href="/connexion.html">Connexion</a></p>
+	    <p><a href="/inscription.html">Inscription</a></p>
+
+    <%
+	}
+    %>
+
+    <%
+    if (msgKO) {
+    %>
+        <p><%= msgKO %></p>
+    <%
+    }
+    else if (msgOK)
+    {
+    %>
+        <p><%= msgOK %></p>
+    <%
+    }
+    %>
+</header>
