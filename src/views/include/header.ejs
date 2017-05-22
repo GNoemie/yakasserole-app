@@ -1,13 +1,12 @@
 <header>
-    <p><a href="../">Accueil</a></p>
+    
     <%
 	if (user) {
     %>
         <p>Hello <%= user.prenom %> !</p>
 	<p><a href="/logout.html">Logout</a></p>
         <p><a href="/profil.html">Profil</a></p>
-	<p><a href="/ateliers.html">Ateliers</a></p>	
-	<p><a href="/recettes.html">Recettes</a></p>
+	
 
 	      <%
 		if (user.role == "admin") {
@@ -27,6 +26,15 @@
     <%
 	}
     %>
+
+    <ul>
+        <li><a href="../">Accueil</a></li>
+        <li><a href="/ateliers.html">Ateliers</a></li>	
+        <li><a href="/recettes.html">Recettes</a></li>
+	<li><a href="">Premium</a></li>
+        <li><a href="">A propos</a></li>
+    </ul>
+
 
     <%
     if (msgKO) {
