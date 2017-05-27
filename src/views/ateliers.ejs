@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Ateliers</title>
+  </head>
+
+  <body>
+    <% include include/header %>
+    <h1>Profil : <%= user.prenom %></h1>
+    <section>
+      <table>
+	<tr>
+	  <th>ID</th>
+	  <th>Titre</th>
+	</tr>
+	<%
+	   for(var i = 0 ; i < result.rows.length ; i++) {
+			       %>
+	   <tr>
+	     <td><%= result.rows[i].id %></td>
+	     <td><%= result.rows[i].titre %></td>
+	   </tr>
+	   <%
+	      }
+	      %>
+      </table>
+    </section>
+    <section>
+      <%
+	 if (user.role == "admin" || user.role == "respo_atelier") {
+	 %>
+      <form action="/addatelier.html" method="get" >
+	<input type="submit" value="Ajouter un atelier" >
+      </form>
+      </br>
+      
+      <button id="modifier">Modifier</button>
+      <%
+	 }
+	 %>
+      <section>
+	<div id="change" style="display : none">
+	  <form action="/ateliers.html" method="post" >
+	    <p>
+	      <label for="titre">Titre</label>
+	      <input type="text" id="titre" name="titre" size="18" placeholder="Titre" />
+              </br>
+
+	      <label for="theme">Thème</label>
+	      <input type="text" id="theme" name="theme" size="18" placeholder="Thème" />
+              </br>
+
+	      <label for="description">Description</label></br>
+	      <textarea id="description" name="description" placeholder="Description">
+	      </textarea>
+              </br>
+
+	      <label for="localisation">Localisation</label>
+	      <input type="text" id="localisation" name="localisation" size="18" placeholder="Localisation" />
+              </br>
+
+	      <label for="prix">Prix</label></br>
+	      <input type="number" id="prix" name="prix" />
+              </br>
+	      
+	      <label for="date_debut">Date de début</label></br>
+	      <input type="date" id="date_debut" name="date_debut" />
+              </br>
+
+	      <label for="date_fin">Date de fin</label></br>
+	      <input type="date" id="date_fin" name="date_fin" />
+              </br>
+
+	      <input type="submit" value="Valider" />
+
+	    </p>
+	  </form>
+	</div>
+	<script>
+	  document.querySelector("#modifier").onclick = function() {
+	  if (window.getComputedStyle(document.querySelector('#change')).display=='none'){
+	  document.querySelector("#change").style.display="block";
+	  } else {
+	  document.querySelector("#change").style.display="none";
+	  }
+	  }
+	</script>
+	</br>
+	<button id="supprimer">Supprimer</button>
+	<div id="delete" style="display : none">
+	  <form action="/admin.html" method="post">
+	    <p>
+	      <label for="id">Si vous souhaitez supprimer un utilisateur, veuillez sélectionner l'id correspondant :</label></br>
+	      <input type="number" id="id" name="id" size="8" /></br></br>
+	      <input type="submit" id="m" name="m" value="Valider Suppresion" />
+	    </p>
+	  </form>
+	</div>
+	<script>
+	  document.querySelector("#supprimer").onclick = function() {
+	  if (window.getComputedStyle(document.querySelector('#delete')).display=='none'){
+	  document.querySelector("#delete").style.display="block";
+	  } else {
+	  document.querySelector("#delete").style.display="none";
+	  }
+	  }
+	</script>
+
+	
+      </section>
+  </body>
+</html>

@@ -26,6 +26,33 @@
       <form action="/addrecette.html" method="get" >
 	<input type="submit" value="Ajouter une recette" >
       </form>
+      </br>
+      <button id="supprimer">Supprimer</button>
+      <div id="delete" style="display : none">
+	<form action="/admin.html" method="post">
+	  <p>
+	    <label for="id">Si vous souhaitez supprimer une recette, veuillez sélectionner l'id corr\
+	      espondant :</label></br>
+	    <input type="number" id="id" name="id" size="8" />
+	    </br>
+	    </br>
+	    <input type="submit" id="m" name="m" value="Valider Suppresion" />
+	    
+	  </p>
+	</form>
+      </div>
+      <script>
+	document.querySelector("#supprimer").onclick = function() {
+	if (window.getComputedStyle(document.querySelector('#delete')).display=='none'){
+	document.querySelector("#delete").style.display="block";
+	} else {
+	document.querySelector("#delete").style.display="none";
+	}
+	}
+      </script>
+
+    </section>
+    
     </section>
   </body>
 

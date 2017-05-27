@@ -14,6 +14,8 @@ var form = require("./server_form");
 //use express to handle several pages
 var app = express();
 
+var config = "pg://yakasserole:F8Pf7tM@localhost:5432/app";
+
 //initializing the session
 app.use(session({
 	secret: 'ssshhhhh',
@@ -107,14 +109,47 @@ app.post('/recettes.html', function(req, res) {
     form.recetteForm(req, res);
 });
 
+/*
 app.post('/addrecette.html', function(req, res) {
     form.recetteForm(req, res);
 });
-
+*/
 app.post('/admin.html', function(req, res) {
-    form.changeUser(req, res);
+    if (req.body.m == "Valider Modification")
+	form.changeUser(req, res);
+    else
+	form.deleteUser(req, res);
 });
 
+app.get('/ateliers.html', function(req, res) {
+    sess = req.session.user;
+    if (sess) form.printateliers(req, res);
+    else res.redirect('/');
+});
+
+app.get('/addatelier.html', function(req, res) {
+    sess = req.session.user;
+    if (sess)
+    {
+	pg.connect(config, function(err, client) {
+	    var db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
+					       if (err) console.error('error happened during query', err);
+					       res.render('addatelier.ejs', {result: result});
+					   });
+	}); 
+    }
+    else res.redirect('/');
+});
+
+app.post('/ateliers.html', function(req, res) {
+    form.atelierForm(req, res);
+});
+
+/*
+app.post('/addatelier.html', function(req, res) {
+    form.atelierForm(req, res);
+});
+*/
 app.post('/changeuser.html', function(req, res) {
     form.printusers(req, res);
 });
