@@ -9,15 +9,27 @@
     <% include include/header %>
     <h1>Profil : <%= user.prenom %></h1>
     <section>
+      <%
+	 if (user.role == "admin" || user.role == "respo_user") {
+	 %>
       <form action="/changeuser.html" method="post" >
 	<input type="submit" value="Modifier informations utilisateur" >
       </form></br>
       <form action="/changerecette.html" method="post" >
 	<input type="submit"  value="Modifier informations recette" >
       </form></br>
+      <%
+	 }
+	 %>
+      <%
+	 if (user.role == "admin" || user.role == "respo_atelier") {
+	 %>
       <form action="/changeatelier.html" method="post" >
 	<input type="submit" value="Modifier informations atelier" >
       </form>
+      <%
+	 }
+	 %>
     </section>
   </body>
 

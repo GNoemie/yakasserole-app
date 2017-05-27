@@ -11,32 +11,76 @@
     <section>
       <table>
 	<tr>
+	  <th>ID</th>
 	  <th>Titre</th>
 	</tr>
 	<%
 	   for(var i = 0 ; i < result.rows.length ; i++) {
 			       %>
-	<tr>
-	  <td><%= result.rows[i].titre %></td>
-	</tr>
-	<%
-	   }
-	   %>
+	   <tr>
+	     <td><%= result.rows[i].id %></td>
+	     <td><%= result.rows[i].titre %></td>
+	   </tr>
+	   <%
+	      }
+	      %>
       </table>
       <form action="/addrecette.html" method="get" >
 	<input type="submit" value="Ajouter une recette" >
       </form>
       </br>
+      
+      <button id="modifier">Modifier</button>
+      <div id="change" style="display : none">
+	<form action="/admin.html" method="post">
+	  <p>
+	    <label for="id">Si vous souhaitez modifier une recette, veuillez sélectionner l'id correspondant :</label></br>
+	    <input type="number" id="id" name="id" size="8" />
+	    </br>
+	    </br>
+
+	    <label for="titre">Titre</label>
+	    <input type="text" id="titre" name="titre" size="18" placeholder="Titre" />
+
+	    <label for="type">Type</label>
+	    <input type="text" id="type" name="type" size="18" placeholder="Type" />
+            </br>
+
+	    <label for="description">Description</label></br>
+	    <textarea id="description" name="description" placeholder="Description">
+	    </textarea>
+            </br>
+	    
+	    <label for="difficulte">Difficultée</label></br>
+	    <input type="number" id="difficulte" name="difficulte" min="1" max="5" />
+            </br>
+	
+	    <input type="submit" id="mr" name="mr" value="Valider Modification Recette" />
+    
+	  </p>
+	</form>
+      </div>
+      <script>
+	document.querySelector("#modifier").onclick = function() {
+	if (window.getComputedStyle(document.querySelector('#change')).display=='none'){
+	document.querySelector("#change").style.display="block";
+	} else {
+	document.querySelector("#change").style.display="none";
+	}
+	}
+      </script>
+
+
+      </br>
       <button id="supprimer">Supprimer</button>
       <div id="delete" style="display : none">
 	<form action="/admin.html" method="post">
 	  <p>
-	    <label for="id">Si vous souhaitez supprimer une recette, veuillez sélectionner l'id corr\
-	      espondant :</label></br>
+	    <label for="id">Si vous souhaitez supprimer une recette, veuillez sélectionner l'id correspondant :</label></br>
 	    <input type="number" id="id" name="id" size="8" />
 	    </br>
 	    </br>
-	    <input type="submit" id="m" name="m" value="Valider Suppresion" />
+	    <input type="submit" id="sr" name="sr" value="Valider Suppresion Recette" />
 	    
 	  </p>
 	</form>

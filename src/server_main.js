@@ -45,6 +45,11 @@ app.get('/', function(req, res) {
     res.render('index.ejs');
 });
 
+
+/*
+  INSCRIPTION
+*/
+
 app.get('/inscription.html', function(req, res) {
     sess = req.session.user;
     if (!sess) res.render('inscription.ejs');
@@ -55,15 +60,21 @@ app.post('/inscription.html', function(req, res) {
     form.inscriptionForm(req, res);
 });
 
-app.post('/connexion.html', function(req, res) {
-    form.connexionForm(req, res);
-});
-    
+
+/*
+  CONNEXION
+*/
+
 app.get('/connexion.html', function(req, res) {
     sess = req.session.user;
     if (!sess) res.render('connexion.ejs');
     else res.redirect('/');
 });
+
+app.post('/connexion.html', function(req, res) {
+    form.connexionForm(req, res);
+});
+    
 
 app.get('/pwd_recup.html', function(req, res) {
     sess = req.session.user;
@@ -86,12 +97,38 @@ app.get('/profil.html', function(req, res) {
     else res.redirect('/');
 });
 
+
+/*
+  ADMIN
+*/
+
 app.get('/admin.html', function(req, res) {
     sess = req.session.user;
     if (sess)
 	res.render('admin.ejs');
     else res.redirect('/');
 });
+
+app.post('/admin.html', function(req, res) {
+    console.log(req.body);
+    if (req.body.mu)
+	return form.changeUser(req, res);
+    if (req.body.su)
+	return form.deleteUser(req, res);
+    if (req.body.mr)
+	return form.changeRecette(req, res);
+    if (req.body.sr)
+	return form.deleteRecette(req, res);
+    if (req.body.ma)
+	return form.changeAtelier(req, res);
+    if (req.body.sa)
+	return form.deleteAtelier(req, res);
+});
+
+
+/*
+  RECETTE
+*/
 
 app.get('/recettes.html', function(req, res) {
     sess = req.session.user;
@@ -109,17 +146,10 @@ app.post('/recettes.html', function(req, res) {
     form.recetteForm(req, res);
 });
 
+
 /*
-app.post('/addrecette.html', function(req, res) {
-    form.recetteForm(req, res);
-});
+  ATELIER
 */
-app.post('/admin.html', function(req, res) {
-    if (req.body.m == "Valider Modification")
-	form.changeUser(req, res);
-    else
-	form.deleteUser(req, res);
-});
 
 app.get('/ateliers.html', function(req, res) {
     sess = req.session.user;
@@ -145,11 +175,6 @@ app.post('/ateliers.html', function(req, res) {
     form.atelierForm(req, res);
 });
 
-/*
-app.post('/addatelier.html', function(req, res) {
-    form.atelierForm(req, res);
-});
-*/
 app.post('/changeuser.html', function(req, res) {
     form.printusers(req, res);
 });

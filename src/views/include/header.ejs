@@ -9,7 +9,7 @@
 	
 
 	      <%
-		if (user.role == "admin") {
+		if (user.role != "user" || user.role != "chef_cuisinier") {
 	      %>
 		<p><a href="/admin.html">Admin</a></p>
 		
