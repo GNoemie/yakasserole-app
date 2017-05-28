@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Paiement</title>
+  </head>
+
+  <body>
+    <% include include/header %>
+    <h1>Carte Bancaire</h1>
+<section>
+      <form action="/cb.html" method="post" >
+        <p>
+          <label for="cbnb">Numéro de Carte</label>
+          <input type="text" id="cbnb" name="cbnb" size="18" placeholder="CB - Numéro" maxlength="16" required />
+
+	  <label for ="Date">Date</label>
+	  <!--><input type="text" id="date" name="date" size="18" placeholder="Date"/><--!>
+	  <select name="année" required>
+	      <option value="2017">2017</option>
+	      <option value="2018">2018</option>
+	      <option value="2019">2019</option>	  
+              <option value="2020">2020</option>
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+          </select>
+	  <select name="mois" required>   
+              <option value="01">Janvier</option>  
+              <option value="02">Février</option>  
+              <option value="03">Mars</option>
+              <option value="04">Avril</option>
+              <option value="05">Mai</option>
+              <option value="06">Juin</option>
+              <option value="07">Juillet</option>
+              <option value="08">Aout</option>
+              <option value="09">Septembre</option>
+              <option value="10">Octobre</option>
+              <option value="11">Novembre</option>
+              <option value="02">Décembre</option> 
+          </select> 
+
+          <label for="cvv">CVV</label>
+          <input type="text" id="cvv" name="cvv" size="18" placeholder="CVV" maxlength="3" required/>
+          </br>
+
+          <input type="submit" value="Valider" />
+
+        </p>
+      </form>
+   </section>
+  </body>
+
+</html>
