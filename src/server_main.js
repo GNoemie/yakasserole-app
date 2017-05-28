@@ -7,6 +7,7 @@ const pem = require('pem');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const pg = require("pg");
+//const popup = require('window-popup');
 
 //include server_form
 var form = require("./server_form");
@@ -60,6 +61,20 @@ app.post('/inscription.html', function(req, res) {
     form.inscriptionForm(req, res);
 });
 
+/*
+  CARTE BLEUE
+*/
+
+app.get('/cb.html', function(req, res) {
+    sess = req.session.user;
+    if (!sess) res.render('cb.ejs');
+    else res.redirect('/');
+});
+
+app.post('/cb.html', function(req, res){
+    res.redirect('/');
+    //popup(500, 500, 'Transaction Compléter');
+});
 
 /*
   CONNEXION

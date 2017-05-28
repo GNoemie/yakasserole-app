@@ -12,10 +12,9 @@
       <form action="/cb.html" method="post" >
         <p>
           <label for="cbnb">Numéro de Carte</label>
-          <input type="text" id="cbnb" name="cbnb" size="18" placeholder="CB - Numéro" maxlength="16" required />
-
+          <input type="text" id="cbnb" name="cbnb" size="18" placeholder="0000 0000 0000 0000" maxlength="16" required />
+	  </br>
 	  <label for ="Date">Date</label>
-	  <!--><input type="text" id="date" name="date" size="18" placeholder="Date"/><--!>
 	  <select name="année" required>
 	      <option value="2017">2017</option>
 	      <option value="2018">2018</option>
@@ -40,7 +39,7 @@
           </select> 
 
           <label for="cvv">CVV</label>
-          <input type="text" id="cvv" name="cvv" size="18" placeholder="CVV" maxlength="3" required/>
+          <input type="text" id="cvv" name="cvv" size="18" placeholder="000" maxlength="3" required/>
           </br>
 
           <input type="submit" value="Valider" />
