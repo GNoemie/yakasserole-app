@@ -9,6 +9,7 @@
     <% include include/header %>
     <h1>Ajout de Recette</h1>
     <section>
+      <div id="divFields">
         <form action="/recettes.html" method="post" >
             <p>
                 <label for="titre">Titre</label>
@@ -23,6 +24,18 @@
 		</textarea>
 		</br>
 
+		<label for="addin">Ingrédients</label>
+		<button id="add">Add</button>
+		<script>
+		  document.querySelector("#add").onclick = function {
+		  console.log("VONJOU3)");
+		  var field = "<input type='text' name='' value=''/>";
+		  document.getElementById('divFields').innerHtml += field;
+		  } 
+		</script>
+
+                </br>
+		
 		<label for="difficulte">Difficultée</label></br>
 		<input type="number" id="difficulte" name="difficulte" min="1" max="5" />
 		</br>
@@ -30,6 +43,7 @@
                 <input type="submit" value="Valider" />
             </p>
         </form>
+      </div>
     </section>
 </body>
 

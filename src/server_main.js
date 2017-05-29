@@ -161,6 +161,11 @@ app.post('/recettes.html', function(req, res) {
     form.recetteForm(req, res);
 });
 
+app.get('/recette.html', function(req, res) {
+    form.recettealone(req, res);
+});
+
+
 
 /*
   ATELIER
@@ -189,6 +194,15 @@ app.get('/addatelier.html', function(req, res) {
 app.post('/ateliers.html', function(req, res) {
     form.atelierForm(req, res);
 });
+
+app.get('/atelier.html', function(req, res) {
+    form.atelieralone(req, res);
+});
+
+
+/*
+  PRINT
+*/
 
 app.post('/changeuser.html', function(req, res) {
     form.printusers(req, res);

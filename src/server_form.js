@@ -369,6 +369,19 @@ module.exports = {
 	});
     },
 
+    recettealone:function recettealone(req, res) {
+	sess = req.session;
+
+	pg.connect(config, function(err, client) {
+	    var db_password = client.query('SELECT * FROM recette WHERE titre = $1', [req.query.titre], function (err, result) {
+		if (err) console.error('error happened during query', err);
+		    res.render('recette.ejs', {result: result});
+	    });
+	});
+	
+    },
+
+
 
 /*
   ATELIERS
@@ -516,5 +529,19 @@ module.exports = {
 	});
     },
 
+    atelieralone:function atelieralone(req, res) {
+	sess = req.session;
+
+	pg.connect(config, function(err, client) {
+	    var db_password = client.query('SELECT * FROM atelier WHERE titre = $1', [req.query.titre], function (err, result) {
+		if (err) console.error('error happened during query', err);
+		client.query('SELECT * FROM utilisateur WHERE id = $1', [result.rows[0].chef], function (err, userchief) {
+		    if (err) console.error('error happened during query', err);
+		    res.render('atelier.ejs', {result: result, userchief: userchief});
+		});
+	    });
+	});
+	
+    }
 
 };

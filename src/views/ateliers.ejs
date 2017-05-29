@@ -19,7 +19,7 @@
 			       %>
 	   <tr>
 	     <td><%= result.rows[i].id %></td>
-	     <td><%= result.rows[i].titre %></td>
+	     <td><a href="/atelier.html?titre=<%= result.rows[i].titre %>"><%= result.rows[i].titre %></a></td>
 	   </tr>
 	   <%
 	      }

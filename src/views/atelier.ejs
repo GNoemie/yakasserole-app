@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title><%= result.rows[0].titre %></title>
+  </head>
+
+  <body>
+    <% include include/header %>
+    <h1>Atelier : <%= result.rows[0].titre %></h1>
+    <section>
+      <p>Thème : <%= result.rows[0].theme %></p>
+      <p>Chef cuisinier encadrant : <%= userchief.rows[0].prenom %> <%= userchief.rows[0].nom %> </p>
+      <p>Description : <%= result.rows[0].description %></p>
+      <p>Localisation : <%= result.rows[0].localisation %></p>
+      <p>Prix : <%= result.rows[0].prix %>€</p>
+      <p>Date de début : <%= result.rows[0].date_debut %></p>
+      <p>Date de fin : <%= result.rows[0].date_fin %></p>
+    </section>
+  </body>
+
+</html>
