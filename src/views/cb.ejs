@@ -9,10 +9,10 @@
     <% include include/header %>
     <h1>Carte Bancaire</h1>
 <section>
-      <form action="/cb.html" method="post" >
+      <form action="/ateliers.html?titre=<%= r %>" method="post" >
         <p>
           <label for="cbnb">Numéro de Carte</label>
-          <input type="text" id="cbnb" name="cbnb" size="18" placeholder="0000 0000 0000 0000" maxlength="16" required />
+          <input type="text" id="cbnb" name="cbnb" size="18" placeholder="0000 0000 0000 0000" minlength="16" maxlength="16" required />
 	  </br>
 	  <label for ="Date">Date</label>
 	  <select name="année" required>
@@ -39,10 +39,10 @@
           </select> 
 
           <label for="cvv">CVV</label>
-          <input type="text" id="cvv" name="cvv" size="18" placeholder="000" maxlength="3" required/>
+          <input type="text" id="cvv" name="cvv" size="18" placeholder="000" minlength="3" maxlength="3" required/>
           </br>
 
-          <input type="submit" value="Valider" />
+          <input type="submit" id="vr" name="vr" value="Valider" />
 
         </p>
       </form>

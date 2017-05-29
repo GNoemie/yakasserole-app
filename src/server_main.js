@@ -46,7 +46,6 @@ app.get('/', function(req, res) {
     res.render('index.ejs');
 });
 
-
 /*
   INSCRIPTION
 */
@@ -65,14 +64,8 @@ app.post('/inscription.html', function(req, res) {
   CARTE BLEUE
 */
 
-app.get('/cb.html', function(req, res) {
-    sess = req.session.user;
-    if (!sess) res.render('cb.ejs');
-    else res.redirect('/');
-});
-
 app.post('/cb.html', function(req, res){
-    res.redirect('/');
+    res.render('cb.ejs', {r: req.query.titre});
     //popup(500, 500, 'Transaction Compléter');
 });
 
@@ -108,7 +101,7 @@ app.get('/logout.html', function(req, res) {
 
 app.get('/profil.html', function(req, res) {
     sess = req.session.user;
-    if (sess) res.render('profil.ejs');
+    if (sess) form.printProfil(req, res);
     else res.redirect('/');
 });
 
@@ -125,7 +118,6 @@ app.get('/admin.html', function(req, res) {
 });
 
 app.post('/admin.html', function(req, res) {
-    console.log(req.body);
     if (req.body.mu)
 	return form.changeUser(req, res);
     if (req.body.su)
@@ -192,7 +184,10 @@ app.get('/addatelier.html', function(req, res) {
 });
 
 app.post('/ateliers.html', function(req, res) {
-    form.atelierForm(req, res);
+    if (req.body.vr)
+	return form.reservation(req, res);
+    else
+	return form.atelierForm(req, res);
 });
 
 app.get('/atelier.html', function(req, res) {

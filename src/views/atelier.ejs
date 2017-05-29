@@ -16,6 +16,10 @@
       <p>Prix : <%= result.rows[0].prix %>€</p>
       <p>Date de début : <%= result.rows[0].date_debut %></p>
       <p>Date de fin : <%= result.rows[0].date_fin %></p>
+
+      <form action="/cb.html?titre=<%= result.rows[0].titre %>" method="post">
+	<input type="submit" id="p" name="p" value="Participer" />
+      </form>
     </section>
   </body>
 

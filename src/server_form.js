@@ -11,38 +11,28 @@ const pg = require("pg");
 //connect to bdd
 var config = "pg://yakasserole:F8Pf7tM@localhost:5432/app";
 
-
 module.exports = {
 
     inscriptionForm: function inscriptionForm(req, res) {
 	sess = req.session;
 
-	if (!req.body.adresse || !req.body.ville || !req.body.cp)
-            sess.msgKO = "INVALID ADDRESS";
-
-	if (!req.body.prenom || !req.body.nom)
-            sess.msgKO = "INCOMPLETE NAME";
-
 	if (req.body.mdp.length < 6)
-            sess.msgKO = "INVALID PASSWORD";
+            sess.msgKO = "MOT DE PASSE INVALIDE";
 
 	var password = sha256(req.body.mdp);
 	var password2 = sha256(req.body.mdp2);
 
 	if (password != password2)
-            sess.msgKO = "NOT MATCHING PWDs";
+            sess.msgKO = "MOTS DE PASSES NON IDENTIQUES";
 	
-	if (!req.body.accepte)
-            sess.msgKO = "CONDITIONS NOT ACCEPTED";
-
 	if (req.body.mail != req.body.mail2)
-            sess.msgKO = "NOT MATCHING EMAILs";
+            sess.msgKO = "MAILS NON INDENTIQUES";
 
 	pg.connect(config, function(err, client) {
 	    db_password = client.query('SELECT * FROM utilisateur WHERE mail = $1;',
 				       [req.body.mail], function (err, result) {
 					   if (err) console.error('error happened during query', err);
-					   if (result.rowCount) sess.msgKO = "EMAIL NOT AVAILABLE";
+					   if (result.rowCount) sess.msgKO = "MAIL NON DISPONIBLE";
 					   if (sess.msgKO)
 					       res.redirect('inscription.html');
 					   else
@@ -52,7 +42,7 @@ module.exports = {
 								['user', false, req.body.nom, req.body.prenom, req.body.adresse, req.body.cp, req.body.ville, req.body.mail, password, new Date()],
 								function (err, result) {
 								    if (err) console.error('error happened during query', err);
-								    sess.msgOK = "SUCCESSFUL INSCRIPTION";
+								    sess.msgOK = "INSCRIPTION EFFECTUEE";
 								    res.redirect('/');
 								});
 					       });
@@ -76,7 +66,7 @@ module.exports = {
 					       if (err) console.error('error happened during query', err);
 					       if (result.rowCount == 0)
 					       {
-						   sess.msgKO = "UNKNOWN USER";
+						   sess.msgKO = "UTILISATEUR INCONNU";
 						   console.log("user does not exist");
 						   res.redirect('/connexion.html');
 					       }
@@ -85,13 +75,12 @@ module.exports = {
             db_password.on('row', function(row) {
 		if (row.mot_de_passe != password)
 		{
-                    sess.msgKO = "BAD PASSWORD";
-                    console.log("Incorrect password");
+                    sess.msgKO = "MAUVAIS MOT DE PASSE";
                     res.redirect('/connexion.html');
 		}
 		else
 		{
-                    sess.msgOK = "SUCCESSFUL CONNEXION";
+                    sess.msgOK = "CONNEXION EFFECTUEE";
                     sess.user = row;
                     res.redirect('/');
 		}
@@ -109,13 +98,13 @@ module.exports = {
 					   if (err) console.error('error happened during query', err);
 					   if (!result.rowCount)
 					   {
-					       sess.msgKO = "USER DOES NOT EXIST";
+					       sess.msgKO = "UTILISATEUR INCONNU";
 					       res.redirect('/pwd_recup.html');
 					   }
 					   else
 					   {
 					       //FIXME : send an email to change password
-					       sess.msgOK = "EMAIL WAS SENT";
+					       sess.msgOK = "MAIL ENVOYE";
 					       res.redirect('/pwd_recup.html');
 					   }
 				       });
@@ -152,7 +141,7 @@ module.exports = {
 					   if (err) console.error('error happened during query', err);
 					   if (!result.rowCount)
 					   {
-					       sess.msgKO = "USER DOES NOT EXIST";
+					       sess.msgKO = "UTILISATEUR INCONNU";
 					       return res.redirect('/admin.html');
 					   }
 					   else
@@ -217,7 +206,7 @@ module.exports = {
 					   if (err) console.error('error happened during query', err);
 					   if (!result.rowCount)
 					   {
-					       sess.msgKO = "USER DOES NOT EXIST";
+					       sess.msgKO = "UTILISATEUR INCONNU";
 					       return res.redirect('/admin.html');
 					   }
 					   else
@@ -228,18 +217,25 @@ module.exports = {
 										      if (err) console.error('error happened during query', err);
 										      if (result.rowCount)
 										      {
-											  console.log("ON EST LA");
-											  sess.msgKO = "L'utilisateur est responsable d'un atelier";
+											  sess.msgKO = "L'UTILISATEUR EST RESPONSABLE D'UN ATELIER";
 											  res.redirect('/admin.html');
 										      }
 										      else
 										      {
-											  
-											  db_password = client.query('DELETE FROM utilisateur WHERE id = $1;', [req.body.id],
-														     function (err, result) {
-															 if (err) console.error('error happened during query', err);
-															 res.render('admin.ejs', {result: result});
-														     });
+											  client.query('SELECT * FROM recette WHERE auteur = $1;', [req.body.id], function (err, result) {
+											      if (result.rowCount)
+											      {
+												  sess.msgKO = "L'UTILISATEUR EST L'AUTEUR DE RECETTE(S)";
+												  res.redirect('/admin.html');
+											      }
+											      else {
+												  db_password = client.query('DELETE FROM utilisateur WHERE id = $1;', [req.body.id],
+															     function (err, result) {
+																 if (err) console.error('error happened during query', err);
+																 res.render('admin.ejs', {result: result});
+															     });
+											      }
+											  });
 										      }
 										  });
 					       });
@@ -249,6 +245,38 @@ module.exports = {
     },
 
 
+    
+/*
+  PROFIL
+*/
+    printProfil: function printProfil(req, res) {
+
+	sess = req.session;
+	
+	pg.connect(config, function(err, client) {
+	    db_password = client.query('SELECT * FROM utilisateur WHERE mail = $1;',
+				       [sess.user.mail], function (err, result) {
+					   if (err) console.error('error happened during query', err);
+				       });
+	    db_password.on('row', function(row) {
+		if (sess.msgKO)
+		    return res.redirect('/');
+		client.query('SELECT * FROM recette WHERE auteur = $1;', [row.id], function (err, resultrecette) {
+		    if (err) console.error('error happened during query', err);
+		    client.query('SELECT * FROM reservation WHERE utilisateur = $1;', [sess.user.id], function (err, reservationatelier) {
+			    client.query('SELECT * FROM atelier', function (err, resultatelier) {
+				if (err) console.error('error happened during query', err);
+				res.render('profil.ejs', {resultrecette: resultrecette, reservationatelier: reservationatelier, resultatelier: resultatelier});
+			    });
+		    });
+		});
+	    });
+	});
+	
+    },
+    
+    
+    
 /*
   RECETTE
 */
@@ -257,31 +285,27 @@ module.exports = {
 	sess = req.session;
 	
 	pg.connect(config, function(err, client) {
-            db_password = client.query('SELECT * FROM recette;',
-				       function (err, result) {
+            db_password = client.query('SELECT * FROM utilisateur WHERE mail = $1;',
+				       [sess.user.mail], function (err, result) {
 					   if (err) console.error('error happened during query', err);
-					   res.render('recettes.ejs', {result: result});
 				       });
+
+	    db_password.on('row', function(row) {
+		if (sess.msgKO)
+		    return res.redirect('/');
+   		client.query('SELECT * FROM recette;', function (err, result) {
+		    if (err) console.error('error happened during query', err);
+		    res.render('recettes.ejs', {result: result, userid: row.id});
+		});
+	    });
+
 
 	});
     },
     
     recetteForm: function recetteForm(req, res) {
 	sess = req.session;
-	
-	if (!req.body.titre)
-	    sess.msgKO = "INCOMPLETE TITLE";
-
-	if (!req.body.type)
-	    sess.msgKO = "INCOMPLETE TYPE";
-
-	if (!req.body.description)
-	    sess.msgKO = "INCOMPLETE DESCRIPTION";
-
-	if (!req.body.difficulte)
-	    sess.msgKO = "INCOMPLETE DIFFICULTY";
-
-	
+		
 	pg.connect(config, function(err, client) {
             var db_password = client.query('SELECT * FROM utilisateur WHERE mail = $1;',
 					   [sess.user.mail], function (err, result) {
@@ -291,10 +315,10 @@ module.exports = {
             db_password.on('row', function(row) {
 		if (sess.msgKO)
 		    return res.redirect('/');
-   		client.query('INSERT INTO recette VALUES (DEFAULT, $1, $2, $3, $4, $5, $6);',
-			     [new Date(), row.id, req.body.titre, req.body.type, req.body.description, req.body.difficulte], function (err, result) {
+   		client.query('INSERT INTO recette VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7);',
+			     [new Date(), row.id, req.body.titre, req.body.type, req.body.ingredients, req.body.description, req.body.difficulte], function (err, result) {
 				 if (err) console.error('error happened during query', err);
-				 sess.msgOK = "SUCCESSFUL ADD OF RECETTE";
+				 sess.msgOK = "RECETTE CREEE AVEC SUCCES";
 				 res.redirect('/recettes.html');
 			     });
 	    });
@@ -311,12 +335,11 @@ module.exports = {
 					   if (err) console.error('error happened during query', err);
 					   if (!result.rowCount)
 					   {
-					       sess.msgKO = "RECETTE DOES NOT EXIST";
+					       sess.msgKO = "RECETTE INCONNUE";
 					       return res.redirect('/admin.html');
 					   }
 					   else
 					   {
-					       console.log("breberb");
     					       if (req.body.titre)
 						   db_password = client.query('UPDATE recette SET titre = $1 WHERE id = $2;', [req.body.titre, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
@@ -324,6 +347,11 @@ module.exports = {
 					       
 					       if (req.body.type)
 						   db_password = client.query('UPDATE recette SET type = $1 WHERE id = $2;', [req.body.type, req.body.id], function (err, result) {
+						       if (err) console.log('error happened during query', err);
+						   });
+
+					       if (req.body.ingredients)
+						   db_password = client.query('UPDATE recette SET ingredients = $1 WHERE id = $2;', [req.body.ingredients, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
 						   });
 					       
@@ -354,7 +382,7 @@ module.exports = {
 					   if (err) console.error('error happened during query', err);
 					   if (!result.rowCount)
 					   {
-					       sess.msgKO = "RECETTE DOES NOT EXIST";
+					       sess.msgKO = "RECETTE INCONNUE";
 					       return res.redirect('/admin.html');
 					   }
 					   else
@@ -403,32 +431,7 @@ module.exports = {
     
     atelierForm: function atelierForm(req, res) {
 	sess = req.session;
-	
-	if (!req.body.chef)
-	    sess.msgKO = "INCOMPLETE CHEF";
 
-	if (!req.body.titre)
-	    sess.msgKO = "INCOMPLETE TITLE";
-
-	if (!req.body.theme)
-	    sess.msgKO = "INCOMPLETE THEME";
-
-	if (!req.body.description)
-	    sess.msgKO = "INCOMPLETE DESCRIPTION";
-
-	if (!req.body.localisation)
-	    sess.msgKO = "INCOMPLETE LOCALISATION";
-
-	if (!req.body.prix)
-	    sess.msgKO = "INCOMPLETE PRICE";
-
-	if (!req.body.date_debut)
-	    sess.msgKO = "INCOMPLETE START DATE";
-
-	if (!req.body.date_fin)
-	    sess.msgKO = "INCOMPLETE END DATE";
-
-	
 	pg.connect(config, function(err, client) {
             var db_password = client.query('SELECT * FROM utilisateur WHERE nom = $1;',
 					   [req.body.chef], function (err, result) {
@@ -441,7 +444,7 @@ module.exports = {
    		client.query('INSERT INTO atelier VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8);',
 			     [row.id, req.body.titre, req.body.theme, req.body.description, req.body.localisation, req.body.prix, req.body.date_debut, req.body.date_fin], function (err, result) {
 				 if (err) console.error('error happened during query', err);
-				 sess.msgOK = "SUCCESSFUL ADD OF ATELIER";
+				 sess.msgOK = "ATELIER CREEE AVEC SUCCES";
 				 res.redirect('/ateliers.html');
 			     });
 	    });
@@ -458,7 +461,7 @@ module.exports = {
 					   if (err) console.error('error happened during query', err);
 					   if (!result.rowCount)
 					   {
-					       sess.msgKO = "ATELIER DOES NOT EXIST";
+					       sess.msgKO = "ATELIER INCONNU";
 					       return res.redirect('/admin.html');
 					   }
 					   else
@@ -514,7 +517,7 @@ module.exports = {
 					   if (err) console.error('error happened during query', err);
 					   if (!result.rowCount)
 					   {
-					       sess.msgKO = "ATELIER DOES NOT EXIST";
+					       sess.msgKO = "ATELIER INCONNU";
 					       return res.redirect('/admin.html');
 					   }
 					   else
@@ -542,6 +545,28 @@ module.exports = {
 	    });
 	});
 	
+    },
+ 
+    reservation: function reservation(req, res) {
+	sess = req.session;
+
+	pg.connect(config, function(err, client) {
+	    var db_password = client.query('SELECT * FROM atelier WHERE titre = $1;', [req.query.titre], function (err, result) {
+		if (err) console.error('error happened during query', err);
+		client.query('SELECT * FROM reservation WHERE utilisateur = $1 AND atelier = $2;', [sess.user.id, result.rows[0].id], function (err, resultr) {
+		    if (resultr.rowCount) {
+			sess.msgKO = "VOUS AVEZ DEJA RESERVE POUR CET ATELIER";
+			return res.redirect('/ateliers.html');
+		    }
+		    client.query('INSERT INTO Reservation VALUES ($1, $2, $3, $4);', [result.rows[0].id, sess.user.id, 1, new Date()], function (err, result) {
+			if (err) console.error('error happened during query', err);
+			sess.msgOK = "RESERVATION EFFECTUEE";		
+			res.redirect('/ateliers.html');
+		    });
+		});
+	    });
+	});
+
     }
 
 };

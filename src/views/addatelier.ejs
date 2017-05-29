@@ -11,7 +11,8 @@
     <section>
         <form action="/ateliers.html" method="post" >
           <p>
-	    <select id="chef" name="chef" />
+	    <label for="chef">Chef cuisinier</label>
+	    <select id="chef" name="chef" required />
 	    <%
 	       for(var i = 0 ; i < result.rows.length ; i++) {
 				   if (result.rows[i].role == "chef_cuisinier") {
@@ -25,32 +26,32 @@
 		   %>
 		</select></br>
                 <label for="titre">Titre</label>
-                <input type="text" id="titre" name="titre" size="18" placeholder="Titre" />
+                <input type="text" id="titre" name="titre" size="18" placeholder="Titre" required />
                 </br>
 
 		<label for="theme">Thème</label>
-                <input type="text" id="theme" name="theme" size="18" placeholder="Thème" />
+                <input type="text" id="theme" name="theme" size="18" placeholder="Thème" required />
                 </br>
 
                 <label for="description">Description</label></br>
-                <textarea id="description" name="description" placeholder="Description">
+                <textarea id="description" name="description" placeholder="Description" required>
 		</textarea>
 		</br>
 		
 		<label for="localisation">Localisation</label>
-                <input type="text" id="localisation" name="localisation" size="18" placeholder="Localisation" />
+                <input type="text" id="localisation" name="localisation" size="18" placeholder="Localisation" required />
                 </br>
 
 		<label for="prix">Prix</label></br>
-		<input type="number" id="prix" name="prix" />
+		<input type="number" id="prix" name="prix" required />
 		</br>
 
 		<label for="date_debut">Date de début</label></br>
-		<input type="date" id="date_debut" name="date_debut" />
+		<input type="date" id="date_debut" name="date_debut" required />
 		</br>
 
 		<label for="date_fin">Date de fin</label></br>
-		<input type="date" id="date_fin" name="date_fin" />
+		<input type="date" id="date_fin" name="date_fin" required />
 		</br>
 
                 <input type="submit" value="Valider" />

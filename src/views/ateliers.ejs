@@ -26,6 +26,8 @@
 	      %>
       </table>
     </section>
+    </br>
+    </br>
     <section>
       <%
 	 if (user.role == "admin" || user.role == "respo_atelier") {
@@ -36,15 +38,20 @@
       </br>
       
       <button id="modifier">Modifier</button>
-      <%
-	 }
-	 %>
       <section>
 	<div id="change" style="display : none">
 	  <form action="/admin.html" method="post" >
 	    <p>
-	      <label for="id">Si vous souhaitez modifier un atelier, veuillez sélectionner l'id correspondant :</label></br>
-	      <input type="number" id="id" name="id" size="8" />
+	      <label for="id">Si vous souhaitez modifier un atelier, veuillez sélectionner l'id correspondant et ne remplir uniquement les cases des informations que vous voulez modifier :</label></br>
+	      <select name="id" id="id" required >
+		<%
+		   for(var i = 0 ; i < result.rows.length ; i++) {
+				       %>
+		   <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
+		   <%
+		      }
+		      %>
+	      </select>
               </br>
               </br>
 				      
@@ -96,8 +103,16 @@
 	<div id="delete" style="display : none">
 	  <form action="/admin.html" method="post">
 	    <p>
-	      <label for="id">Si vous souhaitez supprimer un utilisateur, veuillez sélectionner l'id correspondant :</label></br>
-	      <input type="number" id="id" name="id" size="8" /></br></br>
+	      <label for="id">Si vous souhaitez supprimer un atelier, veuillez sélectionner l'id correspondant :</label></br>
+	      <select id="id" name="id" required >
+	      <%		  
+		 for(var i = 0 ; i < result.rows.length ; i++) {
+				     %>
+		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
+		 <%
+		    }
+		    %>
+	      </select>
 	      <input type="submit" id="sa" name="sa" value="Valider Suppresion Atelier" />
 	    </p>
 	  </form>
@@ -111,6 +126,9 @@
 	  }
 	  }
 	</script>
+	<%
+	   }
+	   %>
 
 	
       </section>

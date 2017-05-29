@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Connexion</title>
+    <title><%= user.prenom %> <%= user.nom %></title>
   </head>
 
   <body>
@@ -10,7 +10,50 @@
     <h1>Profil : </h1>
     <section>
       <p>Prénom : <%= user.prenom %>        Nom : <%= user.nom %></p>
-      <p>Adresse Postale : <%= user.adresse %> </p>
+      <p>Adresse Postale : <%= user.adresse_postale %> <%= user.code_postal %> <%= user.ville %> </p>
+      <p>Adresse Mail : <%= user.mail %> </p>
+      <label for="atelier">Atelier(s) :</label>
+      <table>
+	<tr>
+	  <th>ID</th>
+	  <th>Titre</th>
+	</tr>
+	<%
+	   for(var i = 0 ; i < reservationatelier.rows.length ; i++) {
+			       for(var j = 0; j < resultatelier.rows.length; j++) {
+						  if (reservationatelier.rows[i].atelier == resultatelier.rows[j].id) {
+			       %>
+	   <tr>
+	     <td><%= resultatelier.rows[j].id %></td>
+	     <td><a href="/atelier.html?titre=<%= resultatelier.rows[j].titre %>"><%= resultatelier.rows[j].titre %></a></td>
+	   </tr>
+	   <%
+	      }
+	      }
+	      }
+	      %>
+      </table>
+      </br>
+      </br>
+      
+      <label for="recette">Recette(s) :</label>
+      <table>
+	<tr>
+	  <th>ID</th>
+	  <th>Titre</th>
+	</tr>
+	<%
+	   for(var i = 0 ; i < resultrecette.rows.length ; i++) {
+			       %>
+	   <tr>
+	     <td><%= resultrecette.rows[i].id %></td>
+	     <td><a href="/recette.html?titre=<%= resultrecette.rows[i].titre %>"><%= resultrecette.rows[i].titre %></a></td>
+	   </tr>
+	   <%
+	      }
+	      %>
+      </table>
+
     </section>
   </body>
 

@@ -15,6 +15,12 @@
       <form action="/changeuser.html" method="post" >
 	<input type="submit" value="Modifier informations utilisateur" >
       </form></br>
+      <%
+	 }
+	 %>
+      <%
+	 if (user.role == "user" || user.role == "admin" || user.role == "respo_user") {
+	 %>
       <form action="/changerecette.html" method="post" >
 	<input type="submit"  value="Modifier informations recette" >
       </form></br>

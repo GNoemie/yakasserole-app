@@ -37,13 +37,24 @@
 	     }
 	     %>
       </table>
+      </br>
+      </br>
+      
       <button id="modifier">Modifier</button>
       <div id="change" style="display : none">
 	<form action="/admin.html" method="post">
 	  <p>
-	    <label for="id">Si vous souhaitez modifier une(des) information(s) concernant un utilisateur, veuillez entrer l'id de l'utilisateur en question et ne remplir uniquement les cases des informations dont vous voulez modifier :</label></br>
-	    <input type="number" id="id" name="id" size="8" />
-	  </br>
+	    <label for="id">Si vous souhaitez modifier une(des) information(s) concernant un utilisateur, veuillez entrer l'id de l'utilisateur en question et ne remplir uniquement les cases des informations que vous voulez modifier :</label></br>
+	    <select name="id" id="id" required>
+	      <%
+		 for(var i = 0 ; i < result.rows.length ; i++) {
+				     %>
+		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
+		 <%
+		    }
+		    %>
+	    </select>	     
+          </br>
 	  </br>
 	  
 	  <label for="role">Rôle</label></br>
@@ -93,12 +104,22 @@
 	}
       </script>
       </br>
+      </br>
+      
       <button id="supprimer">Supprimer</button>
       <div id="delete" style="display : none">
 	<form action="/admin.html" method="post">
 	  <p>
 	    <label for="id">Si vous souhaitez supprimer un utilisateur, veuillez sélectionner l'id correspondant :</label></br>
-	    <input type="number" id="id" name="id" size="8" />
+	    <select name="id" id="id" required>
+	      <%
+		 for(var i = 0 ; i < result.rows.length ; i++) {
+				     %>
+		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
+		 <%
+		    }
+		    %>
+	    </select>
 	  </br>
 	  </br>
 	  <input type="submit" id="su" name="su" value="Valider Suppresion Utilisateur" />
