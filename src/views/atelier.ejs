@@ -20,6 +20,91 @@
       <form action="/cb.html?titre=<%= result.rows[0].titre %>" method="post">
 	<input type="submit" id="p" name="p" value="Participer" />
       </form>
+      </br>
+      </br>
+
+      <% if (user.role == "admin" || user.role == "respo_atelier") {
+	 %>
+      <button id="modifier">Modifier</button>
+      <section>
+	<div id="change" style="display : none">
+	  <form action="/admin.html" method="post" >
+	    <p>
+	      <label for="id">Si vous souhaitez modifier l'atelier, veuillez sélectionner modifier uniquement les cases des informations que vous souhaitez modifier :</label></br>
+	      <select name="id" id="id" required >		 
+		<option value="<%= result.rows[0].id %>"><%= result.rows[0].id %></option>
+	      </select>
+	      </br>
+              </br>
+
+	      <label for="titre">Titre</label>
+	      <input type="text" id="titre" name="titre" size="18" placeholder="Titre" value="<%= result.rows[0].titre %>" />
+              </br>
+	      
+	      <label for="theme">Thème</label>
+	      <input type="text" id="theme" name="theme" size="18" placeholder="Thème" value="<%= result.rows[0].theme %>" />
+              </br>
+
+	      <label for="description">Description</label></br>
+	      <textarea id="description" name="description" placeholder="Description">
+	      </textarea>
+              </br>
+
+	      <label for="localisation">Localisation</label>
+	      <input type="text" id="localisation" name="localisation" size="18" placeholder="Localisation" value="<%= result.rows[0].localisation %>" />
+              </br>
+
+	      <label for="prix">Prix</label></br>
+	      <input type="number" id="prix" name="prix" value="<%= result.rows[0].prix %>" />
+              </br>
+	      
+	      <label for="date_debut">Date de début</label></br>
+	      <input type="date" id="date_debut" name="date_debut" value="<%= result.rows[0].date_debut %>" />
+              </br>
+	      
+	      <label for="date_fin">Date de fin</label></br>
+	      <input type="date" id="date_fin" name="date_fin" value="<%= result.rows[0].date_fin %>" />
+              </br>
+	      
+	      <input type="submit" id="ma" name="ma" value="Valider Modification Atelier" />
+	      
+	    </p>
+	  </form>
+	</div>
+	<script>
+	  document.querySelector("#modifier").onclick = function() {
+	  if (window.getComputedStyle(document.querySelector('#change')).display=='none'){
+	  document.querySelector("#change").style.display="block";
+	  } else {
+	  document.querySelector("#change").style.display="none";
+	  }
+	  }
+	</script>
+        </br>
+
+	<button id="supprimer">Supprimer</button>
+	<div id="delete" style="display : none">
+	  <form action="/admin.html" method="post">
+	    <p>
+	      <select id="id" name="id" required >
+		<option value="<%= result.rows[0].id %>"><%= result.rows[0].id %></option>
+	      </select>
+	      <input type="submit" id="sa" name="sa" value="Valider Suppresion Atelier" />
+	    </p>
+	  </form>
+	</div>
+	<script>
+	  document.querySelector("#supprimer").onclick = function() {
+	  if (window.getComputedStyle(document.querySelector('#delete')).display=='none'){
+	  document.querySelector("#delete").style.display="block";
+	  } else {
+	  document.querySelector("#delete").style.display="none";
+	  }
+	  }
+	</script>
+	<%
+	   }
+	   %>	
     </section>
   </body>
 

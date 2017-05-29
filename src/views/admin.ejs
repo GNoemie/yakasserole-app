@@ -10,17 +10,11 @@
     <h1>Profil : <%= user.prenom %></h1>
     <section>
       <%
-	 if (user.role == "admin" || user.role == "respo_user") {
+	 if (user.role == "admin" || user.role == "respo_user" || user.role == "user") {
 	 %>
       <form action="/changeuser.html" method="post" >
 	<input type="submit" value="Modifier informations utilisateur" >
       </form></br>
-      <%
-	 }
-	 %>
-      <%
-	 if (user.role == "user" || user.role == "admin" || user.role == "respo_user") {
-	 %>
       <form action="/changerecette.html" method="post" >
 	<input type="submit"  value="Modifier informations recette" >
       </form></br>
