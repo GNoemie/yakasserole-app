@@ -13,6 +13,8 @@
 	<tr>
 	  <th>ID</th>
 	  <th>Titre</th>
+	  <th>Auteur</th>
+	  <th>Type</th>
 	</tr>
 	<%
 	   for(var i = 0 ; i < result.rows.length ; i++) {
@@ -20,11 +22,15 @@
 	   <tr>
 	     <td><%= result.rows[i].id %></td>
 	     <td><a href="/recette.html?titre=<%= result.rows[i].titre %>"><%= result.rows[i].titre %></a></td>
+	     <td><%= userid.prenom %> <%= userid.nom %></td>
+	     <td><%= result.rows[i].type %></td>
 	   </tr>
 	   <%
 	      }
 	      %>
       </table>
+      <p>Pour plus d'informationsconcernant un atelier en particulier, veuillez cliquer sur le titre de ce dernier.</p>
+      
       </br>
       </br>
       
@@ -44,7 +50,7 @@
 	      <%
 		 if (user.role == "user") {
 		 for(var i = 0 ; i < result.rows.length ; i++) {
-				     if (userid == result.rows[i].auteur) {
+				     if (userid.id == result.rows[i].auteur) {
 				     %>
 		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
 		 <%
@@ -117,7 +123,7 @@
 	      <%
 		 if (user.role == "user") {
 		 for(var i = 0 ; i < result.rows.length ; i++) {
-				     if (userid == result.rows[i].auteur) {
+				     if (userid.id == result.rows[i].auteur) {
 				     %>
 		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
 		 <%

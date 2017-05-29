@@ -295,7 +295,7 @@ module.exports = {
 		    return res.redirect('/');
    		client.query('SELECT * FROM recette;', function (err, result) {
 		    if (err) console.error('error happened during query', err);
-		    res.render('recettes.ejs', {result: result, userid: row.id});
+		    res.render('recettes.ejs', {result: result, userid: row});
 		});
 	    });
 
@@ -403,7 +403,9 @@ module.exports = {
 	pg.connect(config, function(err, client) {
 	    var db_password = client.query('SELECT * FROM recette WHERE titre = $1', [req.query.titre], function (err, result) {
 		if (err) console.error('error happened during query', err);
-		    res.render('recette.ejs', {result: result});
+		client.query('SELECT * FROM utilisateur WHERE id = $1;', [result.rows[0].auteur], function (err, resultauteur) {
+		    res.render('recette.ejs', {result: result, resultauteur: resultauteur});
+		});
 	    });
 	});
 	
@@ -423,7 +425,9 @@ module.exports = {
             db_password = client.query('SELECT * FROM atelier;',
 				       function (err, result) {
 					   if (err) console.error('error happened during query', err);
-					   res.render('ateliers.ejs', {result: result});
+					   client.query('SELECT * FROM utilisateur;', function (err, resultuser) {
+					       res.render('ateliers.ejs', {result: result, resultuser: resultuser});
+					   });
 				       });
 
 	});
