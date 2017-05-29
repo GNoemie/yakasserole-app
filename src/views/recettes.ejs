@@ -22,7 +22,15 @@
 	   <tr>
 	     <td><%= result.rows[i].id %></td>
 	     <td><a href="/recette.html?titre=<%= result.rows[i].titre %>"><%= result.rows[i].titre %></a></td>
-	     <td><%= userid.prenom %> <%= userid.nom %></td>
+	     <%
+		for (var j = 0; j < resultuser.rows.length; j++) {
+				    if (resultuser.rows[j].id == result.rows[i].auteur) {
+				    %>
+		<td><%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %></td>
+		<%
+		   }
+		   }
+		   %>
 	     <td><%= result.rows[i].type %></td>
 	   </tr>
 	   <%

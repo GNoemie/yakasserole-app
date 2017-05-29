@@ -1,3 +1,4 @@
+
 const https = require('https');
 const fs = require('fs');
 const express = require('express');
@@ -188,7 +189,10 @@ app.get('/addrecette.html', function(req, res) {
 });
 
 app.post('/recettes.html', function(req, res) {
-    return form.recetteForm(req, res);
+    if (req.body.pc)
+	return form.addcommentairerecette(req, res);
+    else
+	return form.recetteForm(req, res);
 });
 
 app.get('/recette.html', function(req, res) {
@@ -219,7 +223,7 @@ app.get('/addatelier.html', function(req, res) {
 					       if (err) console.error('error happened during query', err);
 		res.render('addatelier.ejs', {result: result});
 		res.end();
-					   });
+	    });
 	}); 
     }
     else {
@@ -231,6 +235,8 @@ app.get('/addatelier.html', function(req, res) {
 app.post('/ateliers.html', function(req, res) {
     if (req.body.vr)
 	return form.reservation(req, res);
+    if (req.body.pc)
+	return form.addcommentaireatelier(req, res);
     else
 	return form.atelierForm(req, res);
 });

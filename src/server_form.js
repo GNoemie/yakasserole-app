@@ -193,7 +193,7 @@ module.exports = {
 					       db_password = client.query('SELECT * FROM utilisateur;',
 									  function (err, result) {
 									      if (err) console.error('error happened during query', err);
-									      if (req.body.role == "chef_cuisinier" && req.body.id == sess.user.id)
+									      if (req.body.role == "chef_cuisinier" || req.body.id == sess.user.id)
 									      {
 										  req.session.destroy();
 										  res.redirect('/');
@@ -317,8 +317,10 @@ module.exports = {
 		}
    		client.query('SELECT * FROM recette;', function (err, result) {
 		    if (err) console.error('error happened during query', err);
-		    res.render('recettes.ejs', {result: result, userid: row});
-		    res.end();
+		    client.query('SELECT * FROM utilisateur;', function (err, resultuser) {
+			res.render('recettes.ejs', {result: result, userid: row, resultuser: resultuser});
+			res.end();
+		    });
 		});
 	    });
 
@@ -434,14 +436,27 @@ module.exports = {
 	    var db_password = client.query('SELECT * FROM recette WHERE titre = $1', [req.query.titre], function (err, result) {
 		if (err) console.error('error happened during query', err);
 		client.query('SELECT * FROM utilisateur WHERE id = $1;', [result.rows[0].auteur], function (err, resultauteur) {
-		    res.render('recette.ejs', {result: result, resultauteur: resultauteur});
-		    res.end();
+		    client.query('SELECT * FROM commentaire_recette WHERE recette = $1;', [result.rows[0].id], function (err, resultcommentaire) {
+			res.render('recette.ejs', {result: result, resultauteur: resultauteur, resultcommentaire: resultcommentaire});
+			res.end();
+		    });
 		});
 	    });
 	});
 	
     },
 
+    addcommentairerecette: function addcommentairerecette(req, res) {
+	sess = req.session;
+
+	pg.connect(config, function(err, client) {
+	    var db_password = client.query('INSERT INTO commentaire_recette VALUES (DEFAULT, $1, $2, $3, $4);', [sess.user.id, req.query.id, new Date(), req.body.commentaire], function (err, result) {
+		sess.msgOK = "COMMENTAIRE AJOUTE";
+		res.redirect('/recettes.html');
+		res.end();
+	    });
+	});
+    },
 
 
 /*
@@ -583,13 +598,28 @@ module.exports = {
 		if (err) console.error('error happened during query', err);
 		client.query('SELECT * FROM utilisateur WHERE id = $1', [result.rows[0].chef], function (err, userchief) {
 		    if (err) console.error('error happened during query', err);
-		    res.render('atelier.ejs', {result: result, userchief: userchief});
-		    res.end();
+		    client.query('SELECT * FROM commentaire_atelier WHERE atelier = $1;', [result.rows[0].id], function (err, resultcommentaire) {
+			res.render('atelier.ejs', {result: result, userchief: userchief, resultcommentaire: resultcommentaire});
+			res.end();
+		    });
 		});
 	    });
 	});
 	
     },
+
+    addcommentaireatelier: function addcommentaireatelier(req, res) {
+	sess = req.session;
+
+	pg.connect(config, function(err, client) {
+	    var db_password = client.query('INSERT INTO commentaire_atelier VALUES (DEFAULT, $1, $2, $3, $4);', [sess.user.id, req.query.id, new Date(), req.body.commentaire], function (err, result) {
+		sess.msgOK = "COMMENTAIRE AJOUTE";
+		res.redirect('/ateliers.html');
+		res.end();
+	    });
+	});
+    },
+
  
     reservation: function reservation(req, res) {
 	sess = req.session;

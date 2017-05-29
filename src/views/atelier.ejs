@@ -104,8 +104,33 @@
 	</script>
 	<%
 	   }
-	   %>	
-    </section>
+	   %>
+      </section>
+        </br>
+	</br>
+	</br>
+	</br>
+
+	<section>
+	  <label><em>Commentaires :</em></label>
+	  <%
+	     for (var i = 0; i < resultcommentaire.rows.length; i++) {
+				 %>
+	     <p><%= resultcommentaire.rows[i].contenu %></br>
+	       Posté par : <%= user.prenom %> <%= user.nom %>
+	       le : <%= resultcommentaire.rows[i].date_post %></p>
+	     <%
+		}
+		%>
+	     <form action="/ateliers.html?id=<%= result.rows[0].id %>" method="post">
+	       <textarea id="commentaire" name="commentaire" >
+	       </textarea>
+               </br>
+	       
+	       <input type="submit" id="pc" name="pc" value="Poster un commentaire" />
+	     </form>
+	</section>
+		      
   </body>
 
 </html>
