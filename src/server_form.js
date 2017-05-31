@@ -437,8 +437,10 @@ module.exports = {
 		if (err) console.error('error happened during query', err);
 		client.query('SELECT * FROM utilisateur WHERE id = $1;', [result.rows[0].auteur], function (err, resultauteur) {
 		    client.query('SELECT * FROM commentaire_recette WHERE recette = $1;', [result.rows[0].id], function (err, resultcommentaire) {
-			res.render('recette.ejs', {result: result, resultauteur: resultauteur, resultcommentaire: resultcommentaire});
-			res.end();
+			client.query('SELECT * FROM utilisateur;', function (err, resultuser) {
+			    res.render('recette.ejs', {result: result, resultauteur: resultauteur, resultcommentaire: resultcommentaire, resultuser: resultuser});
+			    res.end();
+			});
 		    });
 		});
 	    });

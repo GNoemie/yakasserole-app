@@ -112,8 +112,15 @@
 	 for (var i = 0; i < resultcommentaire.rows.length; i++) {
 			     %>
 	 <p><%= resultcommentaire.rows[i].contenu %></br>
-	 Posté par : <%= user.prenom %> <%= user.nom %>
-	 le : <%= resultcommentaire.rows[i].date_post %></p>
+	   <% for (var j = 0; j < resultuser.rows.length; j++) {
+				  if (resultcommentaire.rows[i].auteur == resultuser.rows[j].id) {
+				  %>
+	      Posté par : <%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %>
+	      <%
+		 }
+		 }
+		 %>
+	      le : <%= resultcommentaire.rows[i].date_post %></p>
 	 <%
 	    }
 	    %>
