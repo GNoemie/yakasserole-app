@@ -13,6 +13,8 @@
 	<tr>
 	  <th>ID</th>
 	  <th>Titre</th>
+	  <th>Chef Cuisiner</th>
+	  <th>Prix</th>
 	</tr>
 	<%
 	   for(var i = 0 ; i < result.rows.length ; i++) {
@@ -20,12 +22,26 @@
 	   <tr>
 	     <td><%= result.rows[i].id %></td>
 	     <td><a href="/atelier.html?titre=<%= result.rows[i].titre %>"><%= result.rows[i].titre %></a></td>
+	     <%
+		for (var j = 0; j < resultuser.rows.length; j++) {
+				    if (resultuser.rows[j].id == result.rows[i].chef) {
+				    %>
+		<td><%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %></td>
+		<%
+		   }
+		   }
+		   %>
+	     <td><%= result.rows[i].prix %>€</td>
+	    
 	   </tr>
 	   <%
 	      }
 	      %>
       </table>
     </section>
+    <p>Pour plus d'informations concernant un atelier en particulier, veuillez cliquer sur le titre de ce dernier.</p>
+    </br>
+    </br>
     <section>
       <%
 	 if (user.role == "admin" || user.role == "respo_atelier") {
@@ -36,15 +52,20 @@
       </br>
       
       <button id="modifier">Modifier</button>
-      <%
-	 }
-	 %>
       <section>
 	<div id="change" style="display : none">
 	  <form action="/admin.html" method="post" >
 	    <p>
-	      <label for="id">Si vous souhaitez modifier un atelier, veuillez sélectionner l'id correspondant :</label></br>
-	      <input type="number" id="id" name="id" size="8" />
+	      <label for="id">Si vous souhaitez modifier un atelier, veuillez sélectionner l'id correspondant et ne remplir uniquement les cases des informations que vous voulez modifier :</label></br>
+	      <select name="id" id="id" required >
+		<%
+		   for(var i = 0 ; i < result.rows.length ; i++) {
+				       %>
+		   <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
+		   <%
+		      }
+		      %>
+	      </select>
               </br>
               </br>
 				      
@@ -96,8 +117,16 @@
 	<div id="delete" style="display : none">
 	  <form action="/admin.html" method="post">
 	    <p>
-	      <label for="id">Si vous souhaitez supprimer un utilisateur, veuillez sélectionner l'id correspondant :</label></br>
-	      <input type="number" id="id" name="id" size="8" /></br></br>
+	      <label for="id">Si vous souhaitez supprimer un atelier, veuillez sélectionner l'id correspondant :</label></br>
+	      <select id="id" name="id" required >
+	      <%		  
+		 for(var i = 0 ; i < result.rows.length ; i++) {
+				     %>
+		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
+		 <%
+		    }
+		    %>
+	      </select>
 	      <input type="submit" id="sa" name="sa" value="Valider Suppresion Atelier" />
 	    </p>
 	  </form>
@@ -111,6 +140,9 @@
 	  }
 	  }
 	</script>
+	<%
+	   }
+	   %>
 
 	
       </section>

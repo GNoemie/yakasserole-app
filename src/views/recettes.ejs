@@ -13,6 +13,8 @@
 	<tr>
 	  <th>ID</th>
 	  <th>Titre</th>
+	  <th>Auteur</th>
+	  <th>Type</th>
 	</tr>
 	<%
 	   for(var i = 0 ; i < result.rows.length ; i++) {
@@ -20,23 +22,59 @@
 	   <tr>
 	     <td><%= result.rows[i].id %></td>
 	     <td><a href="/recette.html?titre=<%= result.rows[i].titre %>"><%= result.rows[i].titre %></a></td>
+	     <%
+		for (var j = 0; j < resultuser.rows.length; j++) {
+				    if (resultuser.rows[j].id == result.rows[i].auteur) {
+				    %>
+		<td><%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %></td>
+		<%
+		   }
+		   }
+		   %>
+	     <td><%= result.rows[i].type %></td>
 	   </tr>
 	   <%
 	      }
 	      %>
       </table>
+      <p>Pour plus d'informations concernant un atelier en particulier, veuillez cliquer sur le titre de ce dernier.</p>
+      
+      </br>
+      </br>
+      
+      <% if (user.role == "user" || user.role == "admin" || user.role == "respo_user") {
+	 %>
       <form action="/addrecette.html" method="get" >
 	<input type="submit" value="Ajouter une recette" >
       </form>
       </br>
-      
+			 
       <button id="modifier">Modifier</button>
       <div id="change" style="display : none">
 	<form action="/admin.html" method="post">
 	  <p>
-	    <label for="id">Si vous souhaitez modifier une recette, veuillez sélectionner l'id correspondant :</label></br>
-	    <input type="number" id="id" name="id" size="8" />
-	    </br>
+	    <label for="id">Si vous souhaitez modifier une recette, veuillez sélectionner l'id correspondant et ne remplir uniquement les cases des informations que vous voulez modifier :</label></br>
+	    <select name="id" id="id" required>
+	      <%
+		 if (user.role == "user") {
+		 for(var i = 0 ; i < result.rows.length ; i++) {
+				     if (userid.id == result.rows[i].auteur) {
+				     %>
+		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
+		 <%
+		    }
+		    }
+		    }
+		    else {
+		    for(var i = 0 ; i < result.rows.length ; i++) {
+					%>
+		    <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
+		    <%
+		       }
+		       }
+		    %>
+	    </select>
+            </br>
 	    </br>
 
 	    <label for="titre">Titre</label>
@@ -46,8 +84,19 @@
 	    <input type="text" id="type" name="type" size="18" placeholder="Type" />
             </br>
 
+	    <label for="ingredients">Ingrédient(s)</label></br>
+	    <label>Veuillez entrer les ingrédients que comporte votre recette sous le format suivant :</br>
+	      Ex :</br>
+	      Farine, 75g</br>
+	      Sel, 2g
+	    </label></br>
+	    <textarea id="ingredients" name="ingredients" placeholder="Ingrédient(s)" >
+	    </textarea>
+	    </br>
+	    
+
 	    <label for="description">Description</label></br>
-	    <textarea id="description" name="description" placeholder="Description">
+	    <textarea id="description" name="description" placeholder="Description"  >
 	    </textarea>
             </br>
 	    
@@ -72,12 +121,32 @@
 
 
       </br>
+      </br>
       <button id="supprimer">Supprimer</button>
       <div id="delete" style="display : none">
 	<form action="/admin.html" method="post">
 	  <p>
 	    <label for="id">Si vous souhaitez supprimer une recette, veuillez sélectionner l'id correspondant :</label></br>
-	    <input type="number" id="id" name="id" size="8" />
+	    <select name="id" id="id" required >
+	      <%
+		 if (user.role == "user") {
+		 for(var i = 0 ; i < result.rows.length ; i++) {
+				     if (userid.id == result.rows[i].auteur) {
+				     %>
+		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
+		 <%
+		    }
+		    }
+		    }
+		    else {
+		    for(var i = 0 ; i < result.rows.length ; i++) {
+					%>
+		    <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
+		    <%
+		       }
+		       }
+		       %>
+	    </select>
 	    </br>
 	    </br>
 	    <input type="submit" id="sr" name="sr" value="Valider Suppresion Recette" />
@@ -96,8 +165,9 @@
       </script>
 
     </section>
-    
-    </section>
+    <%
+       }
+       %>
   </body>
 
 </html>

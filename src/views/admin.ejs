@@ -10,7 +10,7 @@
     <h1>Profil : <%= user.prenom %></h1>
     <section>
       <%
-	 if (user.role == "admin" || user.role == "respo_user") {
+	 if (user.role == "admin" || user.role == "respo_user" || user.role == "user") {
 	 %>
       <form action="/changeuser.html" method="post" >
 	<input type="submit" value="Modifier informations utilisateur" >

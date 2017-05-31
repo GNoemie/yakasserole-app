@@ -1,3 +1,4 @@
+
 const https = require('https');
 const fs = require('fs');
 const express = require('express');
@@ -44,8 +45,8 @@ var path = require("path");
 
 app.get('/', function(req, res) {
     res.render('index.ejs');
+    res.end();
 });
-
 
 /*
   INSCRIPTION
@@ -53,26 +54,27 @@ app.get('/', function(req, res) {
 
 app.get('/inscription.html', function(req, res) {
     sess = req.session.user;
-    if (!sess) res.render('inscription.ejs');
-    else res.redirect('/');
+    if (!sess) {
+	res.render('inscription.ejs');
+	res.end();
+    }
+    else {
+	res.redirect('/');
+	res.end();
+    }
 });
 
 app.post('/inscription.html', function(req, res) {
-    form.inscriptionForm(req, res);
+    return form.inscriptionForm(req, res);
 });
 
 /*
   CARTE BLEUE
 */
 
-app.get('/cb.html', function(req, res) {
-    sess = req.session.user;
-    if (!sess) res.render('cb.ejs');
-    else res.redirect('/');
-});
-
 app.post('/cb.html', function(req, res){
-    res.redirect('/');
+    res.render('cb.ejs', {r: req.query.titre});
+    res.end();
     //popup(500, 500, 'Transaction Compléter');
 });
 
@@ -82,34 +84,50 @@ app.post('/cb.html', function(req, res){
 
 app.get('/connexion.html', function(req, res) {
     sess = req.session.user;
-    if (!sess) res.render('connexion.ejs');
-    else res.redirect('/');
+    if (!sess) {
+	res.render('connexion.ejs');
+	res.end();
+    }
+    else {
+	res.redirect('/');
+	res.end();
+    }
 });
 
 app.post('/connexion.html', function(req, res) {
-    form.connexionForm(req, res);
+    return form.connexionForm(req, res);
 });
     
 
 app.get('/pwd_recup.html', function(req, res) {
     sess = req.session.user;
-    if (!sess) res.render('pwd_recup.ejs');
-    else res.redirect('/');
+    if (!sess) {
+	res.render('pwd_recup.ejs');
+	res.end();
+    }
+    else {
+	res.redirect('/');
+	res.end();
+    }
 });
 
 app.post('/pwd_recup.html', function(req, res) {
-    form.recupForm(req, res);
+    return form.recupForm(req, res);
 });
 
 app.get('/logout.html', function(req, res) {
     req.session.destroy();
     res.redirect('/');
+    res.end();
 });
 
 app.get('/profil.html', function(req, res) {
     sess = req.session.user;
-    if (sess) res.render('profil.ejs');
-    else res.redirect('/');
+    if (sess) return form.printProfil(req, res);
+    else {
+	res.redirect('/');
+	res.end();
+    }
 });
 
 
@@ -119,13 +137,17 @@ app.get('/profil.html', function(req, res) {
 
 app.get('/admin.html', function(req, res) {
     sess = req.session.user;
-    if (sess)
+    if (sess) {
 	res.render('admin.ejs');
-    else res.redirect('/');
+	res.end();
+    }
+    else {
+	res.redirect('/');
+	res.end();
+    }
 });
 
 app.post('/admin.html', function(req, res) {
-    console.log(req.body);
     if (req.body.mu)
 	return form.changeUser(req, res);
     if (req.body.su)
@@ -147,22 +169,34 @@ app.post('/admin.html', function(req, res) {
 
 app.get('/recettes.html', function(req, res) {
     sess = req.session.user;
-    if (sess) form.printrecettes(req, res);
-    else res.redirect('/');
+    if (sess) return form.printrecettes(req, res);
+    else {
+	res.redirect('/');
+	res.end();
+    }
 });
 
 app.get('/addrecette.html', function(req, res) {
     sess = req.session.user;
-    if (sess) res.render('addrecette.ejs');
-    else res.redirect('/');
+    if (sess) {
+	res.render('addrecette.ejs');
+	res.end();
+    }
+    else {
+	res.redirect('/');
+	res.end();
+    }
 });
 
 app.post('/recettes.html', function(req, res) {
-    form.recetteForm(req, res);
+    if (req.body.pc)
+	return form.addcommentairerecette(req, res);
+    else
+	return form.recetteForm(req, res);
 });
 
 app.get('/recette.html', function(req, res) {
-    form.recettealone(req, res);
+    return form.recettealone(req, res);
 });
 
 
@@ -173,8 +207,11 @@ app.get('/recette.html', function(req, res) {
 
 app.get('/ateliers.html', function(req, res) {
     sess = req.session.user;
-    if (sess) form.printateliers(req, res);
-    else res.redirect('/');
+    if (sess) return form.printateliers(req, res);
+    else {
+	res.redirect('/');
+	res.end();
+    }
 });
 
 app.get('/addatelier.html', function(req, res) {
@@ -184,19 +221,28 @@ app.get('/addatelier.html', function(req, res) {
 	pg.connect(config, function(err, client) {
 	    var db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
 					       if (err) console.error('error happened during query', err);
-					       res.render('addatelier.ejs', {result: result});
-					   });
+		res.render('addatelier.ejs', {result: result});
+		res.end();
+	    });
 	}); 
     }
-    else res.redirect('/');
+    else {
+	res.redirect('/');
+	res.end();
+    }
 });
 
 app.post('/ateliers.html', function(req, res) {
-    form.atelierForm(req, res);
+    if (req.body.vr)
+	return form.reservation(req, res);
+    if (req.body.pc)
+	return form.addcommentaireatelier(req, res);
+    else
+	return form.atelierForm(req, res);
 });
 
 app.get('/atelier.html', function(req, res) {
-    form.atelieralone(req, res);
+    return form.atelieralone(req, res);
 });
 
 
@@ -205,15 +251,15 @@ app.get('/atelier.html', function(req, res) {
 */
 
 app.post('/changeuser.html', function(req, res) {
-    form.printusers(req, res);
+    return form.printusers(req, res);
 });
 
 app.post('/changeatelier.html', function(req, res) {
-    form.printateliers(req, res);
+    return form.printateliers(req, res);
 });
 
 app.post('/changerecette.html', function(req, res) {
-    form.printrecettes(req, res);
+    return form.printrecettes(req, res);
 })
 
 

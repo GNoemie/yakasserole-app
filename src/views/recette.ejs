@@ -9,10 +9,129 @@
     <% include include/header %>
     <h1>Recette : <%= result.rows[0].titre %></h1>
     <section>
+      <p>Auteur : <%= resultauteur.rows[0].prenom %> <%= resultauteur.rows[0].nom %></p>
       <p>Type : <%= result.rows[0].type %></p>
-      <p>Description : <%= result.rows[0].description %></p>
+      <p>Ingrédients : <%= result.rows[0].ingredients %></p>
+      <p>Description : <%= result.rows[0].description %></p>	    
       <p>Difficulté : <%= result.rows[0].difficulte %></p>
-     </section>
+      <p>Posté le : <%= result.rows[0].date_post %></p>
+    </section>
+    </br>
+    </br>
+    <%
+       if (user.id == result.rows[0].auteur || user.role == "admin") {
+       %>
+    
+    <button id="modifier">Modifier</button>
+    <%
+       }
+       %>
+    <div id="change" style="display : none">
+      <form action="/admin.html" method="post">
+	<p>
+	  <label for="id">Si vous souhaitez modifier une recette, veuillez sélectionner l'id correspondant et ne remplir uniquement les cases des informations que vous voulez modifier :</label></br>
+	  <select name="id" id="id" required>
+	    <option value="<%= result.rows[0].id %>"><%= result.rows[0].id %></option>
+	  </select>
+	  </br>
+	  </br>
+
+	  <label for="titre">Titre</label>
+	  <input type="text" id="titre" name="titre" size="18" placeholder="Titre" value="<%= result.rows[0].titre %>" />
+	  
+	  <label for="type">Type</label>
+	  <input type="text" id="type" name="type" size="18" placeholder="Type" value="<%= result.rows[0].type %>" />
+          </br>
+
+	  <label for="ingredients">Ingrédient(s)</label></br>
+	  <label>Veuillez entrer les ingrédients que comporte votre recette sous le format suivant :</br>
+	    Ex :</br>
+	    Farine, 75g</br>
+	    Sel, 2g
+	  </label></br>
+	  <textarea id="ingredients" name="ingredients" placeholder="Ingrédient(s)" value="<%= result.rows[0].ingredients %>" >
+	  </textarea>
+          </br>
+
+	  <label for="description">Description</label></br>
+	  <textarea id="description" name="description" placeholder="Description" value="<%= result.rows[0].description %>"  >
+	  </textarea>
+          </br>
+
+	  <label for="difficulte">Difficultée</label></br>
+	  <input type="number" id="difficulte" name="difficulte" min="1" max="5" value="<%= result.rows[0].difficulte %>" />
+          </br>
+	  
+	  <input type="submit" id="mr" name="mr" value="Valider Modification Recette" />
+	</p>
+      </form>
+    </div>
+    <script>
+      document.querySelector("#modifier").onclick = function() {
+      if (window.getComputedStyle(document.querySelector('#change')).display=='none'){
+      document.querySelector("#change").style.display="block";
+      } else {
+      document.querySelector("#change").style.display="none";
+      }
+      }
+    </script>
+    </br>
+    </br>
+    
+    <button id="supprimer">Supprimer</button>
+    <div id="delete" style="display : none">
+      <form action="/admin.html" method="post">
+	<p>
+	  <select name="id" id="id" required >
+	    <option value="<%= result.rows[0].id %>"><%= result.rows[0].id %></option>
+	  </select>
+	  </br>
+	  </br>
+	  <input type="submit" id="sr" name="sr" value="Valider Suppresion Recette" />
+
+	</p>
+      </form>
+    </div>
+    <script>
+      document.querySelector("#supprimer").onclick = function() {
+      if (window.getComputedStyle(document.querySelector('#delete')).display=='none'){
+      document.querySelector("#delete").style.display="block";
+      } else {
+      document.querySelector("#delete").style.display="none";
+      }
+      }
+    </script>
+    </br>
+    </br>
+    </br>
+    </br>
+    
+    <section>
+      <label><em>Commentaires :</em></label>
+      <%
+	 for (var i = 0; i < resultcommentaire.rows.length; i++) {
+			     %>
+	 <p><%= resultcommentaire.rows[i].contenu %></br>
+	   <% for (var j = 0; j < resultuser.rows.length; j++) {
+				  if (resultcommentaire.rows[i].auteur == resultuser.rows[j].id) {
+				  %>
+	      Posté par : <%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %>
+	      <%
+		 }
+		 }
+		 %>
+	      le : <%= resultcommentaire.rows[i].date_post %></p>
+	 <%
+	    }
+	    %>
+	 <form action="/recettes.html?id=<%= result.rows[0].id %>" method="post">	   
+	   <textarea id="commentaire" name="commentaire" >
+	   </textarea>
+	   </br>
+	   
+	   <input type="submit" id="pc" name="pc" value="Poster un commentaire" />	 
+	 </form>
+    </section>
   </body>
 
 </html>
