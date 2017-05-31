@@ -193,7 +193,7 @@ module.exports = {
 					       db_password = client.query('SELECT * FROM utilisateur;',
 									  function (err, result) {
 									      if (err) console.error('error happened during query', err);
-									      if (req.body.role == "chef_cuisinier" || req.body.id == sess.user.id)
+									      if (req.body.id == sess.user.id)
 									      {
 										  req.session.destroy();
 										  res.redirect('/');
@@ -599,8 +599,10 @@ module.exports = {
 		client.query('SELECT * FROM utilisateur WHERE id = $1', [result.rows[0].chef], function (err, userchief) {
 		    if (err) console.error('error happened during query', err);
 		    client.query('SELECT * FROM commentaire_atelier WHERE atelier = $1;', [result.rows[0].id], function (err, resultcommentaire) {
-			res.render('atelier.ejs', {result: result, userchief: userchief, resultcommentaire: resultcommentaire});
-			res.end();
+			client.query('SELECT * FROM utilisateur;', function (err, resultuser) {
+			    res.render('atelier.ejs', {result: result, userchief: userchief, resultcommentaire: resultcommentaire, resultuser: resultuser});
+			    res.end();
+			});
 		    });
 		});
 	    });
