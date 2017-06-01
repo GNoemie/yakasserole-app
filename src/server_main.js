@@ -25,9 +25,13 @@ app.use(session({
 	saveUninitialized: false
 }));   //those options are for cookies i think, but we don't use them anyway
 
+//handling pages
+var path = require("path");
+
 //handle form data
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 //export session variables in all files
 app.use(function(req, res, next) {
@@ -38,10 +42,6 @@ app.use(function(req, res, next) {
     req.session.msgOK = null;
     next();
 });
-
-
-//handling pages
-var path = require("path");
 
 app.get('/', function(req, res) {
     res.render('index.ejs');
