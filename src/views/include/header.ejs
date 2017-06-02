@@ -1,17 +1,18 @@
 <!-- <!DOCTYPE html> -->
-<header> 
+<header>
+    <img src="resources/logo.png" class="pull-left"/>
+    <div id="buttons" class="pull-right">
+        <div id="account">
     <%
 	if (user) {
     %>
-        <p>Hello <%= user.prenom %> !</p>
-	<p><a href="/logout.html">Logout</a></p>
-        <p><a href="/profil.html">Profil</a></p>
-	
+	        <a href="/logout.html" id="logout">LOGOUT</a>
+            <a href="/profil.html" id="profil">PROFIL</a>
 
 	      <%
 		if (user.role != "chef_cuisinier") {
 	      %>
-		<p><a href="/admin.html">Admin</a></p>
+		    <a href="/admin.html">Admin</a>
 		
 	      <%
 	        }
@@ -21,22 +22,32 @@
 	else
 	{
     %>
-	    <p><a href="/connexion.html">Connexion</a></p>
-	    <p><a href="/inscription.html">Inscription</a></p>
-
+	        <a href="/connexion.html" id="connexion">CONNEXION</a>
+	        <a href="/inscription.html" id="inscription">INSCRIPTION</a>
     <%
 	}
     %>
+        </div>
 
-    <ul>
-        <li><a href="../">Accueil</a></li>
-        <li><a href="/ateliers.html">Ateliers</a></li>	
-        <li><a href="/recettes.html">Recettes</a></li>
-	<li><a href="">Premium</a></li>
-        <li><a href="">A propos</a></li>
-    </ul>
+        <div id="menu">
+        <ul class="list-inline">
+            <li><a href="../">ACCUEIL</a></li>
+            <li><a href="/ateliers.html">ATELIERS</a></li>	
+            <li><a href="/recettes.html">RECETTES</a></li>
+	        <li><a href="">PREMIUM</a></li>
+            <li><a href="">A PROPOS</a></li>
+        </ul>
+        </div>
 
+        <p id="hello">
+        <% if (user) { %>
+        Bonjour <%= user.prenom %> !
+        <% } else { %>
+        Bienvenue chez YaKasserole !
+        <% } %>
+        </p>
 
+    </div>
     <%
     if (msgKO) {
     %>
