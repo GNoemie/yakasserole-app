@@ -26,7 +26,26 @@ a:hover
 input
 {
     background-color: white;
-    border: 1px solid black;
+    border: none;
+    outline: none;
+    padding: 5px;
+    margin: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    letter-spacing: 0.1em;
+}
+label
+{
+    min-width: 100px;
+    letter-spacing: 0.1em;
+}
+
+#body form
+{
+    margin: 20px;
+    padding: 20px;
+    background-color: #ffbb6b;
+    color: #c15013;
 }
 
 /* HEADER */
@@ -94,7 +113,6 @@ header #logo
     background: none;
     border: none;
     width: 400px;
-    margin-top: 5px;
     padding: 3px;
     text-align: left;
 }
@@ -423,12 +441,12 @@ footer h1
     color: white;
     font-weight: bold;
     font-size: 1.2em;
-    text-shadow: 1px 1px black;
 }
 
 #accueil #prez .button:hover
 {
     border-color: #ffdb45;
+    color: #ffdb45;
 }
 
 #accueil #prez #button1
