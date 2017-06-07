@@ -89,7 +89,10 @@ app.get('/connexion.html', function(req, res) {
 });
 
 app.post('/connexion.html', function(req, res) {
-    return form.connexionForm(req, res);
+    if (req.body.c)
+	return form.connexionForm(req, res);
+    else
+	return form.mdpchange(req, res, req.query);
 });
     
 
@@ -103,6 +106,11 @@ app.get('/pwd_recup.html', function(req, res) {
 
 app.post('/pwd_recup.html', function(req, res) {
     return form.recupForm(req, res);
+});
+
+app.get('/changemdp.html', function(req, res) {
+    m = "";
+    return res.render('changemdp.ejs', {m: m, r: req.query});
 });
 
 app.get('/logout.html', function(req, res) {
@@ -220,6 +228,9 @@ app.get('/atelier.html', function(req, res) {
     return form.atelieralone(req, res);
 });
 
+app.post('/profil.html', function(req, res) {
+    return form.deletereservation(req, res);
+});
 
 /*
   PRINT

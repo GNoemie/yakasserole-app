@@ -23,6 +23,15 @@
       </br>
       </br>
 
+      <% if (resultreservation.rowCount) {
+	 %>
+      <label>Attention toute annulation n'entraîne pas de remboursement</label>
+      <form action="/profil.html?titre=<%= result.rows[0].titre%>" method="post">
+	<input type="submit" id="ar" name="ar" value="Annuler la participation" />
+      </form>
+      <%
+	 }
+	 %>
       <% if (user.role == "admin" || user.role == "respo_atelier") {
 	 %>
       <button id="modifier">Modifier</button>

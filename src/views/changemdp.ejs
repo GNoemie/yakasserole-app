@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include include/head %>
+    <title>CHANGE MOT DE PASSE</title>
+  </head>
+
+  <body>
+    <% include include/header %>
+    <h1>CHANGEMENT DE MOT DE PASSE</h1>
+    <section>
+      <% if (m != "") {
+	 %>
+      <%= m %>
+      <%
+	 }
+	 %>
+      <form action="/connexion.html?key=<%= r.key %>&mail=<%= r.mail %>" method="post" >
+        <p>
+          <label for="mdp">Mot de Passe</label>
+          <input type="password" id="mdp" name="mdp" size="18" placeholder="Mot de passe" required />
+	  </br>
+	  </br>
+	  
+          <label for="mdp1">Confirmation mot de passe</label>
+          <input type="password" id="mdp1" name="mdp1" size="18" placeholder="Mot de passe" required />
+          </br>
+	  </br>
+
+          <input type="submit" value="Valider" />
+
+        </p>
+      </form>
+   </section>
+   <% include include/footer %>
+  </body>
+
+</html>
