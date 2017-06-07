@@ -23,6 +23,12 @@ a:hover
     color: #a44141;
 }
 
+input
+{
+    background-color: white;
+    border: 1px solid black;
+}
+
 /* HEADER */
 
 header
@@ -270,4 +276,113 @@ footer h1
     background-repeat: repeat-y;
     background-position: left;
     font-size: 1.5em;
+}
+
+
+/* PRESENTATION SITE */
+
+#accueil
+{
+    position: relative;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: -1px;
+    text-align: center;
+}
+
+#prez
+{
+    text-align: left;
+    border: 1px solid black;
+    padding-left: 60px;
+    margin-bottom: 20px;
+    background-color: #dcdcdc;
+    background-image: url(resources/line3.png), url(resources/line4.png);
+    background-repeat: repeat-y;
+    background-position: left 20px, right;
+    min-height: 200px
+}
+
+#prez h2
+{
+    font-size: 1.5em;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    color: black;
+}
+
+#accueil #premium
+{
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: 70px;
+    border: 4px solid #c15013;
+    border-radius: 0px 0px 20px 20px;
+    border-top: 0;
+    margin-top: 1px;
+    width: 200px;
+    height: 120px;
+    background-color: #ffbb6b;
+    color: black;
+}
+
+#accueil #premium:hover
+{
+    height: 140px;
+    color: black;
+}
+
+#accueil #premium h2
+{
+    margin: 0;
+    height: 30px;
+    background-color: #ffdb45;
+    color: #ff8309;
+    padding: 3px;
+    font-size: 1.5em;
+}
+
+#accueil #premium:hover h2
+{
+    padding-top: 23px;
+    height: 50px;
+}
+
+#accueil #premium .prem_block
+{
+    display: inline-block;
+    width: 48%;
+    vertical-align: top;
+    color: #c15013;
+    margin-top: 5px;
+    line-height: 17px;
+}
+
+#accueil #premium .prem_block .big
+{
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.title_block
+{
+    margin: 3px;
+    width: 49%;
+    display: inline-block;
+    border: 4px solid #db5c5c;
+    border-radius: 15px 15px 15px 15px;
+}
+
+.title_block h2
+{
+    margin: 0;
+    padding: 6px;
+    padding-left: 10px;
+    background-color: #a44141;
+    border-radius: 9px 9px 0px 0px;
+    color: #e5e5e5;
+    font-size: 1.1em;
+    letter-spacing: 0.3em;
+    text-align: left;
 }
