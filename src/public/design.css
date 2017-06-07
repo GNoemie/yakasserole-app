@@ -422,6 +422,8 @@ footer h1
     margin-right: 5px;
     color: white;
     font-weight: bold;
+    font-size: 1.2em;
+    text-shadow: 1px 1px black;
 }
 
 #accueil #prez .button:hover
