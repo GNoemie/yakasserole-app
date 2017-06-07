@@ -54,27 +54,25 @@ app.get('/', function(req, res) {
 
 app.get('/inscription.html', function(req, res) {
     sess = req.session.user;
-    if (!sess) {
+    if (!sess)
 	res.render('inscription.ejs');
-	res.end();
-    }
-    else {
+    else
 	res.redirect('/');
-	res.end();
-    }
 });
 
 app.post('/inscription.html', function(req, res) {
     return form.inscriptionForm(req, res);
 });
 
+app.get('/activation.html', function(req, res) {
+    return form.activationtest(req, res);
+});
 /*
   CARTE BLEUE
 */
 
 app.post('/cb.html', function(req, res){
     res.render('cb.ejs', {r: req.query.titre});
-    res.end();
     //popup(500, 500, 'Transaction Compléter');
 });
 
@@ -84,50 +82,48 @@ app.post('/cb.html', function(req, res){
 
 app.get('/connexion.html', function(req, res) {
     sess = req.session.user;
-    if (!sess) {
+    if (!sess)
 	res.render('connexion.ejs');
-	res.end();
-    }
-    else {
+    else 
 	res.redirect('/');
-	res.end();
-    }
 });
 
 app.post('/connexion.html', function(req, res) {
-    return form.connexionForm(req, res);
+    if (req.body.c)
+	return form.connexionForm(req, res);
+    else
+	return form.mdpchange(req, res, req.query);
 });
     
 
 app.get('/pwd_recup.html', function(req, res) {
     sess = req.session.user;
-    if (!sess) {
+    if (!sess)
 	res.render('pwd_recup.ejs');
-	res.end();
-    }
-    else {
+    else
 	res.redirect('/');
-	res.end();
-    }
 });
 
 app.post('/pwd_recup.html', function(req, res) {
     return form.recupForm(req, res);
 });
 
+app.get('/changemdp.html', function(req, res) {
+    m = "";
+    return res.render('changemdp.ejs', {m: m, r: req.query});
+});
+
 app.get('/logout.html', function(req, res) {
     req.session.destroy();
     res.redirect('/');
-    res.end();
 });
 
 app.get('/profil.html', function(req, res) {
     sess = req.session.user;
-    if (sess) return form.printProfil(req, res);
-    else {
+    if (sess)
+	return form.printProfil(req, res);
+    else
 	res.redirect('/');
-	res.end();
-    }
 });
 
 
@@ -137,14 +133,10 @@ app.get('/profil.html', function(req, res) {
 
 app.get('/admin.html', function(req, res) {
     sess = req.session.user;
-    if (sess) {
+    if (sess)
 	res.render('admin.ejs');
-	res.end();
-    }
-    else {
+    else
 	res.redirect('/');
-	res.end();
-    }
 });
 
 app.post('/admin.html', function(req, res) {
@@ -169,23 +161,18 @@ app.post('/admin.html', function(req, res) {
 
 app.get('/recettes.html', function(req, res) {
     sess = req.session.user;
-    if (sess) return form.printrecettes(req, res);
-    else {
+    if (sess)
+	return form.printrecettes(req, res);
+    else
 	res.redirect('/');
-	res.end();
-    }
 });
 
 app.get('/addrecette.html', function(req, res) {
     sess = req.session.user;
-    if (sess) {
+    if (sess)
 	res.render('addrecette.ejs');
-	res.end();
-    }
-    else {
+    else 
 	res.redirect('/');
-	res.end();
-    }
 });
 
 app.post('/recettes.html', function(req, res) {
@@ -207,11 +194,10 @@ app.get('/recette.html', function(req, res) {
 
 app.get('/ateliers.html', function(req, res) {
     sess = req.session.user;
-    if (sess) return form.printateliers(req, res);
-    else {
+    if (sess)
+	return form.printateliers(req, res);
+    else
 	res.redirect('/');
-	res.end();
-    }
 });
 
 app.get('/addatelier.html', function(req, res) {
@@ -222,14 +208,11 @@ app.get('/addatelier.html', function(req, res) {
 	    var db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
 					       if (err) console.error('error happened during query', err);
 		res.render('addatelier.ejs', {result: result});
-		res.end();
 	    });
 	}); 
     }
-    else {
+    else
 	res.redirect('/');
-	res.end();
-    }
 });
 
 app.post('/ateliers.html', function(req, res) {
@@ -245,6 +228,9 @@ app.get('/atelier.html', function(req, res) {
     return form.atelieralone(req, res);
 });
 
+app.post('/profil.html', function(req, res) {
+    return form.deletereservation(req, res);
+});
 
 /*
   PRINT
