@@ -79,6 +79,14 @@ header #logo
     margin-top: 10px;
     position: absolute;
     left: 0px;
+    -webkit-transition: -webkit-transform 2s;
+    transition: transform 5s;
+}
+
+header #logo:hover
+{
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
 }
 
 #connexion, #inscription, #logout, #profil, #admin, #research
@@ -94,6 +102,9 @@ header #logo
     padding-top: 15px;
 
     vertical-align: top;
+
+    -webkit-transition: padding-top 1s, height 1s;
+    transition: height 1s, padding-top 1s;
 }
 
 #connexion:hover, #inscription:hover, #logout:hover, #profil:hover, #admin:hover
@@ -115,6 +126,8 @@ header #logo
     width: 400px;
     padding: 3px;
     text-align: left;
+    -webkit-transition: none;
+    transition: none;
 }
 
 #research #search
@@ -141,6 +154,8 @@ header #logo
     background-repeat: no-repeat;
     background-position: center;
     margin-left: 20px;
+    -webkit-transition: background-color 0.7s;
+    transition: background-color 0.7s;
 }
 
 #research #ok:hover
@@ -190,6 +205,8 @@ header ul li
     height: 34px;
     padding-top: 7px;
     padding: none;
+    -webkit-transition: background-color 0.7s;
+    transition: background-color 0.7s;
 }
 
 header ul li a
@@ -198,6 +215,8 @@ header ul li a
     width: 130px;
     text-align: center;
     color: #dcdcdc;
+    -webkit-transition: color 0.7s;
+    transition: color 0.7s;
     margin: none;
 }
 
@@ -265,12 +284,14 @@ footer ul
 footer a
 {
     color: #e5e5e5;
+    letter-spacing: 0.1em;
 }
 
 footer h1
 {
     color: #e5e5e5;
     font-size: 1.3em;
+    letter-spacing: 0.2em;
 }
 
 /* SECTION */
@@ -350,6 +371,9 @@ footer h1
     background-color: #ffbb6b;
     color: black;
     text-align: center;
+
+    -webkit-transition: height 1s;
+    transition: height 1s;
 }
 
 #accueil #premium:hover
@@ -366,6 +390,8 @@ footer h1
     color: #ff8309;
     padding: 3px;
     font-size: 1.5em;
+    -webkit-transition: padding-top 1s, height 1s;
+    transition: padding-top 1s, height 1s;
 }
 
 #accueil #premium:hover h2
@@ -406,6 +432,9 @@ footer h1
     color: #e3e3e3;
     padding-top: 5px;
     text-align: center;
+
+    -webkit-transition: padding-top 1s, height 1s;
+    transition: padding-top 1s, height 1s;
 }
 
 #accueil #goto_inscription:hover
