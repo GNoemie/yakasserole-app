@@ -102,14 +102,14 @@
 	  }
 	  }
 	</script>
-	<%
-	   }
-	   %>
       </section>
         </br>
 	</br>
 	</br>
 	</br>
+	<%
+	   }
+	   %>
 
 	<section>
 	  <label><em>Commentaires :</em></label>
@@ -120,7 +120,7 @@
 	       <% for (var j = 0; j < resultuser.rows.length; j++) {
 				      if (resultcommentaire.rows[i].auteur == resultuser.rows[j].id) {
 				      %>
-		  Posté par : <%= resultuser.rows[j]prenom %> <%= resultuser.rows[j].nom %>
+		  Posté par : <%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %>
 		  <%
 		     }
 		     }
