@@ -142,7 +142,7 @@ module.exports = {
        
        pg.connect(config, function(err, client, done) {
 	   var db = client.query("SELECT * FROM recette WHERE titre LIKE '%'+ $1 + '%'; SELECT * FROM atelier WHERE titre LIKE '%' + $1 + '%';", 
-				 [req.body.search], function (err, result) {
+				 [req.body.search], function (err, search) {
 				     if (err) console.error('error happened during query', err);
 				     if (result.rowCount == 0)
                                      {
@@ -155,7 +155,7 @@ module.exports = {
                                      }
 				     else
                                      {
-					res.render('recherche.ejs', result);
+					res.render('recherche.ejs', {search: search});
                                      }
        				 });
 	});

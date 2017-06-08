@@ -78,6 +78,18 @@ app.post('/cb.html', function(req, res){
 });
 
 /*
+  RECHERCHE
+*/
+
+app.get('/recherche.html', function(req, res) {
+    res.redirect('/');
+});
+
+app.post('/recherche.html', function(req, res) {
+    return form.searchForm(req, res);
+});
+
+/*
   CONNEXION
 */
 
