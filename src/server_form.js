@@ -15,8 +15,8 @@ var config = "pg://yakasserole:F8Pf7tM@localhost:5432/app";
 var smtpTransport = mailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
-	user: "",
-	pass: ""
+	user: "yakasserolehandle@gmail.com",
+	pass: "yakasserole"
     }
 });
 
@@ -34,6 +34,7 @@ function aleatoire()
 module.exports = {
     
     inscriptionForm: function inscriptionForm(req, res) {
+
 	sess = req.session;
 
 	if (req.body.mdp.length < 6)
@@ -291,8 +292,8 @@ module.exports = {
     },
 
     changeUser: function changeUser(req, res) {
-	sess = req.session;
 
+	sess = req.session;
 
 	pg.connect(config, function(err, client, done) {
 	    db_password = client.query('SELECT * FROM utilisateur WHERE id = $1;',
@@ -419,26 +420,55 @@ module.exports = {
 	sess = req.session;
 	
 	pg.connect(config, function(err, client, done) {
-	    var db_password = client.query('SELECT * FROM utilisateur WHERE mail = $1;',
-				       [sess.user.mail], function (err, result) {
-					   if (err) console.error('error happened during query', err);
-				       });
-	    db_password.on('row', function(row) {
-		if (sess.msgKO)
-		    res.redirect('/');
-		client.query('SELECT * FROM recette WHERE auteur = $1;', [row.id], function (err, resultrecette) {
-		    if (err) console.error('error happened during query', err);
-		    client.query('SELECT * FROM reservation WHERE utilisateur = $1;', [sess.user.id], function (err, reservationatelier) {
+	    if (req.query.id)
+	    {
+		var db_password = client.query('SELECT * FROM utilisateur WHERE id = $1;',
+					       [req.query.id], function (err, result) {
+						   if (err) console.error('error happened during query', err);
+					       });
+		db_password.on('row', function(row) {
+		    if (sess.msgKO)
+			res.redirect('/');
+		    client.query('SELECT * FROM recette WHERE auteur = $1;', [row.id], function (err, resultrecette) {
+			if (err) console.error('error happened during query', err);
+			client.query('SELECT * FROM reservation WHERE utilisateur = $1;', [req.query.id], function (err, reservationatelier) {
 			    client.query('SELECT * FROM atelier', function (err, resultatelier) {
 				if (err) console.error('error happened during query', err);
 				res.render('profil.ejs', {resultrecette: resultrecette, reservationatelier: reservationatelier, resultatelier: resultatelier});
 			    });
+			});
 		    });
 		});
-	    });
-	    db_password.on('end', () => {
-		return done();
-	    });
+		db_password.on('end', () => {
+		    return done();
+		});
+
+	    }
+	    else
+	    {
+		var db_password = client.query('SELECT * FROM utilisateur WHERE mail = $1;',
+					       [sess.user.mail], function (err, result) {
+						   if (err) console.error('error happened during query', err);
+					       });
+		
+		db_password.on('row', function(row) {
+		    if (sess.msgKO)
+			res.redirect('/');
+		    client.query('SELECT * FROM recette WHERE auteur = $1;', [row.id], function (err, resultrecette) {
+			if (err) console.error('error happened during query', err);
+			client.query('SELECT * FROM reservation WHERE utilisateur = $1;', [sess.user.id], function (err, reservationatelier) {
+			    client.query('SELECT * FROM atelier', function (err, resultatelier) {
+				if (err) console.error('error happened during query', err);
+				res.render('profil.ejs', {resultrecette: resultrecette, reservationatelier: reservationatelier, resultatelier: resultatelier});
+			    });
+			});
+		    });
+		});
+		db_password.on('end', () => {
+		    return done();
+		});
+
+	    }
 	});
 	
     },
@@ -739,7 +769,35 @@ module.exports = {
 						   db_password = client.query('UPDATE atelier SET date_fin = $1 WHERE id = $2;', [req.body.date_fin, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
 						   });
-					       res.render('admin.ejs', {result: result});
+					       client.query('SELECT * FROM reservation WHERE atelier = $1;', [req.body.id], function (err, resultreservation) {
+						   if (resultreservation.rowCount)
+						   {
+						       client.query('SELECT * FROM atelier WHERE id = $1;', [req.body.id], function (err, resultatelier) {
+							   for (var i = 0; i < resultreservation.rowCount; i++)
+							   {
+							       client.query('SELECT * FROM utilisateur WHERE id = $1;', [resultreservation.rows[i].utilisateur], function (err, resultuser) {
+								   
+								   var mail = {
+								       from: "yakasserolehandle@gmail.com",
+								       to: resultuser.rows[0].mail,
+								       subject: "CONFIRMATION DE PARTICIPATION A ATELIER",
+								       html: "Certaines informations concernant l'atelier " + result.rows[0].titre " ont été modifié.</br>" + "Voici un récapulatif de l'atelier en question :</br>" + "Titre : " + resultatelier.rows[0].titre + "</br>Thème : " + resultatelier.rows[0].theme + "</br>Description : " + resultatelier.rows[0].description + "</br>Localisation : " + resultatelier.rows[0].localisation + "</br>Prix : " + resultatelier.rows[0].prix + "</br>Date de début : " + resultatelier.rows[0].date_debut + "</br>Date de fin : " + resultatelier.rows[0].date_fin
+								   }
+								   smtpTransport.sendMail(mail, function(error, response){
+								       if (error) {
+									   console.log("Erreur lors de l'envoie du mail!");
+									   console.log(error);
+								       }
+								       else
+									   console.log("Mail envoyé avec succès!")
+								       smtpTransport.close();
+								   });
+							       });
+							   });
+						       }
+						   }
+						   res.render('admin.ejs', {result: result});
+					       });
 					   }
 				       });
 	    db_password.on('end', () => {

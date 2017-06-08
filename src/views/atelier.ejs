@@ -10,7 +10,7 @@
     <h1>Atelier : <%= result.rows[0].titre %></h1>
     <section>
       <p>Thème : <%= result.rows[0].theme %></p>
-      <p>Chef cuisinier encadrant : <%= userchief.rows[0].prenom %> <%= userchief.rows[0].nom %> </p>
+      <p>Chef cuisinier encadrant : <a href="/profil.html?id=<%= userchief.rows[0].id %>"><%= userchief.rows[0].prenom %> <%= userchief.rows[0].nom %> </p></a>
       <p>Description : <%= result.rows[0].description %></p>
       <p>Localisation : <%= result.rows[0].localisation %></p>
       <p>Prix : <%= result.rows[0].prix %>€</p>
