@@ -479,7 +479,7 @@ module.exports = {
         sess = req.session;
 
         pg.connect(config, function(err, client, done) {
-            db_password = client.query('SELECT * FROM recette ORDER BY date_post DESC LIMIT 3;', function (err, recettes) {
+            var db_password = client.query('SELECT * FROM recette ORDER BY date_post DESC LIMIT 3;', function (err, recettes) {
                 if (err) console.error('error happened during query', err);
                 client.query('SELECT * FROM atelier ORDER BY date_debut DESC LIMIT 3;', function (err, ateliers) {
                     if (err) console.error('error happened during query', err);
