@@ -15,8 +15,8 @@ var config = "pg://yakasserole:F8Pf7tM@localhost:5432/app";
 var smtpTransport = mailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
-	user: "jean.francois.ngo@gmail.com",
-	pass: "3wyxxg97"
+	user: "",
+	pass: ""
     }
 });
 
