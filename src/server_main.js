@@ -44,8 +44,9 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-    res.render('index.ejs');
-    res.end();
+    //res.render('index.ejs');
+    return form.printIndex(req, res);
+    //res.end();
 });
 
 /*

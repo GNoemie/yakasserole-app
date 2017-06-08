@@ -36,11 +36,27 @@
 
             <div class="title_block">
                 <h2>Meilleures Recettes</h2>
-                <p>sdfasdas</p>
+                <% if (!recettes.rows.length) { %>
+                <p>Aucune recette</p>
+                <% } else { %>
+                <ul>
+                    <% for (i = 0; i < recettes.rows.length; i++) { %>
+                    <li><%= recettes.rows[i].titre %></li>
+                    <% } %>
+                </ul>
+                <% } %>
             </div>
             <div class="title_block">
                 <h2>Meilleurs Ateliers</h2>
-                <p>fdsdfsd</p>
+                <% if (!ateliers.rows.length) { %>
+                <p>Aucun atelier</p>
+                <% } else { %>
+                <ul>
+                    <% for (i = 0; i < ateliers.rows.length; i++) { %>
+                    <li><%= ateliers.rows[i].titre %></li>
+                    <% } %>
+                </ul>
+                <% } %>
             </div>
         </div>
         <% include include/footer %>

@@ -448,7 +448,7 @@ module.exports = {
 /*
   RECETTE
 */
-    printrecettes:function printrecettes(req, res) {
+    printrecettes: function printrecettes(req, res) {
 	
 	sess = req.session;
 	
@@ -472,6 +472,24 @@ module.exports = {
 		return done();
 	    });
 	});
+    },
+
+    /* select first recettes and ateliers to print them on main page */
+    printIndex: function printIndex(req, res) {
+        sess = req.session;
+
+        pg.connect(config, function(err, client, done) {
+            db_password = client.query('SELECT * FROM recette ORDER BY date_post DESC LIMIT 3;', function (err, recettes) {
+                if (err) console.error('error happened during query', err);
+                client.query('SELECT * FROM atelier ORDER BY date_debut DESC LIMIT 3;', function (err, ateliers) {
+                    if (err) console.error('error happened during query', err);
+                    res.render('index.ejs', {recettes: recettes, ateliers: ateliers});
+                });
+            });
+            db_password.on('end', () => {
+                return done();
+            });
+        });
     },
     
     recetteForm: function recetteForm(req, res) {
