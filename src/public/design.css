@@ -500,6 +500,8 @@ footer h1
     display: inline-block;
     border: 4px solid #db5c5c;
     border-radius: 15px 15px 15px 15px;
+    vertical-align: top;
+    padding-bottom: 5px;
 }
 
 .title_block h2
@@ -513,4 +515,49 @@ footer h1
     font-size: 1.1em;
     letter-spacing: 0.3em;
     text-align: left;
+}
+
+.title_block p
+{
+    margin: 10px;
+    letter-spacing: 0.1em;
+}
+
+.title_block ul
+{
+    list-style: none;
+    padding: 0;
+    margin: 10px;
+}
+
+.title_block li
+{
+    margin-bottom: 10px;
+    text-align: left;
+    display: block; 
+}
+
+.title_block li a
+{
+    display: block;
+    background-color: #ffbb6b;
+    transition: background-color 2s, color 1s;
+    -webkit-transition: background-color 2s, color 1s;
+}
+
+.title_block li a:hover
+{
+    background-color: #ffdb45;
+}
+
+.title_block .description
+{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+}
+
+.title_block img
+{
+    border-left: 4px solid black;
 }

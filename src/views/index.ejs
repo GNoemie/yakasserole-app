@@ -35,27 +35,47 @@
             </div>
 
             <div class="title_block">
-                <h2>Meilleures Recettes</h2>
+                <h2>Dernieres Recettes</h2>
                 <% if (!recettes.rows.length) { %>
                 <p>Aucune recette</p>
                 <% } else { %>
                 <ul>
                     <% for (i = 0; i < recettes.rows.length; i++) { %>
-                    <li><%= recettes.rows[i].titre %></li>
+                    <li>
+                        <a href="">
+                            <img src="resources/recette.png" />
+                            <div class="description">
+                                <h3><%= recettes.rows[i].titre %></h3>
+                                <%= recettes.rows[i].type %></br>
+                                Difficulte : <%= recettes.rows[i].difficulte %> / 5
+                            </div>
+                        </a>
+                    </li>
                     <% } %>
                 </ul>
+                <a href="">Voir toutes</a>
                 <% } %>
             </div>
             <div class="title_block">
-                <h2>Meilleurs Ateliers</h2>
+                <h2>Prochains Ateliers</h2>
                 <% if (!ateliers.rows.length) { %>
                 <p>Aucun atelier</p>
                 <% } else { %>
                 <ul>
                     <% for (i = 0; i < ateliers.rows.length; i++) { %>
-                    <li><%= ateliers.rows[i].titre %></li>
+                    <li>
+                        <a href="">
+                            <img src="resources/chinois.png" />
+                            <div class="description">
+                                <h3><%= ateliers.rows[i].titre %></h3>
+                                <%= ateliers.rows[i].theme %>
+                                Situe a : <%= ateliers.rows[i].localisation %>
+                            </div>
+                        </a>
+                    </li>
                     <% } %>
                 </ul>
+                <a href="">Voir tous</a>
                 <% } %>
             </div>
         </div>
