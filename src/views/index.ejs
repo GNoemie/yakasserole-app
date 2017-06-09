@@ -14,7 +14,7 @@
                     <span>S'inscrire maintenant</span>
                 </a>
 
-                <a id="premium" href="">
+                <a id="premium" href="/premium.html">
                     <h2>PREMIUM</h2>
                         Abonnement</br>
                         <div class="prem_block"><span class="big">10%</span></br>de reduction</div>
@@ -28,9 +28,9 @@
                 </p>
 
                 <div id="buttons">
-                    <a class="button" id="button1" href="">Nos recettes</a>
-                    <a class="button" id="button2" href="">Nos ateliers</a>
-                    <a class="button" id="button3" href="">Les chefs</a>
+                    <a class="button" id="button1" href="/recettes.html">Nos recettes</a>
+                    <a class="button" id="button2" href="/ateliers.html">Nos ateliers</a>
+                    <a class="button" id="button3" href="/chefs.html">Les chefs</a>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
                 <ul>
                     <% for (i = 0; i < recettes.rows.length; i++) { %>
                     <li>
-                        <a href="">
+                        <a href="/recette.html?titre=<%= recettes.rows[i].titre %>">
                             <img src="resources/recette.png" />
                             <div class="description">
                                 <h3><%= recettes.rows[i].titre %></h3>
@@ -53,7 +53,7 @@
                     </li>
                     <% } %>
                 </ul>
-                <a href="">Voir toutes</a>
+                <a href="/recettes.html">Voir toutes</a>
                 <% } %>
             </div>
             <div class="title_block">
@@ -64,7 +64,7 @@
                 <ul>
                     <% for (i = 0; i < ateliers.rows.length; i++) { %>
                     <li>
-                        <a href="">
+                        <a href="/atelier.html?titre=<%= ateliers.rows[i].titre %>">
                             <img src="resources/chinois.png" />
                             <div class="description">
                                 <h3><%= ateliers.rows[i].titre %></h3>
@@ -75,7 +75,7 @@
                     </li>
                     <% } %>
                 </ul>
-                <a href="">Voir tous</a>
+                <a href="/ateliers.html">Voir tous</a>
                 <% } %>
             </div>
         </div>

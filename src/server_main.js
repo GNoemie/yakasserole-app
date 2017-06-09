@@ -1,4 +1,3 @@
-
 const https = require('https');
 const fs = require('fs');
 const express = require('express');
@@ -44,10 +43,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-    //res.render('index.ejs');
-    m = "";
-    return form.printIndex(req, res, m);
-    //res.end();
+    return form.printIndex(req, res);
 });
 
 app.get('/index.html', function(req, res) {
@@ -77,13 +73,24 @@ app.post('/inscription.html', function(req, res) {
 app.get('/activation.html', function(req, res) {
     return form.activationtest(req, res);
 });
+
 /*
   CARTE BLEUE
 */
 
-app.post('/cb.html', function(req, res){
-    res.render('cb.ejs', {r: req.query.titre, req});
-    //popup(500, 500, 'Transaction Compléter');
+app.post('/cb.html', function(req, res) {
+    pg.connect(config, function(err, client, done) {
+	var db_password = client.query('SELECT * FROM atelier WHERE titre = $1;', [req.query.titre], function (err, result) {
+	    if (err) console.error('error happened during query', err);
+	    price = 0;
+	    if (result.rowCount)
+		price = req.body.nb * result.rows[0].prix - ((req.body.nb * result.rows[0].prix * 10) / 100);
+	    res.render('cb.ejs', {r: req.query.titre, req, price: price, nb: req.body.nb, result: result});;
+	});
+	db_password.on('end', () => {
+	    return done();
+	});
+    });
 });
 
 /*
@@ -179,12 +186,12 @@ app.post('/profil.html', function(req, res) {
     return form.printProfil(req, res);
 });
 
-/*
+
 app.get('/premium.html', function(req, res) {
     sess = req.session.user;
-    form.annulerpremium(req, res);
+    return res.render('premium.ejs');
 });
-*/
+
 
 /*
   ADMIN
@@ -211,8 +218,25 @@ app.post('/admin.html', function(req, res) {
 	return form.changeAtelier(req, res);
     if (req.body.sa)
 	return form.deleteAtelier(req, res);
+    if (req.body.ex)
+	return form.excelstats(req, res);
+    if (req.body.pdf)
+	return form.pdfstats(req, res);
+    
 });
 
+app.get('/chefs.html', function(req, res) {
+    sess = req.session.user;
+    if (sess)
+	return form.printchefs(req, res);
+    else
+	res.redirect('/');
+});
+
+
+app.post('/statistiques.html', function(req, res) {
+    return form.printstats(req, res);
+});
 
 /*
   RECETTE
@@ -263,12 +287,15 @@ app.get('/addatelier.html', function(req, res) {
     sess = req.session.user;
     if (sess)
     {
-	pg.connect(config, function(err, client) {
+	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
 					       if (err) console.error('error happened during query', err);
 		res.render('addatelier.ejs', {result: result});
 	    });
-	}); 
+	    db_password.on('end', () => {
+		return done();
+	    });
+	});
     }
     else
 	res.redirect('/');

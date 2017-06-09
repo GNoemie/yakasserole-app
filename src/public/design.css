@@ -2,28 +2,6 @@ html
 {
 }
 
-#hohoho
-{
-    position: fixed;
-    bottom: 0px;
-    right: 50px;
-    text-align: center;
-    transition: bottom 3s, transform 2s;
-}
-#hohoho:hover
-{
-    bottom: -400px;
-}
-
-#hohoho:focus, #hohoho:active
-{
-    transform: rotate(180deg);
-}
-
-
-
-
-
 body
 {
     background-color: #e8e8e8;
@@ -206,21 +184,15 @@ header #logo:hover
 
 header ul
 {
+    margin-top: 15px;
     right: 0px;
     display: inline-block;
     background-color: #672020;
     vertical-align: bottom;
     border: #dcdcdc solid 3px;
+    outline: black 4px solid;
 }
 
-header #menu
-{
-    border: black 4px solid;
-    padding-left: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 48px;
-}
 
 header ul li
 {
@@ -545,21 +517,21 @@ footer h1
     letter-spacing: 0.1em;
 }
 
-.title_block ul
+.title_block ul, .list ul
 {
     list-style: none;
     padding: 0;
     margin: 10px;
 }
 
-.title_block li
+.title_block li, .list li
 {
     margin-bottom: 10px;
     text-align: left;
     display: block; 
 }
 
-.title_block li a
+.title_block li a, .list li a
 {
     display: block;
     background-color: #ffbb6b;
@@ -567,19 +539,41 @@ footer h1
     -webkit-transition: background-color 2s, color 1s;
 }
 
-.title_block li a:hover
+.title_block li a:hover, .list li a:hover
 {
     background-color: #ffdb45;
 }
 
-.title_block .description
+.title_block h3, .list h3
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.title_block .description, .list .description
 {
     display: inline-block;
     vertical-align: top;
     margin-left: 20px;
 }
 
-.title_block img
+.title_block img, .list img
 {
     border-left: 4px solid black;
 }
+
+
+/* RECETTE ATELIER */
+
+#recette
+{
+    background-color: #ffdb45;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+

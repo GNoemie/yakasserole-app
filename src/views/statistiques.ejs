@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include include/head %>
+    <title>Statistiques</title>
+  </head>
+
+  <body>
+    <% include include/header %>
+    <h1>Statistiques</h1>
+    <section>
+      <p>Nombre d'inscrit sur le site YaKasserole : <%= resultuser.rowCount %></p>
+      <p>Nombre de connexions : <%= con %></p>
+      <p>Nombre de recettes postées : <%= resultrecette.rowCount %></p>
+      <p>Nombre d'ateliers créés : <%= resultatelier.rowCount %></p>
+      <p>Nombre de réservations pour les ateliers : <%= resultreservation.rowCount %></p>
+      <form action="/admin.html" method="post" >
+        <input type="submit" id="ex" name="ex" value="Obtenir statistiques en fichier excel" />
+      </form>
+      <form action="/admin.html" method="post" >
+        <input type="submit" id="pdf" name="pdf" value="Obtenir statistiques en fichier pdf" />
+      </form>
+
+   </section>
+   <% include include/footer %>
+  </body>
+
+</html>
