@@ -9,12 +9,12 @@
     <% include include/header %>
     <h1>Recette : <%= result.rows[0].titre %></h1>
     <section id="recette">
-      <p>Auteur : <%= resultauteur.rows[0].prenom %> <%= resultauteur.rows[0].nom %></p>
-      <p>Type : <%= result.rows[0].type %></p>
-      <p>Ingrédients : <%= result.rows[0].ingredients %></p>
-      <p>Description : <%= result.rows[0].description %></p>	    
-      <p>Difficulté : <%= result.rows[0].difficulte %></p>
-      <p>Posté le : <%= result.rows[0].date_post %></p>
+      <p><span class="field">Auteur :</span> <%= resultauteur.rows[0].prenom %> <%= resultauteur.rows[0].nom %></p>
+      <p><span class="field">Type :</span> <%= result.rows[0].type %></p>
+      <p><span class="field">Ingrédients :</span> <%= result.rows[0].ingredients %></p>
+      <p><span class="field">Description :</span> <%= result.rows[0].description %></p>	    
+      <p><span class="field">Difficulté :</span> <%= result.rows[0].difficulte %> / 5</p>
+      <p class="date">Posté le : <%= result.rows[0].date_post %></p>
     </section>
 
     <% if (user.id == result.rows[0].auteur || user.role == "admin") { %>

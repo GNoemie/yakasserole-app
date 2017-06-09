@@ -402,6 +402,7 @@ footer h1
     color: #c15013;
     margin-top: 5px;
     line-height: 17px;
+    font-size: 0.9em
 }
 
 #accueil #premium .prem_block .big
@@ -565,16 +566,24 @@ footer h1
 
 /* RECETTE ATELIER */
 
-#recette
+#recette, #atelier
 {
     background-color: #ffdb45;
     padding: 20px;
     margin-bottom: 20px;
-    color: #ff8309;
 }
 
+#recette .date
+{
+    text-align: right;
+    font-weight: bold;
+    font-size: 0.9em;
+}
 
-
+#recette .field, #atelier .field
+{
+    font-weight: bold;
+}
 
 
 
