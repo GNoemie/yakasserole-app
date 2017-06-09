@@ -139,7 +139,7 @@ module.exports = {
 
     searchForm: function searchForm(req, res) {
        sess = req.session;
-       
+       req.body.search = '%' + req.body.search + '%';
        pg.connect(config, function(err, client, done) {
 	   var db = client.query("SELECT * FROM recette WHERE titre LIKE $1;", 
 				 [req.body.search], function (err, search) {
