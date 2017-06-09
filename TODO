@@ -3,9 +3,5 @@
 /* - Confirmation pour l'ajout d'atelier ou de recette */
 /* - Vérifier les coordonnées bancaires */
 - Vérifier que Atelier et Recette n'existe pas déjà
-- Lien vers la page du chef cuisinier à partir de l'atelier				TO CHECK
-- Notification par mail si l'atelier est modifié pour les utilisateurs			TO CHECK
-- Ajouter premium dans page de profil	 	      	  				TO CHECK
 - Possibilité de voir profil d'un autre utilisateur					
 - Profils des chefs disponible pour tout le monde
-- Préciser avantages premiums partout où on parle d'atelier ou de compte premium

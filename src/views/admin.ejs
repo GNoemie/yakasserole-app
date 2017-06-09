@@ -30,6 +30,15 @@
       <%
 	 }
 	 %>
+      <%
+	 if (user.role == "admin") {
+	 %>
+      <form action="/statistiques.html" method="post" >
+	<input type="submit" value="Afficher les statistiques" >
+      </form>
+      <%
+	 }
+	 %>
     </section>
     <% include include/footer %>
   </body>
