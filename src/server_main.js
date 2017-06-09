@@ -266,7 +266,11 @@ app.post('/recettes.html', function(req, res) {
 });
 
 app.get('/recette.html', function(req, res) {
-    return form.recettealone(req, res);
+    sess =  req.session.user;
+    if (sess)
+        return form.recettealone(req, res);
+    else
+        res.render('connexion.ejs');
 });
 
 
