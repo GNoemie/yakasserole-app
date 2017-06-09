@@ -141,17 +141,20 @@ module.exports = {
        sess = req.session;
        
        pg.connect(config, function(err, client, done) {
-	   var db = client.query("SELECT * FROM recette WHERE titre LIKE '%'+ $1 + '%'; SELECT * FROM atelier WHERE titre LIKE '%' + $1 + '%';", 
+	   var db = client.query("SELECT * FROM recette WHERE titre LIKE $1; SELECT * FROM atelier WHERE titre LIKE $1;", 
 				 [req.body.search], function (err, search) {
 				     if (err) console.error('error happened during query', err);
-				     if (result.rowCount == 0)
+				     if (search.rowCount == 0)
                                      {
 					sess.msgKO = "Aucun document ne correpond aux termes de recherche spécifiés."
 					console.log("Found Nothing");
+					console.log(req.body.search);
+				        res.redirect('/');
                                      }
-				     else if (result.rowCount == 1)
+				     else if (search.rowCount == 1)
 				     {
 					//CONNEXION A LA PAGE
+					console.log("Prout");
                                      }
 				     else
                                      {

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include include/head %>
+    <title>Recherche</title>
+  </head>
+
+  <body>
+    <% include include/header %>
+    <h1>Résultats de la Recherche</h1>
+    <section>
+      <form action="/recherche.html" method="post">
+        <p>
+	   <label for="search">Recherche</label>
+	   <input type="text" id="search" name="search" placeholder="Recherche" />
+	   </br>
+	   <% for (var j = 0; j < search.rows.length; j++) {
+	      
+	   } %>
+           //A COMPLETER
+	</p>
+      </form>
+    </section>
+    <% iclude include/footer %>
+  </body>
+</html>
