@@ -161,6 +161,38 @@ module.exports = {
 	});
     },
 
+    abopremium: function abopremium(req, res) {
+
+	sess = req.session;
+	pg.connect(config, function(err, client, done) {
+	    var db_password = client.query('UPDATE utilisateur SET premium = $1 WHERE id = $2;', [true, sess.user.id], function (err, result) {
+		if (err)
+		    return console.log('error happened during query', err);
+		res.redirect('/connexion.html?premium=oui');
+		sess.destroy();
+	    });
+	    db_password.on('end', () => {
+		return done();
+	    });
+	});
+    },
+
+    annulerpremium: function annulerpremium(req, res) {
+
+	sess = req.session;
+	pg.connect(config, function(err, client, done) {
+	    var db_password = client.query('UPDATE utilisateur SET premium = $1 WHERE id = $2;', [false, sess.user.id], function (err, result) {
+		if (err)
+		    return console.log('error happened during query', err);
+		res.redirect('/connexion.html?premium=non');
+		sess.destroy();
+	    });
+	    db_password.on('end', () => {
+		return done();
+	    });
+	});
+    },
+    
     connexionForm: function connexionForm(req, res) {
 
 	var password = sha256(req.body.pw);
@@ -800,12 +832,11 @@ module.exports = {
 							   for (var i = 0; i < resultreservation.rowCount; i++)
 							   {
 							       client.query('SELECT * FROM utilisateur WHERE id = $1;', [resultreservation.rows[i].utilisateur], function (err, resultuser) {
-								   
 								   var mail = {
 								       from: "yakasserolehandle@gmail.com",
 								       to: resultuser.rows[0].mail,
 								       subject: "CONFIRMATION DE PARTICIPATION A ATELIER",
-								       html: "Certaines informations concernant l'atelier " + result.rows[0].titre " ont été modifié.</br>" + "Voici un récapulatif de l'atelier en question :</br>" + "Titre : " + resultatelier.rows[0].titre + "</br>Thème : " + resultatelier.rows[0].theme + "</br>Description : " + resultatelier.rows[0].description + "</br>Localisation : " + resultatelier.rows[0].localisation + "</br>Prix : " + resultatelier.rows[0].prix + "</br>Date de début : " + resultatelier.rows[0].date_debut + "</br>Date de fin : " + resultatelier.rows[0].date_fin
+								       html: "Certaines informations concernant l'atelier " + result.rows[0].titre + " ont été modifié.</br>" + "Voici un récapulatif de l'atelier en question :</br>" + "Titre : " + resultatelier.rows[0].titre + "</br>Thème : " + resultatelier.rows[0].theme + "</br>Description : " + resultatelier.rows[0].description + "</br>Localisation : " + resultatelier.rows[0].localisation + "</br>Prix : " + resultatelier.rows[0].prix + "</br>Date de début : " + resultatelier.rows[0].date_debut + "</br>Date de fin : " + resultatelier.rows[0].date_fin
 								   }
 								   smtpTransport.sendMail(mail, function(error, response){
 								       if (error) {
@@ -817,8 +848,8 @@ module.exports = {
 								       smtpTransport.close();
 								   });
 							       });
-							   });
-						       }
+							   }
+						       });
 						   }
 						   res.render('admin.ejs', {result: result});
 					       });

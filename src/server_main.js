@@ -45,9 +45,18 @@ app.use(function(req, res, next) {
 
 app.get('/', function(req, res) {
     //res.render('index.ejs');
-    return form.printIndex(req, res);
+    m = "";
+    return form.printIndex(req, res, m);
     //res.end();
 });
+
+app.get('/index.html', function(req, res) {
+    //res.render('index.ejs');
+    m = "Veuillez vous reconnecter afin de mettre à jour votre nouveau statut concernant le premium";
+    return form.printIndex(req, res, m);
+    //res.end();
+});
+
 
 /*
   INSCRIPTION
@@ -73,7 +82,7 @@ app.get('/activation.html', function(req, res) {
 */
 
 app.post('/cb.html', function(req, res){
-    res.render('cb.ejs', {r: req.query.titre});
+    res.render('cb.ejs', {r: req.query.titre, req});
     //popup(500, 500, 'Transaction Compléter');
 });
 
@@ -96,16 +105,41 @@ app.post('/recherche.html', function(req, res) {
 app.get('/connexion.html', function(req, res) {
     sess = req.session.user;
     if (!sess)
+    {
 	res.render('connexion.ejs');
-    else 
-	res.redirect('/');
+    }
+    else
+    {
+	if (req.query.premium == "oui")
+	    return form.abopremium(req, res);
+	if (req.query.premium == "non")
+	    return form.annulerpremium(req, res);
+	else
+	    res.redirect('/');
+    }
 });
 
 app.post('/connexion.html', function(req, res) {
     if (req.body.c)
+    {
+	sess = req.session.user;
 	return form.connexionForm(req, res);
+    }
+    if (req.body.abp)
+    {
+	return form.abopremium(req, res);
+	//return req.session.destroy();
+    }
+    if (req.body.anp)
+    {
+	return form.annulerpremium(req, res);
+	//return req.session.destroy();
+    }	
     else
+    {
+	sess = req.session.user;
 	return form.mdpchange(req, res, req.query);
+    }
 });
     
 
@@ -139,6 +173,18 @@ app.get('/profil.html', function(req, res) {
 	res.redirect('/');
 });
 
+app.post('/profil.html', function(req, res) {
+    sess = req.session.user;
+    form.abopremium(req, res);
+    return form.printProfil(req, res);
+});
+
+/*
+app.get('/premium.html', function(req, res) {
+    sess = req.session.user;
+    form.annulerpremium(req, res);
+});
+*/
 
 /*
   ADMIN

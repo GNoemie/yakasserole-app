@@ -12,6 +12,34 @@
       <p>Prénom : <%= user.prenom %>        Nom : <%= user.nom %></p>
       <p>Adresse Postale : <%= user.adresse_postale %> <%= user.code_postal %> <%= user.ville %> </p>
       <p>Adresse Mail : <%= user.mail %> </p>
+      </br>
+      <% if (user.premium == true) {
+	 %>
+      <section>
+	<p>Veuillez vous reconnecter après avoir validé votre désabonnement afin de confirmer ce dernier.</p>
+	<form action="/connexion.html" method="post" >
+	  <input type="submit" id="anp" name="anp" value="Annuler son abonnement premium" >
+	</form>
+      </section>
+      <%
+	 }
+	 %>
+      <%
+	 if (user.premium == false) {
+	 %>
+      <section>
+	<p>Les avantages du premium sont :</br>
+	  - Possibilité d'inviter jusqu'à 4 personnes pour participer à un atelier.</br>
+	  - Une réduction de 10% lors de la participation à un atelier.</p>
+	<p>Veuillez vous reconnecter après avoir validé votre paiement afin de confirmer votre abonnement premium.</p>
+	<form action="/cb.html?premium=non" method="post" >
+	  <input type="submit" value="Prendre un abonnement premium" >
+	</form>
+      </section>
+      <%
+	 }
+	 %>
+      </br>
       <label for="atelier">Atelier(s) :</label>
       <table>
 	<tr>
