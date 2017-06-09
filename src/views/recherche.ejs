@@ -11,16 +11,26 @@
     <section>
       <form action="/recherche.html" method="post">
         <p>
-	   <label for="search">Recherche</label>
-	   <input type="text" id="search" name="search" placeholder="Recherche" />
-	   </br>
-	   <% for (var j = 0; j < search.rows.length; j++) {
-	      
-	   } %>
-           //A COMPLETER
+	    <div class="list">
+              <% if (search.rows.length == 0) { %>
+              <p>Aucune résultat</p>
+                <% } else { %>
+              <ul>
+                <% for(var i = 0 ; i < search.rows.length ; i++) { %>
+              <li>
+                <a href="/recette.html?titre=<%= search.rows[i].titre %>">
+                <img src="resources/recette.png" />
+                <div class="description">
+                    <h3><%= search.rows[i].titre %></h3>
+                    <%= search.rows[i].type %></br>
+                    Difficulte : <%= search.rows[i].difficulte %> / 5</br>
+                    <% }} %>
+	        </div>
+            </a>
+        </li>
 	</p>
       </form>
     </section>
-    <% iclude include/footer %>
+    <% include include/footer %>
   </body>
 </html>
