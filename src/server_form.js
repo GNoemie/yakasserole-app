@@ -201,7 +201,7 @@ module.exports = {
 		    return console.log('error happened during query', err);
 		var mail = {
 		    from: "yakasserolehandle@gmail.com",
-		    to: req.body.mail,
+		    to: sess.user.mail,
 		    subject: "CONFIRMATION D'ABONNEMENT PREMIUM",
 		    html: "Bonjour " + sess.user.prenom + " " + sess.user.nom + ",</br>Voici un récapitulatif de votre commande :</br>Abonnement premium pour un mois au prix de 3,99€.</br></br></br>--------------------</br>Ceci est un mail automatique, veui\llez ne pas y répondre."
 		}
