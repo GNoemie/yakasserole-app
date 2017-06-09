@@ -1,4 +1,3 @@
-
 const https = require('https');
 const fs = require('fs');
 const express = require('express');
@@ -44,10 +43,16 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-    //res.render('index.ejs');
     return form.printIndex(req, res);
+});
+
+app.get('/index.html', function(req, res) {
+    //res.render('index.ejs');
+    m = "Veuillez vous reconnecter afin de mettre à jour votre nouveau statut concernant le premium";
+    return form.printIndex(req, res, m);
     //res.end();
 });
+
 
 /*
   INSCRIPTION
@@ -68,13 +73,36 @@ app.post('/inscription.html', function(req, res) {
 app.get('/activation.html', function(req, res) {
     return form.activationtest(req, res);
 });
+
 /*
   CARTE BLEUE
 */
 
-app.post('/cb.html', function(req, res){
-    res.render('cb.ejs', {r: req.query.titre});
-    //popup(500, 500, 'Transaction Compléter');
+app.post('/cb.html', function(req, res) {
+    pg.connect(config, function(err, client, done) {
+	var db_password = client.query('SELECT * FROM atelier WHERE titre = $1;', [req.query.titre], function (err, result) {
+	    if (err) console.error('error happened during query', err);
+	    price = 0;
+	    if (result.rowCount)
+		price = req.body.nb * result.rows[0].prix - ((req.body.nb * result.rows[0].prix * 10) / 100);
+	    res.render('cb.ejs', {r: req.query.titre, req, price: price, nb: req.body.nb, result: result});;
+	});
+	db_password.on('end', () => {
+	    return done();
+	});
+    });
+});
+
+/*
+  RECHERCHE
+*/
+
+app.get('/recherche.html', function(req, res) {
+    res.redirect('/');
+});
+
+app.post('/recherche.html', function(req, res) {
+    return form.searchForm(req, res);
 });
 
 /*
@@ -84,16 +112,41 @@ app.post('/cb.html', function(req, res){
 app.get('/connexion.html', function(req, res) {
     sess = req.session.user;
     if (!sess)
+    {
 	res.render('connexion.ejs');
-    else 
-	res.redirect('/');
+    }
+    else
+    {
+	if (req.query.premium == "oui")
+	    return form.abopremium(req, res);
+	if (req.query.premium == "non")
+	    return form.annulerpremium(req, res);
+	else
+	    res.redirect('/');
+    }
 });
 
 app.post('/connexion.html', function(req, res) {
     if (req.body.c)
+    {
+	sess = req.session.user;
 	return form.connexionForm(req, res);
+    }
+    if (req.body.abp)
+    {
+	return form.abopremium(req, res);
+	//return req.session.destroy();
+    }
+    if (req.body.anp)
+    {
+	return form.annulerpremium(req, res);
+	//return req.session.destroy();
+    }	
     else
+    {
+	sess = req.session.user;
 	return form.mdpchange(req, res, req.query);
+    }
 });
     
 
@@ -127,6 +180,18 @@ app.get('/profil.html', function(req, res) {
 	res.redirect('/');
 });
 
+app.post('/profil.html', function(req, res) {
+    sess = req.session.user;
+    form.abopremium(req, res);
+    return form.printProfil(req, res);
+});
+
+
+app.get('/premium.html', function(req, res) {
+    sess = req.session.user;
+    return res.render('premium.ejs');
+});
+
 
 /*
   ADMIN
@@ -153,8 +218,25 @@ app.post('/admin.html', function(req, res) {
 	return form.changeAtelier(req, res);
     if (req.body.sa)
 	return form.deleteAtelier(req, res);
+    if (req.body.ex)
+	return form.excelstats(req, res);
+    if (req.body.pdf)
+	return form.pdfstats(req, res);
+    
 });
 
+app.get('/chefs.html', function(req, res) {
+    sess = req.session.user;
+    if (sess)
+	return form.printchefs(req, res);
+    else
+	res.redirect('/');
+});
+
+
+app.post('/statistiques.html', function(req, res) {
+    return form.printstats(req, res);
+});
 
 /*
   RECETTE
@@ -205,12 +287,15 @@ app.get('/addatelier.html', function(req, res) {
     sess = req.session.user;
     if (sess)
     {
-	pg.connect(config, function(err, client) {
+	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
 					       if (err) console.error('error happened during query', err);
 		res.render('addatelier.ejs', {result: result});
 	    });
-	}); 
+	    db_password.on('end', () => {
+		return done();
+	    });
+	});
     }
     else
 	res.redirect('/');

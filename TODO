@@ -1,10 +1,7 @@
-Bensabat David :
-	 - Schéma Base de Données.
-	 - Base de Données.
-
-Gavalda Noémie :
-	- Page de Connexion.
-
-Ngo Jean-François :
-    	- Page d'Inscription.
-	- Lien avec la BDD.
+- Gestion Https
+- Vérifier dates pour les ateliers
+/* - Confirmation pour l'ajout d'atelier ou de recette */
+/* - Vérifier les coordonnées bancaires */
+- Vérifier que Atelier et Recette n'existe pas déjà
+- Possibilité de voir profil d'un autre utilisateur					
+- Profils des chefs disponible pour tout le monde

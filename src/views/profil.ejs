@@ -9,9 +9,44 @@
     <% include include/header %>
     <h1>Profil : </h1>
     <section>
-      <p>Prénom : <%= user.prenom %>        Nom : <%= user.nom %></p>
-      <p>Adresse Postale : <%= user.adresse_postale %> <%= user.code_postal %> <%= user.ville %> </p>
-      <p>Adresse Mail : <%= user.mail %> </p>
+      <p>Prénom : <%= row.prenom %>        Nom : <%= row.nom %></p>
+      <p>Adresse Postale : <%= row.adresse_postale %> <%= row.code_postal %> <%= row.ville %> </p>
+      <p>Adresse Mail : <%= row.mail %> </p>
+      <p>Rôle : <%= row.role %> </p>
+      </br>
+      <% if (user.id == row.id) {
+	 %>
+      <% if (row.premium == true) {
+	 %>
+      <section>
+	<p>Les avantages du premium sont :</br>
+	  - Possibilité d'inviter jusqu'à 4 personnes pour participer à un atelier.</br>
+	  - Une réduction de 10% lors de la participation à un atelier.</p>
+	<p>Veuillez vous reconnecter après avoir validé votre désabonnement afin de confirmer ce dernier.</p>
+	<form action="/connexion.html" method="post" >
+	  <input type="submit" id="anp" name="anp" value="Annuler son abonnement premium" >
+	</form>
+      </section>
+      <%
+	 }
+	 %>
+      <%
+	 if (row.premium == false) {
+	 %>
+      <section>
+	<p>Les avantages du premium sont :</br>
+	  - Possibilité d'inviter jusqu'à 4 personnes pour participer à un atelier.</br>
+	  - Une réduction de 10% lors de la participation à un atelier.</p>
+	<p>Veuillez vous reconnecter après avoir validé votre paiement afin de confirmer votre abonnement premium.</p>
+	<form action="/cb.html?premium=non" method="post" >
+	  <input type="submit" value="Prendre un abonnement premium" >
+	</form>
+      </section>
+      <%
+	 }
+	 }
+	 %>
+      </br>
       <label for="atelier">Atelier(s) :</label>
       <table>
 	<tr>
@@ -56,6 +91,8 @@
       </br>
       </br>
       
+      <% if (user.id == row.id) {
+	 %>
       <button id="modifier">Modifier</button>
       <div id="change" style="display : none">
 	<form action="/admin.html" method="post" >
@@ -109,7 +146,9 @@
 	}
       </script>
       
-      
+      <%
+	 }
+	 %>
     </section>
     <% include include/footer %>
   </body>

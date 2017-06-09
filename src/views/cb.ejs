@@ -8,8 +8,33 @@
   <body>
     <% include include/header %>
     <h1>Carte Bancaire</h1>
-<section>
-      <form action="/ateliers.html?titre=<%= r %>" method="post" >
+    <section>
+      <% if (req.query.premium) {
+	 %>
+      <p>Vous vous apprêtez à payer le montant de 3,99€ pour souscrire à un abonnement premium d'un mois.</br>
+      Nous vous rappelons que les avantages du premium sont :</br>
+	- Possibilité d'inviter jusqu'à 4 personnes pour participer à un atelier.</br>
+	- Une réduction de 10% lors de la participation à un atelier.</p>
+      <form action="/connexion.html" method="post" >
+	<%
+	   }
+	   %>
+	<% if (r) {
+	   if (user.premium == true) {
+	   %>
+	<p>Vous vous apprêtez à réserver pour <%= nb %> personnes et ainsi payer le montant de <%= price %>€ (incluant la remise de 10% avec un prix de départ de <%= result.rows[0].prix %>€ par personne) pour votre participation à l'atelier <%= r %>.</p>
+	<%
+	   }
+	   if (user.premium == false) {
+	   %>
+	<p>Vous vous apprêtez à réserver pour 1 personne et ainsi payer le montant de <%= result.rows[0].prix %>€ pour votre participation à l'atelier <%= r %>.</p>
+	<%
+	   }
+	   %>
+	<form action="/ateliers.html?titre=<%= r %>" method="post" >
+	  <%
+	     }
+	     %>
         <p>
           <label for="cbnb">Numéro de Carte</label>
           <input type="text" id="cbnb" name="cbnb" size="18" placeholder="0000 0000 0000 0000" minlength="16" maxlength="16" required />
@@ -37,13 +62,23 @@
               <option value="11">Novembre</option>
               <option value="02">Décembre</option> 
           </select> 
-
+	  </br>
+	  
           <label for="cvv">CVV</label>
           <input type="text" id="cvv" name="cvv" size="18" placeholder="000" minlength="3" maxlength="3" required/>
           </br>
-
-          <input type="submit" id="vr" name="vr" value="Valider" />
-
+	  <% if (req.query.premium) {
+	     %>
+	  <input type="submit" id="abp" name="abp" value="Valider" />	    
+	    <%
+	       }
+	       %>
+	    <% if (r) {
+	       %>
+	    <input type="submit" id="vr" name="vr" value="Valider" />	      
+	      <%
+		 }
+		 %>
         </p>
       </form>
    </section>

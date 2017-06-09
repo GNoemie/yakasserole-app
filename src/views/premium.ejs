@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include include/head %>
+    <title>Premium</title>
+  </head>
+
+  <body>
+    <% include include/header %>
+    <h1>Premium</h1>
+    <section>
+      <p>Les avantages du premium sont :</br>
+	- Possibilité d'inviter jusqu'à 4 personnes pour participer à un atelier.</br>
+	- Une réduction de 10% lors de la participation à un atelier.</br>
+	Tous ces avantages sont pour une durée d'un mois pour seulement 3,99€.</p>
+      <% if (user) {
+	 if (user.premium == false) {
+	 %>
+      <p>Veuillez vous reconnecter après avoir validé votre paiement afin de confirmer votre abonnement premium.</p>
+      <form action="/cb.html?premium=non" method="post" >
+        <input type="submit" value="Prendre un abonnement premium" />
+      </form>
+      <%
+	 }
+	 if (user.premium == true) {
+	 %>
+      <p>Veuillez vous reconnecter après avoir validé votre désabonnement afin de confirmer ce dernier.</p>
+      <form action="/connexion.html" method="post" >
+	<input type="submit" id="anp" name="anp" value="Annuler son abonnement premium" >
+      </form>      
+      <%
+	 }
+	 }
+	 %>
+      <% if (!user) {
+	 %>
+      <p>Veuillez vous connecter ou vous inscrire afin de pouvoir prendre un abonnement premium.</p>
+      <%
+	 }
+	 %>
+   </section>
+   <% include include/footer %>
+  </body>
+
+</html>

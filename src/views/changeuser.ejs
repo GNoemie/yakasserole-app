@@ -29,7 +29,17 @@
 	   <tr>
 	     <td><%= result.rows[i].id %></td>
 	     <td><%= result.rows[i].role %></td>
-	     <td><%= result.rows[i].prenium %></td>
+	     <% if (result.rows[i].prenium) {
+		%>
+	     <td>Oui</td>
+	     <% }
+		else
+		{
+		%>
+	     <td>Non</td>
+	     <%
+		}
+		%>
 	     <td><%= result.rows[i].nom %></td>
 	     <td><%= result.rows[i].prenom %></td>
 	     <td><%= result.rows[i].adresse_postale %>, <%= result.rows[i].code_postal %> <%= result.rows[i].ville %></td>

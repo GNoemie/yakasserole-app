@@ -10,14 +10,25 @@
     <h1>Atelier : <%= result.rows[0].titre %></h1>
     <section>
       <p>Thème : <%= result.rows[0].theme %></p>
-      <p>Chef cuisinier encadrant : <%= userchief.rows[0].prenom %> <%= userchief.rows[0].nom %> </p>
+      <p>Chef cuisinier encadrant : <a href="/profil.html?id=<%= userchief.rows[0].id %>"><%= userchief.rows[0].prenom %> <%= userchief.rows[0].nom %> </p></a>
       <p>Description : <%= result.rows[0].description %></p>
       <p>Localisation : <%= result.rows[0].localisation %></p>
       <p>Prix : <%= result.rows[0].prix %>€</p>
       <p>Date de début : <%= result.rows[0].date_debut %></p>
       <p>Date de fin : <%= result.rows[0].date_fin %></p>
-
+    </section>
+    <section>
       <form action="/cb.html?titre=<%= result.rows[0].titre %>" method="post">
+	<select name="nb" id="nb" required >
+	  <option value="1">1</option>
+	  <% if (user.premium == true) {
+	     %>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	  <%
+	     }
+	     %>
 	<input type="submit" id="p" name="p" value="Participer" />
       </form>
       </br>
