@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include include/head %>
+    <title>Chefs cuisiniers</title>
+  </head>
+
+  <body>
+    <% include include/header %>
+    <h1>Chefs cuisiniers</h1>
+    <section>
+      <% for (var i = 0; i < result.rowCount; i++) {
+			     if (result.rows[i].role == "chef_cuisinier") {
+			     %>
+	 <a href="/profil.html?id=<%= result.rows[i].id %>"><%= result.rows[i].prenom %> <%= result.rows[i].nom %></a>
+	 <%
+	    }
+	    }
+	    %>
+   </section>
+   <% include include/footer %>
+  </body>
+
+</html>

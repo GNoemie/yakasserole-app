@@ -544,12 +544,25 @@ module.exports = {
 		db_password.on('end', () => {
 		    return done();
 		});
-
 	    }
 	});
 	
     },
-    
+
+    printchefs: function printchefs (req, res) {
+
+	sess = req.session;
+	
+	pg.connect(config, function(err, client, done) {
+	    var db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
+		if (err) console.log('error happened during query', err);
+		res.render('chefs.ejs', {result: result});
+	    });	    
+	    db_password.on('end', () => {
+		return done();
+	    });
+	});
+    },
     
     
 /*

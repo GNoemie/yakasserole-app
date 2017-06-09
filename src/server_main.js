@@ -225,6 +225,15 @@ app.post('/admin.html', function(req, res) {
     
 });
 
+app.get('/chefs.html', function(req, res) {
+    sess = req.session.user;
+    if (sess)
+	return form.printchefs(req, res);
+    else
+	res.redirect('/');
+});
+
+
 app.post('/statistiques.html', function(req, res) {
     return form.printstats(req, res);
 });
