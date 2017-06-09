@@ -9,38 +9,30 @@
     <% include include/header %>
     <h1>Profil : <%= user.prenom %></h1>
     <section>
-      <table>
-	<tr>
-	  <th>ID</th>
-	  <th>Titre</th>
-	  <th>Chef Cuisiner</th>
-	  <th>Prix</th>
-	</tr>
-	<%
-	   for(var i = 0 ; i < result.rows.length ; i++) {
-			       %>
-	   <tr>
-	     <td><%= result.rows[i].id %></td>
-	     <td><a href="/atelier.html?titre=<%= result.rows[i].titre %>"><%= result.rows[i].titre %></a></td>
-	     <%
-		for (var j = 0; j < resultuser.rows.length; j++) {
-				    if (resultuser.rows[j].id == result.rows[i].chef) {
-				    %>
-		<td><%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %></td>
-		<%
-		   }
-		   }
-		   %>
-	     <td><%= result.rows[i].prix %>€</td>
+    <div class="list">
+    <% if (result.rows.length == 0) { %>
+        <p>Aucun atelier</p>
+    <% } else { %>
+    <ul>
+	<% for(var i = 0 ; i < result.rows.length ; i++) { %>
+        <li>
+            <a href="/atelier.html?titre=<%= result.rows[i].titre %>">
+                <img src="resources/atelier.png" />
+                <div class="description">
+                    <h3><%= result.rows[i].titre %></h3>
+                    Chef cuisinier : 
+	                <% for (var j = 0; j < resultuser.rows.length; j++) {
+				        if (resultuser.rows[j].id == result.rows[i].chef) { %>
+		                    <%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %>
+		            <% } } %></br>
+	                <%= result.rows[i].prix %> €
 	    
-	   </tr>
-	   <%
-	      }
-	      %>
-      </table>
+	<% } %>
+    </ul>
+    <% } %>
+    </div>
     </section>
     <p>Pour plus d'informations concernant un atelier en particulier, veuillez cliquer sur le titre de ce dernier.</p>
-    </br>
     </br>
     <section>
       <%
