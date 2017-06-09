@@ -8,7 +8,7 @@
   <body>
     <% include include/header %>
     <h1>Recette : <%= result.rows[0].titre %></h1>
-    <section>
+    <section id="recette">
       <p>Auteur : <%= resultauteur.rows[0].prenom %> <%= resultauteur.rows[0].nom %></p>
       <p>Type : <%= result.rows[0].type %></p>
       <p>Ingrédients : <%= result.rows[0].ingredients %></p>
@@ -16,11 +16,8 @@
       <p>Difficulté : <%= result.rows[0].difficulte %></p>
       <p>Posté le : <%= result.rows[0].date_post %></p>
     </section>
-    </br>
-    </br>
-    <%
-       if (user.id == result.rows[0].auteur || user.role == "admin") {
-       %>
+
+    <% if (user.id == result.rows[0].auteur || user.role == "admin") { %>
     
     <button id="modifier">Modifier</button>
 

@@ -184,21 +184,15 @@ header #logo:hover
 
 header ul
 {
+    margin-top: 15px;
     right: 0px;
     display: inline-block;
     background-color: #672020;
     vertical-align: bottom;
     border: #dcdcdc solid 3px;
+    outline: black 4px solid;
 }
 
-header #menu
-{
-    border: black 4px solid;
-    padding-left: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 48px;
-}
 
 header ul li
 {
@@ -567,3 +561,19 @@ footer h1
 {
     border-left: 4px solid black;
 }
+
+
+/* RECETTE ATELIER */
+
+#recette
+{
+    background-color: #ffdb45;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+
