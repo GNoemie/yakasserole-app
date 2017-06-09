@@ -492,7 +492,7 @@ module.exports = {
 			client.query('SELECT * FROM reservation WHERE utilisateur = $1;', [req.query.id], function (err, reservationatelier) {
 			    client.query('SELECT * FROM atelier', function (err, resultatelier) {
 				if (err) console.error('error happened during query', err);
-				res.render('profil.ejs', {resultrecette: resultrecette, reservationatelier: reservationatelier, resultatelier: resultatelier});
+				res.render('profil.ejs', {resultrecette: resultrecette, reservationatelier: reservationatelier, resultatelier: resultatelier, row: row});
 			    });
 			});
 		    });
@@ -517,7 +517,7 @@ module.exports = {
 			client.query('SELECT * FROM reservation WHERE utilisateur = $1;', [sess.user.id], function (err, reservationatelier) {
 			    client.query('SELECT * FROM atelier', function (err, resultatelier) {
 				if (err) console.error('error happened during query', err);
-				res.render('profil.ejs', {resultrecette: resultrecette, reservationatelier: reservationatelier, resultatelier: resultatelier});
+				res.render('profil.ejs', {resultrecette: resultrecette, reservationatelier: reservationatelier, resultatelier: resultatelier, row: row});
 			    });
 			});
 		    });

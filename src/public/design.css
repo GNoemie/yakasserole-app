@@ -288,6 +288,11 @@ footer h1
     letter-spacing: 0.2em;
 }
 
+footer a:hover
+{
+    color: #ff8309;
+}
+
 /* SECTION */
 
 #body
@@ -566,7 +571,7 @@ footer h1
 
 /* RECETTE ATELIER */
 
-#recette, #atelier
+#recette, #atelier, #premium_page
 {
     background-color: #ffdb45;
     padding: 20px;
