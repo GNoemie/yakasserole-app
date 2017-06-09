@@ -167,30 +167,31 @@ module.exports = {
 	});
     },
 
-    searchForm: function searchForm(req, res) {
+     searchForm: function searchForm(req, res) {
        sess = req.session;
-       
+       req.body.search = '%' + req.body.search + '%';
        pg.connect(config, function(err, client, done) {
-	   var db = client.query("SELECT * FROM recette WHERE titre LIKE '%'+ $1 + '%'; SELECT * FROM atelier WHERE titre LIKE '%' + $1 + '%';", 
-				 [req.body.search], function (err, search) {
-				     if (err) console.error('error happened during query', err);
-				     if (result.rowCount == 0)
-                                     {
-					sess.msgKO = "Aucun document ne correpond aux termes de recherche spécifiés."
-					console.log("Found Nothing");
-                                     }
-				     else if (result.rowCount == 1)
-				     {
-					//CONNEXION A LA PAGE
-                                     }
-				     else
-                                     {
-					res.render('recherche.ejs', {search: search});
-                                     }
-       				 });
-	});
-    },
+           var db = client.query("SELECT * FROM recette WHERE titre LIKE $1;",
+                                 [req.body.search], function (err, search) {
+                    client.query("SELECT * FROM atelier WHERE titre LIKE $1;",
+                                 [req.body.search], function (err, ate) {
+                                     if (err) console.error('error happened during query', err);
 
+                                     if (search.rowCount == 0)
+                                     {
+                                        sess.msgKO = "Aucun document ne correpond aux termes de recherche spécifiés."
+                                        console.log("Found Nothing");
+                                        //console.log(req.body.search);
+                                        res.redirect('/');
+                                     }
+                                     else
+                                     {
+                                        res.render('recherche.ejs', {search: search, ate: ate});
+                                     }
+                                 });
+                                 });
+        });
+    },
     abopremium: function abopremium(req, res) {
 
 	sess = req.session;
