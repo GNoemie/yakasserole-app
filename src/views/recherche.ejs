@@ -13,19 +13,34 @@
         <p>
 	    <div class="list">
               <% if (search.rows.length == 0) { %>
-              <p>Aucune résultat</p>
-                <% } else { %>
-              <ul>
-                <% for(var i = 0 ; i < search.rows.length ; i++) { %>
-              <li>
-                <a href="/recette.html?titre=<%= search.rows[i].titre %>">
-                <img src="resources/recette.png" />
-                <div class="description">
+              	<p>Aucune résultat</p>
+              <% } else { %>
+                <ul>
+                  <% for(var i = 0 ; i < search.rows.length ; i++) { %>
+                    <li>
+                    <a href="/recette.html?titre=<%= search.rows[i].titre %>">
+                    <img src="resources/recette.png" />
+                    <div class="description">
                     <h3><%= search.rows[i].titre %></h3>
                     <%= search.rows[i].type %></br>
                     Difficulte : <%= search.rows[i].difficulte %> / 5</br>
-                    <% }} %>
-	        </div>
+                  <% } %>
+		</ul>
+		<ul>
+        	  <% for(var i = 0 ; i < ate.rows.length ; i++) { %>
+        	    <li>
+                    <a href="/atelier.html?titre=<%= ate.rows[i].titre %>">
+                    <img src="resources/atelier.png" />
+                    <div class="description">
+                    <h3><%= ate.rows[i].titre %></h3>
+                    Chef cuisinier : 
+                                    <%= ate.rows[i].prenom %> <%= ate.rows[i].nom %>
+                            </br>
+                        <%= ate.rows[i].prix %> €
+	          <% } %>
+                </ul>
+	      <% } %>
+	      </div>
             </a>
         </li>
 	</p>

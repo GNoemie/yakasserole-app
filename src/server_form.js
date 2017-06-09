@@ -143,7 +143,10 @@ module.exports = {
        pg.connect(config, function(err, client, done) {
 	   var db = client.query("SELECT * FROM recette WHERE titre LIKE $1;", 
 				 [req.body.search], function (err, search) {
+		    client.query("SELECT * FROM atelier WHERE titre LIKE $1;", 
+			         [req.body.search], function (err, ate) {
 				     if (err) console.error('error happened during query', err);
+				     
 				     if (search.rowCount == 0)
                                      {
 					sess.msgKO = "Aucun document ne correpond aux termes de recherche spécifiés."
@@ -153,9 +156,10 @@ module.exports = {
                                      }
 				     else
                                      {
-					res.render('recherche.ejs', {search: search});
+					res.render('recherche.ejs', {search: search, ate: ate});
                                      }
        				 });
+                                 });
 	});
     },
 
