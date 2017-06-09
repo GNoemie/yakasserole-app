@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include include/head %>
+    <title>Recherche</title>
+  </head>
+
+  <body>
+    <% include include/header %>
+    <h1>Résultats de la Recherche</h1>
+    <section>
+      <form action="/recherche.html" method="post">
+        <p>
+	    <div class="list">
+              <% if (search.rows.length == 0) { %>
+              <p>Aucune résultat</p>
+                <% } else { %>
+              <ul>
+                <% for(var i = 0 ; i < search.rows.length ; i++) { %>
+              <li>
+                <a href="/recette.html?titre=<%= search.rows[i].titre %>">
+                <img src="resources/recette.png" />
+                <div class="description">
+                    <h3><%= search.rows[i].titre %></h3>
+                    <%= search.rows[i].type %></br>
+                    Difficulte : <%= search.rows[i].difficulte %> / 5</br>
+                    <% }} %>
+	        </div>
+            </a>
+        </li>
+	</p>
+      </form>
+    </section>
+    <% include include/footer %>
+  </body>
+</html>
