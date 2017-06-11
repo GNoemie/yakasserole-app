@@ -292,7 +292,7 @@ app.get('/addatelier.html', function(req, res) {
     if (sess)
     {
 	pg.connect(config, function(err, client, done) {
-	    var db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
+	    var db_password = client.query("SELECT * FROM utilisateur WHERE role = 'chef_cuisinier';", function (err, result) {
 					       if (err) console.error('error happened during query', err);
 		res.render('addatelier.ejs', {result: result});
 	    });

@@ -98,7 +98,7 @@ header #logo:hover
 
 #connexion, #inscription, #logout, #profil, #admin, #research
 {
-    background-color: #746460;
+    background-color: rgba(116, 100, 96, 0.7);
 
     display: inline-block;
     width: 150px;

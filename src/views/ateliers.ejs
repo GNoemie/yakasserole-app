@@ -31,15 +31,13 @@
 		                    <%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %>
 		            <% } } %></br>
 	                <%= result.rows[i].prix %> €
-	    
+                </div>
+            </a>
+	    </li>
 	<% } %>
     </ul>
     <% } %>
     </div>
-    </section>
-    <p>Pour plus d'informations concernant un atelier en particulier, veuillez cliquer sur le titre de ce dernier.</p>
-    </br>
-    <section>
       <%
 	 if (user.role == "admin" || user.role == "respo_atelier") {
 	 %>

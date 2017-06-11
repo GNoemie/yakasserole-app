@@ -9,21 +9,19 @@
     <% include include/header %>
     <h1>Ajout d'atelier</h1>
     <section>
+        <% if (result.rows.length == 0) { %>
+        <p> Aucun chef cuisinier inscrit. Impossible d'ajouter un atelier.</p>
+        <% } else { %>
         <form action="/ateliers.html" method="post" >
           <p>
 	    <label for="chef">Chef cuisinier</label>
 	    <select id="chef" name="chef" required />
 	    <%
-	       for(var i = 0 ; i < result.rows.length ; i++) {
-				   if (result.rows[i].role == "chef_cuisinier") {
-				   %>
+	       for(var i = 0 ; i < result.rows.length ; i++) { %>
                <label for="chef">Chef</label>
 	       <option value="<%= result.rows[i].id %>">Chef <%= result.rows[i].nom %></option>
 	       
-	       <%
-		  }
-		  }
-		   %>
+	       <% } %>
 		</select></br>
                 <label for="titre">Titre</label>
                 <input type="text" id="titre" name="titre" size="18" placeholder="Titre" required />
@@ -57,6 +55,7 @@
                 <input type="submit" value="Valider" />
             </p>
         </form>
+        <% } %>
     </section>
     <% include include/footer %>
 </body>
