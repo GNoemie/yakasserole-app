@@ -47,7 +47,12 @@
                     <% for (i = 0; i < recettes.rows.length; i++) { %>
                     <li>
                         <a href="/recette.html?titre=<%= recettes.rows[i].titre %>">
+                            <% if (recettes.rows[i].image == null) { %>
                             <img src="resources/recette.png" />
+                            <% } else { %>
+                            <img src="<%= recettes.rows[i].image %>" />
+                            <% } %>
+
                             <div class="description">
                                 <h3><%= recettes.rows[i].titre %></h3>
                                 <%= recettes.rows[i].type %></br>
@@ -69,7 +74,12 @@
                     <% for (i = 0; i < ateliers.rows.length; i++) { %>
                     <li>
                         <a href="/atelier.html?titre=<%= ateliers.rows[i].titre %>">
+                            <% if (ateliers.rows[i].image == null) { %>
                             <img src="resources/chinois.png" />
+                            <% } else { %>
+                            <img src="<%= ateliers.rows[i].image %>" />
+                            <% } %>
+
                             <div class="description">
                                 <h3><%= ateliers.rows[i].titre %></h3>
                                 <%= ateliers.rows[i].theme %>

@@ -17,7 +17,12 @@
 	<% for(var i = 0 ; i < result.rows.length ; i++) { %>
         <li>
             <a href="/atelier.html?titre=<%= result.rows[i].titre %>">
+                <% if (result.rows[i].image == null) { %>
                 <img src="resources/atelier.png" />
+                <% } else { %>
+                <img src="<%= result.rows[i].image %>" />
+                <% } %>
+
                 <div class="description">
                     <h3><%= result.rows[i].titre %></h3>
                     Chef cuisinier : 

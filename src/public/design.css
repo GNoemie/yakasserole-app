@@ -612,6 +612,7 @@ footer a:hover
 
 .title_block img, .list img
 {
+    height: 113px;
     border-left: 4px solid black;
 }
 

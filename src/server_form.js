@@ -651,8 +651,8 @@ module.exports = {
             db_password.on('row', function(row) {
 		if (sess.msgKO)
 		    res.redirect('/');
-   		client.query('INSERT INTO recette VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7);',
-			     [new Date(), row.id, req.body.titre, req.body.type, req.body.ingredients, req.body.description, req.body.difficulte], function (err, result) {
+   		client.query('INSERT INTO recette VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8);',
+			     [new Date(), row.id, req.body.titre, req.body.type, req.body.ingredients, req.body.description, req.body.difficulte, req.body.image], function (err, result) {
 				 if (err) console.error('error happened during query', err);
 				 sess.msgOK = "RECETTE CREEE AVEC SUCCES";
 				 res.redirect('/recettes.html');
