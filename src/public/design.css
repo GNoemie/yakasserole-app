@@ -55,7 +55,7 @@ header
 {
     border-radius: 0px 0px 0px 60px;
     background-color: blue;
-    background-image: url(resources/ban.jpg);
+    background-image: url(resources/ban2.jpg);
     background-position: top 300px;
     background-repeat: no-repeat;
     padding-left: 15px;
@@ -127,6 +127,18 @@ header #logo:hover
     padding-top: 20px;
 }
 
+#admin img
+{
+    -webkit-transition: -webkit-transform 5s;
+    transition: transform 5s;
+}
+
+#admin:hover img
+{
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
 #research
 {
     background: none;
@@ -147,13 +159,21 @@ header #logo:hover
     padding: 3px;
     padding-left: 8px;
     padding-right: 8px;
-    background-color: #ffdb45;
+    background-color: rgba(255, 219, 69, 0.7);
+    -webkit-transition: background-color 1s;
+    transition: background-color 1s;
     outline: 0;
+    color: white;
+}
+
+#research #search:focus
+{
+    background-color: rgba(255, 219, 69, 0.9);
 }
 
 #research #ok, #research #ok:active
 {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.7);
     outline: 0;
     width: 38px;
     height: 38px;
@@ -177,13 +197,13 @@ header #logo:hover
     margin-left: 5px;
     border-color: /*#e74646*/ white;
     color: white;
-    background-color: #e74646;
+    background-color: rgba(231, 70, 70, 0.7);
 }
 
 #inscription, #profil
 {
     color: white;
-    background-color: #ff9730;
+    background-color: rgba(255, 151, 48, 0.7);
     border-color: /*#ff8105*/ white;
 }
 
@@ -200,7 +220,7 @@ header ul
     margin-top: 15px;
     right: 0px;
     display: inline-block;
-    background-color: #bc3535;
+    background-color: rgba(188, 53, 53, 0.7);
     vertical-align: bottom;
     border: white /*#953737*/ solid 1px;
     border-radius: 5px 0px 5px 0px;
@@ -477,19 +497,32 @@ footer a:hover
 {
     display: inline-block;
     border: 1px solid #bc4545;
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 10px 0px 10px 0px;
     height: 60px;
     width: 250px;
     margin-right: 5px;
     color: white;
-    font-weight: bold;
+    letter-spacing: 0.1em;
     font-size: 1.2em;
 }
 
 #accueil #prez .button:hover
 {
     border-color: #ffdb45;
-    color: #ffdb45;
+}
+
+#accueil #prez .button .title
+{
+    display: inline-block;
+    background-color: rgba(188, 69, 69, 0.6);
+    height: 100%;
+    width: 100px;
+    padding: 15px;
+}
+
+#accueil #prez .button:hover .title
+{
+    background-color: rgba(255, 219, 69, 0.6)
 }
 
 #accueil #prez #button1
