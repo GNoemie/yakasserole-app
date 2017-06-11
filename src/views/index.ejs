@@ -9,17 +9,21 @@
         <% include include/header %>
         <div id="accueil">
             <div id="prez">
+                <% if (!user) { %>
                 <a id="goto_inscription" href="/inscription.html">
                     Rapide</br>et</br>gratuit</br>
                     <span>S'inscrire maintenant</span>
                 </a>
-
+                <% } %>
+                
+                <% if (!user || (user && !user.premium)) { %>
                 <a id="premium" href="/premium.html">
                     <h2>PREMIUM</h2>
                         Abonnement</br>
                         <div class="prem_block"><span class="big">10%</span></br>de reduction</div>
                     <div class="prem_block">Ateliers jusque</br><span class="big">4</span></br>personnes</div>
                 </a>
+                <% } %>
 
                 <h2>Qui sommes-nous ?</h2>
                 <p>
