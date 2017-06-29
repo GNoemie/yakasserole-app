@@ -47,10 +47,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/index.html', function(req, res) {
-    //res.render('index.ejs');
-    m = "Veuillez vous reconnecter afin de mettre à jour votre nouveau statut concernant le premium";
-    return form.printIndex(req, res, m);
-    //res.end();
+    return form.printIndex(req, res);
 });
 
 

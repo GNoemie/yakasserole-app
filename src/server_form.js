@@ -214,8 +214,7 @@ module.exports = {
 			console.log("Mail envoyé avec succès!")
 		    smtpTransport.close();
 		});
-		res.redirect('/connexion.html?premium=oui');
-		sess.destroy();
+		res.redirect('/index.html');
 	    });
 	    db_password.on('end', () => {
 		return done();
@@ -230,8 +229,7 @@ module.exports = {
 	    var db_password = client.query('UPDATE utilisateur SET premium = $1 WHERE id = $2;', [false, sess.user.id], function (err, result) {
 		if (err)
 		    return console.log('error happened during query', err);
-		res.redirect('/connexion.html?premium=non');
-		sess.destroy();
+		res.redirect('/index.html');
 	    });
 	    db_password.on('end', () => {
 		return done();
@@ -630,7 +628,16 @@ module.exports = {
                 if (err) console.error('error happened during query', err);
                 client.query('SELECT * FROM atelier ORDER BY date_debut DESC LIMIT 3;', function (err, ateliers) {
                     if (err) console.error('error happened during query', err);
-                    res.render('index.ejs', {recettes: recettes, ateliers: ateliers});
+		    if (sess.user)
+		    {
+			client.query('SELECT * FROM utilisateur WHERE mail = $1;', [sess.user.mail], function (err, ruser) {
+			    if (err) console.error('error happened during query', err);
+			    sess.user.premium = ruser.rows[0].premium;
+			    res.render('index.ejs', {recettes: recettes, ateliers: ateliers});
+			});
+		    }
+		    else
+			res.render('index.ejs', {recettes: recettes, ateliers: ateliers});
                 });
             });
             db_password.on('end', () => {
