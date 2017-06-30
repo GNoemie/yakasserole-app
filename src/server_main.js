@@ -7,6 +7,7 @@ const pem = require('pem');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const pg = require("pg");
+
 //const popup = require('window-popup');
 
 //include server_form
@@ -16,6 +17,11 @@ var form = require("./server_form");
 var app = express();
 
 var config = "pg://yakasserole:F8Pf7tM@localhost:5432/app";
+
+https.createServer({
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+}, app).listen(8080);
 
 //initializing the session
 app.use(session({
@@ -47,12 +53,19 @@ app.get('/', function(req, res) {
 });
 
 app.get('/index.html', function(req, res) {
-    //res.render('index.ejs');
-    m = "Veuillez vous reconnecter afin de mettre à jour votre nouveau statut concernant le premium";
-    return form.printIndex(req, res, m);
-    //res.end();
+    return form.printIndex(req, res);
 });
 
+app.post('/index.html',function(req,res){
+    console.log('FIRST TEST: ' + JSON.stringify(req.files));
+    console.log('second TEST: ' +req.files.theFile.name);
+    fs.readFile(req.files.theFile.path, function (err, data) {
+	var newPath = "/home/path/to/your/directory/"+req.files.theFile.name;
+	fs.writeFile(newPath, data, function (err) {
+	    res.send("hi");
+	});
+    });
+});
 
 /*
   INSCRIPTION
@@ -177,7 +190,10 @@ app.get('/profil.html', function(req, res) {
     if (sess)
 	return form.printProfil(req, res);
     else
+    {
+	req.session.msgKO = "Veuillez vous connecter afin de voir votre profil.";
 	res.redirect('/');
+    }
 });
 
 app.post('/profil.html', function(req, res) {
@@ -230,7 +246,10 @@ app.get('/chefs.html', function(req, res) {
     if (sess)
 	return form.printchefs(req, res);
     else
-	res.redirect('/');
+    {
+	req.session.msgKO = "Veuillez vous connecter afin de voir la liste de nos chefs cuisiniers.";
+	res.redirect('/connexion.html');
+    }
 });
 
 
@@ -247,7 +266,10 @@ app.get('/recettes.html', function(req, res) {
     if (sess)
 	return form.printrecettes(req, res);
     else
-	res.redirect('/');
+    {
+	req.session.msgKO = "Veuillez vous connecter afin de voir la liste de nos recettes.";
+	res.redirect('/connexion.html');
+    }
 });
 
 app.get('/addrecette.html', function(req, res) {
@@ -270,7 +292,10 @@ app.get('/recette.html', function(req, res) {
     if (sess)
         return form.recettealone(req, res);
     else
-        res.render('connexion.ejs');
+    {
+	req.session.msgKO = "Veuillez vous connecter afin de voir le détail de la recette.";
+        res.redirect('./connexion.html');
+    }
 });
 
 
@@ -284,7 +309,10 @@ app.get('/ateliers.html', function(req, res) {
     if (sess)
 	return form.printateliers(req, res);
     else
-	res.redirect('/');
+    {
+	req.session.msgKO = "Veuillez vous connecter afin de voir la liste de nos ateliers.";
+	res.redirect('/connexion.html');
+    }
 });
 
 app.get('/addatelier.html', function(req, res) {
@@ -319,7 +347,10 @@ app.get('/atelier.html', function(req, res) {
     if (sess)
         return form.atelieralone(req, res);
     else
-        res.render('connexion.ejs');
+    {
+	req.session.msgKO = "Veuillez vous connecter afin de voir le détail de l'atelier.";
+        res.redirect('/connexion.html');
+    }
 });
 
 app.post('/profil.html', function(req, res) {
@@ -341,7 +372,3 @@ app.post('/changeatelier.html', function(req, res) {
 app.post('/changerecette.html', function(req, res) {
     return form.printrecettes(req, res);
 })
-
-
-app.listen(8080);
-console.log("server listening on 8080");

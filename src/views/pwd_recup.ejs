@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <% include include/head %>
-        <title>Connexion</title>
-    </head>
+  <head>
+    <% include include/head %>
+    <title>Connexion</title>
+  </head>
 
-    <body>
-            <% include include/header %>
-            <h1>Recuperation du mot de passe</h1>
-            <section>
-                <form actiom="/pwd_recup.html" method="post" >
-                    <p>
-                        <label for="email">Email associe a votre compte</label>
-                        <input type="text" id="email" name="email" size="18" placeholder="Email" />
+  <body>
+    <% include include/header %>
+    <h1>Recuperation du mot de passe</h1>
+    <section>
+      <form actiom="/pwd_recup.html" method="post" >
+        <p>
+          <label for="email">Email associe a votre compte</label>
+          <input type="text" id="email" name="email" size="18" placeholder="Email" /></br>
+	  
+          <input type="submit" value="Envoyer" />
 
-                        </br>
-
-                        <input type="submit" value="Envoyer" />
-
-                    </p>
-                </form>
-            </section>
-            <% include include/footer %>
-    </body>
+        </p>
+      </form>
+    </section>
+    <% include include/footer %>
+  </body>
 
 </html>
