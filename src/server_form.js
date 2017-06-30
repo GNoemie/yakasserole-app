@@ -116,11 +116,11 @@ module.exports = {
        sess = req.session;
        req.body.search = '%' + req.body.search + '%';
        pg.connect(config, function(err, client, done) {
-           var db = client.query("SELECT * FROM recette WHERE titre LIKE $1;",        
+           var db = client.query("SELECT * FROM recette WHERE upper(titre) LIKE upper($1);",        
                                  [req.body.search], function (err, search) {
-                    client.query("SELECT * FROM atelier WHERE titre LIKE $1;",
+                    client.query("SELECT * FROM atelier WHERE upper(titre) LIKE upper($1);",
                                  [req.body.search], function (err, ate) {
-		    client.query("SELECT * FROM Utilisateur WHERE nom LIKE $1 AND role LIKE '%chef_cuisinier%';",
+		    client.query("SELECT * FROM Utilisateur WHERE upper(nom) LIKE upper($1) AND role LIKE '%chef_cuisinier%';",
                                  [req.body.search], function (err, rol) {
                                      if (err) console.error('error happened during query', err);
 
