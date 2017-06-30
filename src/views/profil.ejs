@@ -88,7 +88,9 @@
                         <div class="description">
                         <h3><%= resultrecette.rows[i].titre %></h3>
                         <%= resultrecette.rows[i].type %></br>
-                        Difficulte : <%= resultrecette.rows[i].difficulte %> / 5
+                        <% for (j = 0; j < resultrecette.rows[i].difficulte; j++) { %>
+                        <img src="resources/spatula.png" class="star"/>
+                        <% } %>
                         </div>
                     </a>
                 </li>

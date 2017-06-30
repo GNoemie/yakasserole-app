@@ -24,9 +24,12 @@
                  <% } %>
                  <div class="description">
                    <h3><%= result.rows[i].titre %></h3>
-                   <%= result.rows[i].type %></br>
-                   Difficulte : <%= result.rows[i].difficulte %> / 5</br>
-                
+                   <p><%= result.rows[i].type %></p>
+                   <p>
+                   <% for (j = 0; j < result.rows[i].difficulte; j++) { %>
+                    <img src="resources/spatula.png" class="star"/>
+                    <% } %>
+                   </p>
                    Par :  
 	           <% for (var j = 0; j < resultuser.rows.length; j++) {
 					  if (resultuser.rows[j].id == result.rows[i].auteur) { %>

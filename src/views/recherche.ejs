@@ -34,8 +34,11 @@
                     <img src="resources/recette.png" />
                     <div class="description">
                     <h3><%= search.rows[i].titre %></h3>
-                    <%= search.rows[i].type %></br>
-                    Difficulte : <%= search.rows[i].difficulte %> / 5</br>
+                    <p><%= search.rows[i].type %></p>
+                    <p><% for (j = 0; j < search.rows[i].difficulte; j++) { %>
+                        <img src="resources/spatula.png" class="star"/>
+                    <% } %>
+                    </p>
 		    </div>
 		    </a>
 		    </li>
