@@ -108,15 +108,24 @@
       <% } %>
       
       <section>
-	<label><em>Commentaires :</em></label>
-	<% for (var i = 0; i < resultcommentaire.rows.length; i++) { %>
-	   <p><%= resultcommentaire.rows[i].contenu %></br>      
-	     <% for (var j = 0; j < resultuser.rows.length; j++) {
-				    if (resultcommentaire.rows[i].auteur == resultuser.rows[j].id) { %>
-		Posté par : <%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %>
-		<% } } %>
-		le : <%= resultcommentaire.rows[i].date_post %></p>
-	   <% }	%>
+       <h1>Commentaires :</h1>
+       <% for (var i = 0; i < resultcommentaire.rows.length; i++) { %>
+       <div class="com">
+            <div class="com_msg">
+            <p><%= resultcommentaire.rows[i].contenu %><p>
+            </div>
+            <% for (var j = 0; j < resultuser.rows.length; j++) {
+            if (resultcommentaire.rows[i].auteur == resultuser.rows[j].id) {
+            %>
+            <div class="com_info">
+            <p><span class="field">Posté par :</span> <%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %></p>
+            <% } } %>
+            <p><span class="field">le :</span> <%= resultcommentaire.rows[i].date_post %></p>
+            </div>
+         </div>
+       <%
+               }
+                       %>
 	   <form action="/ateliers.html?id=<%= result.rows[0].id %>" method="post">
 	     <textarea id="commentaire" name="commentaire" >
 	     </textarea></br>

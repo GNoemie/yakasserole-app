@@ -754,10 +754,11 @@ footer a:hover
 
 .com
 {
-    color: white;
+    color: black;
     margin: 10px;
     padding: 0;
-    background-color: #bc3535;
+    background-color: white;
+    border: 1px solid #bc3535;
 }
 
 .com_msg
@@ -767,6 +768,7 @@ footer a:hover
 
 .com_info
 {
+    color: white;
     border-top: 1px solid white;
     padding-left: 10px;
     padding-top: 5px;
