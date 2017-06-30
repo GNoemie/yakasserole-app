@@ -775,6 +775,11 @@ module.exports = {
 
 	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('SELECT * FROM recette WHERE titre = $1', [req.query.titre], function (err, result) {
+		if (result.rowCount == 0)
+		{
+		    sess.msgKO = "La recette " + req.query.titre + " recherchée n'existe pas.";
+		    return res.redirect('/index.html');
+		}
 		if (err) console.error('error happened during query', err);
 		client.query('SELECT * FROM utilisateur WHERE id = $1;', [result.rows[0].auteur], function (err, resultauteur) {
 		    client.query('SELECT * FROM commentaire_recette WHERE recette = $1;', [result.rows[0].id], function (err, resultcommentaire) {
