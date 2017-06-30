@@ -82,9 +82,7 @@
     <div id="delete" style="display : none">
       <form action="/admin.html" method="post">
 	<p>
-	  <select name="id" id="id" required >
-	    <option value="<%= result.rows[0].id %>"><%= result.rows[0].id %></option>
-	  </select>
+	 <input type="hidden" name="id" value="<%= result.rows[0].id %>" />
 	  </br>
 	  </br>
 	  <input type="submit" id="sr" name="sr" value="Valider Suppresion Recette" />

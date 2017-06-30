@@ -43,9 +43,7 @@
 	  <form action="/admin.html" method="post" >
 	    <p>
 	      <label for="id">Si vous souhaitez modifier l'atelier, veuillez sélectionner modifier uniquement les cases des informations que vous souhaitez modifier :</label></br>
-	      <select name="id" id="id" required >		 
-		<option value="<%= result.rows[0].id %>"><%= result.rows[0].id %></option>
-	      </select></br></br>
+	      <input type="hidden" name="id" value="<%= result.rows[0].id %>" />
 
 	      <label for="titre">Titre</label>
 	      <input type="text" id="titre" name="titre" size="18" placeholder="Titre" value="<%= result.rows[0].titre %>" />
@@ -92,9 +90,7 @@
 	<div id="delete" style="display : none">
 	  <form action="/admin.html" method="post">
 	    <p>
-	      <select id="id" name="id" required >
-		<option value="<%= result.rows[0].id %>"><%= result.rows[0].id %></option>
-	      </select>
+	      <input type="hidden" name="id" value="<%= result.rows[0].id %>" />
 	      <input type="submit" id="sa" name="sa" value="Valider Suppresion Atelier" />
 	    </p>
 	  </form>
