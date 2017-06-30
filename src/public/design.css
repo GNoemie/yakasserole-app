@@ -731,6 +731,17 @@ footer a:hover
 }
 
 
+.users th
+{
+    background-color: #bc3535;
+    padding: 5px;
+    color: white;
+}
 
+.users td
+{
+    background-color: #ffdb45;
+    padding: 5px;
+}
 
 
