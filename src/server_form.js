@@ -459,6 +459,7 @@ module.exports = {
 						   });
 					       db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
 					           if (err) console.error('error happened during query', err);
+						   sess.msgOK = "Modification effectuée !";
                                                    res.render('admin.ejs', {user: sess.user, result: result});
 					       });
 					   }
@@ -719,6 +720,7 @@ module.exports = {
 						   db_password = client.query('UPDATE recette SET difficulte = $1 WHERE id = $2;', [req.body.difficulte, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
 						   });
+						sess.msgOK = "Modification effectuée !";
 					       res.render('admin.ejs', {result: result});
 					   }
 				       });
@@ -935,6 +937,7 @@ module.exports = {
 						       });
 						   }
 						   res.render('admin.ejs', {result: result});
+						   sess.msgOK = "Modification effectuée !";
 					       });
 					   }
 				       });
