@@ -34,7 +34,17 @@ input
     padding-left: 10px;
     padding-right: 10px;
     letter-spacing: 0.1em;
+    color: black;
 }
+
+input:hover, input:focus
+{
+    -webkit-transition: background-color 1s, color 1s;
+    transition: background-color 1s, color 1s;
+    background-color: #bc3535;
+    color: white;
+}
+
 label
 {
     min-width: 100px;
@@ -46,7 +56,25 @@ label
     margin: 20px;
     padding: 20px;
     background-color: #ffbb6b;
-    color: #c15013;
+    color: #bc3535;
+    border: #bc3535 1px solid;
+}
+
+button
+{
+    padding: 7px;
+    background-color: white;
+    color: black;
+    letter-spacing: 0.1em;
+    border: 1px solid #bc3535;
+}
+
+button:hover
+{
+    -webkit-transition: background-color 1s, color 1s;
+    transition: background-color 1s, color 1s;
+    background-color: #bc3535;
+    color: white;
 }
 
 /* HEADER */
@@ -549,6 +577,7 @@ footer a:hover
     border-radius: 5px 5px 5px 5px;
     vertical-align: top;
     padding-bottom: 5px;
+    background-color: white;
 }
 
 .title_block h2
@@ -587,14 +616,14 @@ footer a:hover
 .title_block li a, .list li a
 {
     display: block;
-    background-color: #ffbb6b;
-    transition: background-color 2s, color 1s;
-    -webkit-transition: background-color 2s, color 1s;
+    background-color: #ffdb45;
+    transition: background-color 1s, color 1s;
+    -webkit-transition: background-color 1s, color 1s;
 }
 
 .title_block li a:hover, .list li a:hover
 {
-    background-color: #ffdb45;
+    background-color: #fff080;
 }
 
 .title_block h3, .list h3
@@ -619,7 +648,7 @@ footer a:hover
 
 /* RECETTE ATELIER */
 
-#recette, #atelier, #premium_page
+#recette, #atelier, #premium_page, #profil_page
 {
     background-color: #ffdb45;
     padding: 20px;
@@ -633,10 +662,38 @@ footer a:hover
     font-size: 0.9em;
 }
 
-#recette .field, #atelier .field
+#recette .field, #atelier .field, #profil_page .field
 {
     font-weight: bold;
 }
+
+/* PROFIL */
+
+#profil_page #profil_img
+{
+    height: 250px;
+    max-width: 400px;
+    float: left;
+    border: 1px white solid;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+#profil_page .just_button
+{
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+#profil_page .just_button input
+{
+    margin: 0;
+}
+
+
 
 
 

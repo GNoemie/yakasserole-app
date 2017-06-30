@@ -10,7 +10,7 @@ const pg = require("pg");
 const mailer = require("nodemailer");
 const excelbuilder = require('msexcel-builder');
 const PDFDocument = require('pdfkit');
-const FileReader = require('filereader')
+//const FileReader = require('filereader')
 
 //connect to bdd
 var config = "pg://yakasserole:F8Pf7tM@localhost:5432/app";
@@ -395,6 +395,13 @@ module.exports = {
 						       if (sess.user.id == req.body.id)
 							   sess.user.role = req.body.role;
 						   });
+
+                           if (req.body.image)
+                            db_password = client.query('UPDATE utilisateur SET image = $1 WHERE id = $2;', [req.body.image, req.body.id], function (err, result) {
+                            if (err) console.log('error happened during query', err);
+                            if (sess.user.id == req.body.id)
+                            sess.user.image = req.body.image;
+                            });
 					       
 					       if (req.body.mail)
 						   db_password = client.query('UPDATE utilisateur SET mail = $1 WHERE id = $2;', [req.body.mail, req.body.id], function (err, result) {

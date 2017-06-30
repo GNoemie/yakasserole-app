@@ -7,12 +7,18 @@
 
   <body>
     <% include include/header %>
-    <h1>Profil : </h1>
-    <section>
-      <p>Prénom : <%= row.prenom %>        Nom : <%= row.nom %></p>
-      <p>Adresse Postale : <%= row.adresse_postale %> <%= row.code_postal %> <%= row.ville %> </p>
-      <p>Adresse Mail : <%= row.mail %> </p>
-      <p>Rôle : <%= row.role %> </p>
+    <h1>Votre profil</h1>
+    <section id="profil_page">
+      <% if (row.image) { %>
+        <img src="<%= row.image %>" id="profil_img"/>
+      <% } else { %>
+        <img src="resources/user.png" id="profil_img"/>
+      <% } %>
+      <p><span class="field">Prénom :</span> <%= row.prenom %>
+      <p><span class="field">Nom :</span> <%= row.nom %></p>
+      <p><span class="field">Adresse Postale :</span> <%= row.adresse_postale %> <%= row.code_postal %> <%= row.ville %> </p>
+      <p><span class="field">Adresse Mail :</span> <%= row.mail %> </p>
+      <p><span class="field">Rôle :</span> <%= row.role %> </p>
       </br>
       <% if (user.id == row.id) {
 	 if (row.premium == true) { %>
@@ -20,7 +26,7 @@
 	<p>Les avantages du premium sont :</br>
 	  - Possibilité d'inviter jusqu'à 4 personnes pour participer à un atelier.</br>
 	  - Une réduction de 10% lors de la participation à un atelier.</p>
-	<form action="/connexion.html" method="post" >
+	<form action="/connexion.html" method="post" class="just_button">
 	  <input type="submit" id="anp" name="anp" value="Annuler son abonnement premium" >
 	</form>
       </section>
@@ -30,50 +36,74 @@
 	<p>Les avantages du premium sont :</br>
 	  - Possibilité d'inviter jusqu'à 4 personnes pour participer à un atelier.</br>
 	  - Une réduction de 10% lors de la participation à un atelier.</p>
-	<form action="/cb.html?premium=non" method="post" >
+	<form action="/cb.html?premium=non" method="post" class="just_button">
 	  <input type="submit" value="Prendre un abonnement premium" >
 	</form>
       </section></br>
       <% } } %>
-      
-      <label for="atelier">Atelier(s) :</label>
-      <table>
-	<tr>
-	  <th>ID</th>
-	  <th>Titre</th>
-	</tr>
-	<% for(var i = 0 ; i < reservationatelier.rows.length ; i++) {
-			       for(var j = 0; j < resultatelier.rows.length; j++) {
-						  if (reservationatelier.rows[i].atelier == resultatelier.rows[j].id) { %>
-			       <tr>
-				 <td><%= resultatelier.rows[j].id %></td>
-				 <td><a href="/atelier.html?titre=<%= resultatelier.rows[j].titre %>"><%= resultatelier.rows[j].titre %></a></td>
-			       </tr>
-			       <% } } } %>
-      </table></br></br>
-      
-      <label for="recette">Recette(s) :</label>
-      <table>
-	<tr>
-	  <th>ID</th>
-	  <th>Titre</th>
-	</tr>
-	<% for(var i = 0 ; i < resultrecette.rows.length ; i++) { %>
-	   <tr>
-	     <td><%= resultrecette.rows[i].id %></td>
-	     <td><a href="/recette.html?titre=<%= resultrecette.rows[i].titre %>"><%= resultrecette.rows[i].titre %></a></td>
-	   </tr>
-	   <% } %>
-      </table></br></br>
-      
+     
+
+      <div class="title_block">
+        <h2>Prochains Ateliers</h2>
+        <% if (!resultatelier.rows.length) { %>
+        <p>Aucun atelier</p>
+        <% } else { %>
+        <ul>
+            <% for (i = 0; i < resultatelier.rows.length; i++) { %>
+            <li>
+                <a href="/atelier.html?titre=<%= resultatelier.rows[i].titre %>">
+                <% if (ateliers.rows[i].image == null) { %>
+                <img src="resources/chinois.png" />
+                <% } else { %>
+                <img src="<%= resultatelier.rows[i].image %>" />
+                <% } %>
+
+                <div class="description">
+                <h3><%= resultatelier.rows[i].titre %></h3>
+                <%= resultatelier.rows[i].theme %>
+                Situe a : <%= resultatelier.rows[i].localisation %>
+                </div>
+                </a>
+            </li>
+            <% } %>
+        </ul>
+        <% } %>
+      </div>
+     
+      <div class="title_block">
+        <h2>Recettes de <%= row.prenom %></h2>
+        <% if (! resultrecette.rows.length) { %>
+        <p>Aucune recette</p>
+        <% } else { %>
+        <ul>
+            <% for (i = 0; i < resultrecette.rows.length; i++) { %>
+                <li>
+                    <a href="/recette.html?titre=<%= resultrecette.rows[i].titre %>">
+                        <% if (resultrecette.rows[i].image == null) { %>
+                        <img src="resources/recette.png" />
+                        <% } else { %>
+                        <img src="<%= resultrecette.rows[i].image %>" />
+                        <% } %>
+
+                        <div class="description">
+                        <h3><%= resultrecette.rows[i].titre %></h3>
+                        <%= resultrecette.rows[i].type %></br>
+                        Difficulte : <%= resultrecette.rows[i].difficulte %> / 5
+                        </div>
+                    </a>
+                </li>
+            <% } %>
+        </ul>
+        <% } %>
+     </div>
+
       <% if (user.id == row.id) { %>
       <button id="modifier">Modifier</button>
       <div id="change" style="display : none">
 	<form action="/admin.html" method="post" >
 	  <p>
-	    <select name="id" id="id" required>
-	      <option value="<%= user.id %>"><%= user.id %></option>
-	    </select></br></br>
+
+        <input type="hidden" name="id" value="<%= user.id %>">
 	    
 	    <label for="mail">Adresse Mail</label></br>
 	    <input type="email" id="mail" name="mail" placeholder="Adresse Mail" /></br>
@@ -81,6 +111,8 @@
 	    <label for="mdp">Mot de Passe</label></br>
 	    <input type="password" id="mdp" name="mdp" placeholder="Mot de Passe"  /></br></br></br>
 
+         <label for="image">Image</label>
+          <input type="text" id="image" name="image" size="18" placeholder="Image"  /></br></br>
 	    
 	    <label for="prenom">Prénom</label>
 	    <input type="text" id="prenom" name="prenom" size="18" placeholder="Prenom"  />
