@@ -23,7 +23,7 @@
       </form>
 	  <p>
 	    <div class="list">
-              <% if (search.rows.length == 0) { %>
+              <% if (search.rows.length == 0 &&  ate.rows.length == 0 && rol.rows.length == 0) { %>
               	<p>Aucun résultat</p>
               <% } else { %>
               <% if (cate == "r" || cate == "t" || cate == null) { %>
@@ -37,8 +37,7 @@
                     <%= search.rows[i].type %></br>
                     Difficulte : <%= search.rows[i].difficulte %> / 5</br>
 		<% } %>
-		</ul>
-	      <% } else if (cate == "t" || cate == "a" || cate == null) { %>
+	      <% } if (cate == "t" || cate == "a" || cate == null) { %>
 		<ul>
         	  <% for(var i = 0 ; i < ate.rows.length ; i++) { %>
         	    <li>
@@ -47,18 +46,15 @@
                     <div class="description">
                     <h3><%= ate.rows[i].titre %></h3>
                     Chef cuisinier : 
-                                    <%= ate.rows[i].prenom %> <%= ate.rows[i].nom %>
-                            </br>
-                        <%= ate.rows[i].prix %> €
-		<% } } else if (cate == "t" || cate =="u" || cate == null) { %>
+                    <%= ate.rows[i].prenom %> <%= ate.rows[i].nom %></br>
+                    <%= ate.rows[i].prix %> €
+		<% } } if (cate == "t" || cate =="u" || cate == null) { %>
 		  <ul>
-		    <% for(var i =0 ; i < role.rows.length; i++) { %>
+		    <% for(var i =0 ; i < rol.rows.length; i++) { %>
 		      <li>
-		      <a href="/profil.html?titre=<%= role.rows[i].titre %>">
+		      <a href="/profil.html?id=<%= rol.rows[i].id %>">
 		      <div class="description">
-		      <h3><%= role.rows[i].titre %></h3>
-		      Nom: <%= role.rows[i].nom %>
-		      Prenom: <%= role.row[i].prenom %>
+		      <h3>Chef <%= rol.rows[i].nom %></h3>
 		     </a>
 		     </li>
 		    <% } %>
