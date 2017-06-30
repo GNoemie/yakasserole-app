@@ -56,9 +56,11 @@
                  <div class="description">
                    <h3><%= recettes.rows[i].titre %></h3>
                    <p><%= recettes.rows[i].type %></p>
+                   <p>
                    <% for (j = 0; j < recettes.rows[i].difficulte; j++) { %>
-                   <p><img src="resources/spatula.png" class="star"/></p>
+                   <img src="resources/spatula.png" class="star"/>
                    <% } %>
+                   </p>
                    </br>
                  </div>
                </a>
