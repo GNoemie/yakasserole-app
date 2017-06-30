@@ -56,17 +56,6 @@ app.get('/index.html', function(req, res) {
     return form.printIndex(req, res);
 });
 
-app.post('/index.html',function(req,res){
-    console.log('FIRST TEST: ' + JSON.stringify(req.files));
-    console.log('second TEST: ' +req.files.theFile.name);
-    fs.readFile(req.files.theFile.path, function (err, data) {
-	var newPath = "/home/path/to/your/directory/"+req.files.theFile.name;
-	fs.writeFile(newPath, data, function (err) {
-	    res.send("hi");
-	});
-    });
-});
-
 /*
   INSCRIPTION
 */
@@ -146,15 +135,9 @@ app.post('/connexion.html', function(req, res) {
 	return form.connexionForm(req, res);
     }
     if (req.body.abp)
-    {
 	return form.abopremium(req, res);
-	//return req.session.destroy();
-    }
     if (req.body.anp)
-    {
 	return form.annulerpremium(req, res);
-	//return req.session.destroy();
-    }	
     else
     {
 	sess = req.session.user;

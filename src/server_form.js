@@ -69,13 +69,11 @@ module.exports = {
 									if (err) console.error('error happened during query', err);
 									sess.msgOK = "INSCRIPTION EFFECTUEE";
 									client.query('SELECT * FROM confirmation WHERE mail = $1;', [req.body.mail], function (err, result) {
-									    if (err)
-										return console.error('error happened during query', err);
+									    if (err) console.error('error happened during query', err);
 									    if (result.rowCount)
 									    {
 										client.query('DELETE FROM confirmation WHERE mail = $1;', [req.body.mail], function (err, result) {
-										    if (err)
-											return console.error('error happened during query', err);		
+										    if (err) console.error('error happened during query', err);		
 										});
 									    }
 
@@ -157,7 +155,6 @@ module.exports = {
 				return console.log('error happened during query', err);
 			    res.render('activation.ejs', {m: activer});			     
 			});
-		    
 		    else
 			res.render('activation.ejs', {m: already});
 		});
@@ -172,6 +169,18 @@ module.exports = {
     abopremium: function abopremium(req, res) {
 
 	sess = req.session;
+	var regex1 = /\d{16}/;
+	if (!regex1.test(req.body.cbnb))
+	{
+	    sess.msgKO = "Numéro de carte bancaire invalide.";
+	    return res.redirect('/');
+	}
+	var regex2 = /\d{3}/;
+	if (!regex1.test(req.body.cvv))
+	{
+	    sess.msgKO = "Code de sécurité invalide.";
+	    return res.redirect('/');
+	}
 	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('UPDATE utilisateur SET premium = $1 WHERE id = $2;', [true, sess.user.id], function (err, result) {
 		if (err)
@@ -466,45 +475,45 @@ module.exports = {
 	sess = req.session;
 	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('SELECT * FROM utilisateur WHERE id = $1;',
-				       [req.body.id], function (err, result) {
-					   if (err) console.error('error happened during query', err);
-					   if (!result.rowCount)
-					   {
-					       sess.msgKO = "UTILISATEUR INCONNU";
-					       res.redirect('/admin.html');
-					   }
-					   else
-					   {
-					       pg.connect(config, function(err, client) {
-						   var db_password = client.query('SELECT * FROM atelier WHERE chef = $1;',
-										  [req.body.id], function (err, result) {
-										      if (err) console.error('error happened during query', err);
-										      if (result.rowCount)
-										      {
-											  sess.msgKO = "L'UTILISATEUR EST RESPONSABLE D'UN ATELIER";
-											  res.redirect('/admin.html');
-										      }
-										      else
-										      {
-											  client.query('SELECT * FROM recette WHERE auteur = $1;', [req.body.id], function (err, result) {
-											      if (result.rowCount)
-											      {
-												  sess.msgKO = "L'UTILISATEUR EST L'AUTEUR DE RECETTE(S)";
-												  res.redirect('/admin.html');
-											      }
-											      else {
-												  db_password = client.query('DELETE FROM utilisateur WHERE id = $1;', [req.body.id],
-															     function (err, result) {
-																 if (err) console.error('error happened during query', err);
-																 res.render('admin.ejs', {result: result});
-															     });
-											      }
-											  });
-										      }
-										  });
-					       });
-					   }
-				       });
+					   [req.body.id], function (err, result) {
+					       if (err) console.error('error happened during query', err);
+					       if (!result.rowCount)
+					       {
+						   sess.msgKO = "UTILISATEUR INCONNU";
+						   res.redirect('/admin.html');
+					       }
+					       else
+					       {
+						   pg.connect(config, function(err, client) {
+						       var db_password = client.query('SELECT * FROM atelier WHERE chef = $1;',
+										      [req.body.id], function (err, result) {
+											  if (err) console.error('error happened during query', err);
+											  if (result.rowCount)
+											  {
+											      sess.msgKO = "L'UTILISATEUR EST RESPONSABLE D'UN ATELIER";
+											      res.redirect('/admin.html');
+											  }
+											  else
+											  {
+											      client.query('SELECT * FROM recette WHERE auteur = $1;', [req.body.id], function (err, result) {
+												  if (result.rowCount)
+												  {
+												      sess.msgKO = "L'UTILISATEUR EST L'AUTEUR DE RECETTE(S)";
+												      res.redirect('/admin.html');
+												  }
+												  else {
+												      db_password = client.query('DELETE FROM utilisateur WHERE id = $1;', [req.body.id],
+																 function (err, result) {
+																     if (err) console.error('error happened during query', err);
+																     res.render('admin.ejs', {result: result});
+																 });
+												  }
+											      });
+											  }
+										      });
+						   });
+					       }
+					   });
 	    db_password.on('end', () => {
 		return done();
 	    });
@@ -670,7 +679,6 @@ module.exports = {
 
     changeRecette: function changeRecette(req, res) {
 	sess = req.session;
-
 
 	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('SELECT * FROM recette WHERE id = $1;',
@@ -1025,6 +1033,7 @@ module.exports = {
     reservation: function reservation(req, res) {
 	sess = req.session;
 
+	
 	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('SELECT * FROM atelier WHERE titre = $1;', [req.query.titre], function (err, result) {
 		if (err) console.error('error happened during query', err);
@@ -1035,6 +1044,19 @@ module.exports = {
 		    }
 		    else
 		    {
+			var regex1 = /\d{16}/;
+			if (!regex1.test(req.body.cbnb))
+			{
+			    sess.msgKO = "Numéro de carte bancaire invalide.";
+			    return res.redirect('/');
+			}
+			var regex2 = /\d{3}/;
+			if (!regex1.test(req.body.cvv))
+			{
+			    sess.msgKO = "Code de sécurité invalide.";
+			    return res.redirect('/');
+			}
+			
 			var mail = {
 			    from: "yakasserolehandle@gmail.com",
 			    to: sess.user.mail,
