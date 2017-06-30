@@ -191,8 +191,7 @@ module.exports = {
 			console.log("Mail envoyé avec succès!")
 		    smtpTransport.close();
 		});
-		res.redirect('/connexion.html?premium=oui');
-		sess.destroy();
+		res.redirect('/index.html');
 	    });
 	    db_password.on('end', () => {
 		return done();
@@ -207,8 +206,7 @@ module.exports = {
 	    var db_password = client.query('UPDATE utilisateur SET premium = $1 WHERE id = $2;', [false, sess.user.id], function (err, result) {
 		if (err)
 		    return console.log('error happened during query', err);
-		res.redirect('/connexion.html?premium=non');
-		sess.destroy();
+		res.redirect('/index.html');
 	    });
 	    db_password.on('end', () => {
 		return done();
@@ -395,12 +393,12 @@ module.exports = {
                                                          sess.user.role = req.body.role;
 						   });
 
-                           if (req.body.image)
-                            db_password = client.query('UPDATE utilisateur SET image = $1 WHERE id = $2;', [req.body.image, req.body.id], function (err, result) {
-                            if (err) console.log('error happened during query', err);
-                            if (sess.user.id == req.body.id)
-                            sess.user.image = req.body.image;
-                            });
+					       if (req.body.image)
+						   db_password = client.query('UPDATE utilisateur SET image = $1 WHERE id = $2;', [req.body.image, req.body.id], function (err, result) {
+						       if (err) console.log('error happened during query', err);
+						       if (sess.user.id == req.body.id)
+							   sess.user.image = req.body.image;
+						   });
 					       
 					       if (req.body.mail)
 						   db_password = client.query('UPDATE utilisateur SET mail = $1 WHERE id = $2;', [req.body.mail, req.body.id], function (err, result) {
@@ -444,8 +442,8 @@ module.exports = {
                                                            sess.user.cp = req.body.cp;
 						   });
 					       db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
-					         if (err) console.error('error happened during query', err);
-                                                 res.render('admin.ejs', {user: sess.user, result: result});
+					           if (err) console.error('error happened during query', err);
+                                                   res.render('admin.ejs', {user: sess.user, result: result});
 					       });
 					   }
 				       });
