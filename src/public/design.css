@@ -699,7 +699,7 @@ footer a:hover
     font-size: 0.9em;
 }
 
-#recette .field, #atelier .field, #profil_page .field
+#recette .field, #atelier .field, #profil_page .field, .field
 {
     font-weight: bold;
 }
@@ -748,3 +748,33 @@ footer a:hover
 {
     min-height: 300px;
 }
+
+.com
+{
+    color: white;
+    margin: 10px;
+    padding: 0;
+    background-color: #bc3535;
+}
+
+.com_msg
+{
+    padding: 10px;
+}
+
+.com_info
+{
+    border-top: 1px solid white;
+    padding-left: 10px;
+    padding-top: 5px;
+    margin: 0;
+    background-color: #dc5555;
+}
+
+.com_info p
+{
+    display: inline-block;
+}
+
+
+
