@@ -368,3 +368,6 @@ app.post('/changerecette.html', function(req, res) {
     return form.printrecettes(req, res);
 })
 
+app.get('*', function(req, res){
+  res.redirect('/');
+});

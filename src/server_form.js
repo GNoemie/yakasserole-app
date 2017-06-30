@@ -82,7 +82,7 @@ module.exports = {
 										from: "yakasserolehandle@gmail.com",
 										to: req.body.mail,
 										subject: "CONFIRMATION D'INSCRIPTION",
-										html: "Bienvenue sur YaKasserole,</br></br>Pour confirmer votre inscription, veuillez cliquer sur " + "<a href=\"http://localhost:8080/activation.html?key=" + random + "&mail=" + req.body.mail + "\">Confirmer</a> afin de confirmer votre compte sur le site YaKasserole.</br></br></br>--------------------</br>Ceci est un mail automatique, veuillez ne pas y répondre."
+										html: "Bienvenue sur YaKasserole,</br></br>Pour confirmer votre inscription, veuillez cliquer sur " + "<a href=\"https://localhost:8080/activation.html?key=" + random + "&mail=" + req.body.mail + "\">Confirmer</a> afin de confirmer votre compte sur le site YaKasserole.</br></br></br>--------------------</br>Ceci est un mail automatique, veuillez ne pas y répondre."
 									    }
 									    smtpTransport.sendMail(mail, function(error, response){
 										if (error) {
@@ -302,7 +302,7 @@ module.exports = {
 						       from: "yakasserolehandle@gmail.com",
 						       to: req.body.email,
 						       subject: "MOT DE PASSE OUBLIE",
-						       html: "Bonjour " + result.rows[0].prenom + " " + result.rows[0].nom + ",</br>Suite au signalement de l'oubli de votre mot de passe, nous vous proposons de rédéfinir un nouveau mot de passe en cliquant sur <a href=\"http://localhost:8080/changemdp.html?key=" + random + "&mail=" + req.body.email + "\">Définir son mot de passe</a></br></br></br>--------------------</br>Ceci est un mail automatique, veuillez ne pas y répondre."
+						       html: "Bonjour " + result.rows[0].prenom + " " + result.rows[0].nom + ",</br>Suite au signalement de l'oubli de votre mot de passe, nous vous proposons de rédéfinir un nouveau mot de passe en cliquant sur <a href=\"https://localhost:8080/changemdp.html?key=" + random + "&mail=" + req.body.email + "\">Définir son mot de passe</a></br></br></br>--------------------</br>Ceci est un mail automatique, veuillez ne pas y répondre."
 						   }
 						   smtpTransport.sendMail(mail, function(error, response){
 						       if (error) {
@@ -333,14 +333,15 @@ module.exports = {
 	m = "";
 	if (req.body.mdp.length < 6)
 	    m = "MOT DE PASSE INVALIDE";
-
+	    
 	var password = sha256(req.body.mdp);
 	var password2 = sha256(req.body.mdp1);
 
 	if (password != password2)
-	    m = "MOTS DE PASSES NON IDENTIQUES";	
+	    m = "MOTS DE PASSES NON IDENTIQUES";
+
 	if (m != "")
-	    res.render('changemdp.ejs', {m: m});
+	    return res.render('connexion.ejs');
 	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('SELECT * FROM mdprecup WHERE mail = $1;', [r.mail], function (err, result) {
 		if (result.rows[0].cle == r.key)
@@ -459,6 +460,7 @@ module.exports = {
 						   });
 					       db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
 					           if (err) console.error('error happened during query', err);
+						   sess.msgOK = "Modification effectuée !";
                                                    res.render('admin.ejs', {user: sess.user, result: result});
 					       });
 					   }
@@ -719,6 +721,7 @@ module.exports = {
 						   db_password = client.query('UPDATE recette SET difficulte = $1 WHERE id = $2;', [req.body.difficulte, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
 						   });
+						sess.msgOK = "Modification effectuée !";
 					       res.render('admin.ejs', {result: result});
 					   }
 				       });
@@ -772,11 +775,19 @@ module.exports = {
 
 	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('SELECT * FROM recette WHERE titre = $1', [req.query.titre], function (err, result) {
+		if (result.rowCount == 0)
+		{
+		    sess.msgKO = "La recette " + req.query.titre + " recherchée n'existe pas.";
+		    return res.redirect('/index.html');
+		}
 		if (err) console.error('error happened during query', err);
 		client.query('SELECT * FROM utilisateur WHERE id = $1;', [result.rows[0].auteur], function (err, resultauteur) {
 		    client.query('SELECT * FROM commentaire_recette WHERE recette = $1;', [result.rows[0].id], function (err, resultcommentaire) {
 			client.query('SELECT * FROM utilisateur;', function (err, resultuser) {
-			    res.render('recette.ejs', {result: result, resultauteur: resultauteur, resultcommentaire: resultcommentaire, resultuser: resultuser});
+			    if (req.query.titre != null)
+			      res.render('recette.ejs', {result: result, resultauteur: resultauteur, resultcommentaire: resultcommentaire, resultuser: resultuser});
+			    else
+			      res.redirect('/');
 			});
 		    });
 		});
@@ -935,6 +946,7 @@ module.exports = {
 						       });
 						   }
 						   res.render('admin.ejs', {result: result});
+						   sess.msgOK = "Modification effectuée !";
 					       });
 					   }
 				       });
