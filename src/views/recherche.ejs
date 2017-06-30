@@ -10,45 +10,66 @@
     <h1>Résultats de la Recherche</h1>
     <section>
       <form action="/recherche.html" method="post">
-        <p>
-	  <div class="list">
-            <% if (search.rows.length == 0) { %>
-            <p>Aucune résultat</p>
-            <% } else { %>
-            <ul>
-              <% for(var i = 0 ; i < search.rows.length ; i++) { %>
-                 <li>
-                   <a href="/recette.html?titre=<%= search.rows[i].titre %>">
-		     <img src="resources/recette.png" />
-		     <div class="description">
-		       <h3><%= search.rows[i].titre %></h3>
-		       <%= search.rows[i].type %></br>
-		       <%= search.rows[i].description %></br>
-		       Difficulte : <%= search.rows[i].difficulte %> / 5</br>
-		       <% } %>
-		     </div>
-		   </a>
-		 </li>
-	    </ul>
-	    <ul>
-              <% for(var i = 0 ; i < ate.rows.length ; i++) { %>
-        	 <li>
-                   <a href="/atelier.html?titre=<%= ate.rows[i].titre %>">
-		     <img src="resources/atelier.png" />
-                     <div class="description">
-                       <h3><%= ate.rows[i].titre %></h3>
-                       Chef cuisinier : 
-                       <%= ate.rows[i].prenom %> <%= ate.rows[i].nom %></br>
-                       <%= ate.rows[i].prix %> €
-		       <% } %>
-		     </div>
-		   </a>
-		 </li>
-            </ul>
-	    <% } %>
-	  </div>
-	</p>
+          <p>
+	    <input type="text" name="search" id="search" placeholder="Rechercher" required />
+	    <select name="Catégorie" size="1" id="cat" >
+	      <option value="t">Tout</option>
+	      <option value="r">Recette</option>
+	      <option value="u">Utilisateur</option>
+	      <option value="a">Atelier</option>
+	    </select>
+            <input type="submit" id="ok" name="ok" value=" "/>
+	  </p>
       </form>
+	  <p>
+	    <div class="list">
+              <% if (search.rows.length == 0) { %>
+              	<p>Aucun résultat</p>
+              <% } else { %>
+              <% if (cate == "r" || cate == "t" || cate == null) { %>
+		  <ul>
+                  <% for(var i = 0 ; i < search.rows.length ; i++) { %>
+                    <li>
+                    <a href="/recette.html?titre=<%= search.rows[i].titre %>">
+                    <img src="resources/recette.png" />
+                    <div class="description">
+                    <h3><%= search.rows[i].titre %></h3>
+                    <%= search.rows[i].type %></br>
+                    Difficulte : <%= search.rows[i].difficulte %> / 5</br>
+		<% } %>
+		</ul>
+	      <% } else if (cate == "t" || cate == "a" || cate == null) { %>
+		<ul>
+        	  <% for(var i = 0 ; i < ate.rows.length ; i++) { %>
+        	    <li>
+                    <a href="/atelier.html?titre=<%= ate.rows[i].titre %>">
+                    <img src="resources/atelier.png" />
+                    <div class="description">
+                    <h3><%= ate.rows[i].titre %></h3>
+                    Chef cuisinier : 
+                                    <%= ate.rows[i].prenom %> <%= ate.rows[i].nom %>
+                            </br>
+                        <%= ate.rows[i].prix %> €
+		<% } } else if (cate == "t" || cate =="u" || cate == null) { %>
+		  <ul>
+		    <% for(var i =0 ; i < role.rows.length; i++) { %>
+		      <li>
+		      <a href="/profil.html?titre=<%= role.rows[i].titre %>">
+		      <div class="description">
+		      <h3><%= role.rows[i].titre %></h3>
+		      Nom: <%= role.rows[i].nom %>
+		      Prenom: <%= role.row[i].prenom %>
+		     </a>
+		     </li>
+		    <% } %>
+		  </ul>	  
+	        <% } %>
+              </ul>
+	      <% } %>
+	      </div>
+            </a>
+        </li>
+	</p>
     </section>
     <% include include/footer %>
   </body>
