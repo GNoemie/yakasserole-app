@@ -36,7 +36,11 @@
                     <h3><%= search.rows[i].titre %></h3>
                     <%= search.rows[i].type %></br>
                     Difficulte : <%= search.rows[i].difficulte %> / 5</br>
+		    </div>
+		    </a>
+		    </li>
 		<% } %>
+		  </ul>
 	      <% } if (cate == "t" || cate == "a" || cate == null) { %>
 		<ul>
         	  <% for(var i = 0 ; i < ate.rows.length ; i++) { %>
@@ -48,6 +52,10 @@
                     Chef cuisinier : 
                     <%= ate.rows[i].prenom %> <%= ate.rows[i].nom %></br>
                     <%= ate.rows[i].prix %> €
+		    </div>
+		    </a>
+		    </li>
+		   </ul>
 		<% } } if (cate == "t" || cate =="u" || cate == null) { %>
 		  <ul>
 		    <% for(var i =0 ; i < rol.rows.length; i++) { %>
@@ -55,6 +63,7 @@
 		      <a href="/profil.html?id=<%= rol.rows[i].id %>">
 		      <div class="description">
 		      <h3>Chef <%= rol.rows[i].nom %></h3>
+	             </div>
 		     </a>
 		     </li>
 		    <% } %>
