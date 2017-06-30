@@ -429,17 +429,10 @@ module.exports = {
 						   db_password = client.query('UPDATE utilisateur SET code_postal = $1 WHERE id = $2;', [req.body.code_postal, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
 						   });
-					       db_password = client.query('SELECT * FROM utilisateur;',
-									  function (err, result) {
-									      if (err) console.error('error happened during query', err);
-									      if (req.body.id == sess.user.id)
-									      {
-										  req.session.destroy();
-										  res.redirect('/');
-									      }
-									      else
-										  res.render('admin.ejs', {result: result});
-									  });
+					       db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
+					         if (err) console.error('error happened during query', err);
+                                                 res.render('admin.ejs', {user: sess.user, result: result});
+					       });
 					   }
 				       });
 	    db_password.on('end', () => {
@@ -561,11 +554,10 @@ module.exports = {
     },
 
     printchefs: function printchefs (req, res) {
-
 	sess = req.session;
 	
 	pg.connect(config, function(err, client, done) {
-	    var db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
+	    var db_password = client.query('SELECT * FROM utilisateur WHERE role = $1;', ["chef_cuisinier"], function (err, result) {
 		if (err) console.log('error happened during query', err);
 		res.render('chefs.ejs', {result: result});
 	    });	    
@@ -614,7 +606,16 @@ module.exports = {
                 if (err) console.error('error happened during query', err);
                 client.query('SELECT * FROM atelier ORDER BY date_debut DESC LIMIT 3;', function (err, ateliers) {
                     if (err) console.error('error happened during query', err);
-                    res.render('index.ejs', {recettes: recettes, ateliers: ateliers});
+		    if (sess.user)
+                    {
+                        client.query('SELECT * FROM utilisateur WHERE mail = $1;', [sess.user.mail], function (err, ruser) {
+                            if (err) console.error('error happened during query', err);
+                            sess.user.premium = ruser.rows[0].premium;
+                            res.render('index.ejs', {recettes: recettes, ateliers: ateliers});
+                        });
+                    }
+                    else
+                        res.render('index.ejs', {recettes: recettes, ateliers: ateliers});
                 });
             });
             db_password.on('end', () => {
