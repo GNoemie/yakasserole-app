@@ -191,8 +191,7 @@ module.exports = {
 			console.log("Mail envoyé avec succès!")
 		    smtpTransport.close();
 		});
-		res.redirect('/connexion.html?premium=oui');
-		sess.destroy();
+		res.redirect('/index.html');
 	    });
 	    db_password.on('end', () => {
 		return done();
@@ -207,8 +206,7 @@ module.exports = {
 	    var db_password = client.query('UPDATE utilisateur SET premium = $1 WHERE id = $2;', [false, sess.user.id], function (err, result) {
 		if (err)
 		    return console.log('error happened during query', err);
-		res.redirect('/connexion.html?premium=non');
-		sess.destroy();
+		res.redirect('/index.html');
 	    });
 	    db_password.on('end', () => {
 		return done();
@@ -391,55 +389,69 @@ module.exports = {
     					       if (req.body.role)
 						   db_password = client.query('UPDATE utilisateur SET role = $1 WHERE id = $2;', [req.body.role, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
+						       if (sess.user.id == req.body.id)
+                                                         sess.user.role = req.body.role;
 						   });
 
-                           if (req.body.image)
-                            db_password = client.query('UPDATE utilisateur SET image = $1 WHERE id = $2;', [req.body.image, req.body.id], function (err, result) {
-                            if (err) console.log('error happened during query', err);
-                            if (sess.user.id == req.body.id)
-                            sess.user.image = req.body.image;
-                            });
+					       if (req.body.image)
+						   db_password = client.query('UPDATE utilisateur SET image = $1 WHERE id = $2;', [req.body.image, req.body.id], function (err, result) {
+						       if (err) console.log('error happened during query', err);
+						       if (sess.user.id == req.body.id)
+							   sess.user.image = req.body.image;
+						   });
 					       
 					       if (req.body.mail)
 						   db_password = client.query('UPDATE utilisateur SET mail = $1 WHERE id = $2;', [req.body.mail, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
+						       if (sess.user.id == req.body.id)
+                                                           sess.user.mail = req.body.mail;
 						   });
-					       
+					        
+                                               if (req.body.image)
+                                                   db_password = client.query('UPDATE utilisateur SET image = $1 WHERE id = $2;', [req.body.image, req.body.id], function (err, result) {
+                                                       if (err) console.log('error happened during query', err);
+                                                       if (sess.user.id == req.body.id)
+                                                           sess.user.image = req.body.image;
+                                                   });
+						 
 					       if (req.body.prenom)
 						   db_password = client.query('UPDATE utilisateur SET prenom = $1 WHERE id = $2;', [req.body.prenom, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
+						       if (sess.user.id == req.body.id)
+                                                           sess.user.prenom = req.body.prenom;
 						   });
 
 					       if (req.body.nom)
 						   db_password = client.query('UPDATE utilisateur SET nom = $1 WHERE id = $2;', [req.body.nom, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
+							if (sess.user.id == req.body.id)
+                                                           sess.user.nom = req.body.nom;
 						   });
 
 					       if (req.body.adresse)
 						   db_password = client.query('UPDATE utilisateur SET adresse_postale = $1 WHERE id = $2;', [req.body.adresse, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
+							if (sess.user.id == req.body.id)
+                                                           sess.user.adresse = req.body.adresse;
 						   });
 
 					       if (req.body.ville)
 						   db_password = client.query('UPDATE utilisateur SET ville = $1 WHERE id = $2;', [req.body.ville, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
+							if (sess.user.id == req.body.id)
+                                                           sess.user.ville = req.body.ville;
 						   });
 
 					       if (req.body.cp)
 						   db_password = client.query('UPDATE utilisateur SET code_postal = $1 WHERE id = $2;', [req.body.code_postal, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
+							if (sess.user.id == req.body.id)
+                                                           sess.user.cp = req.body.cp;
 						   });
-					       db_password = client.query('SELECT * FROM utilisateur;',
-									  function (err, result) {
-									      if (err) console.error('error happened during query', err);
-									      if (req.body.id == sess.user.id)
-									      {
-										  req.session.destroy();
-										  res.redirect('/');
-									      }
-									      else
-										  res.render('admin.ejs', {result: result});
-									  });
+					       db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
+					           if (err) console.error('error happened during query', err);
+                                                   res.render('admin.ejs', {user: sess.user, result: result});
+					       });
 					   }
 				       });
 	    db_password.on('end', () => {
@@ -561,11 +573,10 @@ module.exports = {
     },
 
     printchefs: function printchefs (req, res) {
-
 	sess = req.session;
 	
 	pg.connect(config, function(err, client, done) {
-	    var db_password = client.query('SELECT * FROM utilisateur;', function (err, result) {
+	    var db_password = client.query('SELECT * FROM utilisateur WHERE role = $1;', ["chef_cuisinier"], function (err, result) {
 		if (err) console.log('error happened during query', err);
 		res.render('chefs.ejs', {result: result});
 	    });	    
@@ -614,7 +625,16 @@ module.exports = {
                 if (err) console.error('error happened during query', err);
                 client.query('SELECT * FROM atelier ORDER BY date_debut DESC LIMIT 3;', function (err, ateliers) {
                     if (err) console.error('error happened during query', err);
-                    res.render('index.ejs', {recettes: recettes, ateliers: ateliers});
+		    if (sess.user)
+                    {
+                        client.query('SELECT * FROM utilisateur WHERE mail = $1;', [sess.user.mail], function (err, ruser) {
+                            if (err) console.error('error happened during query', err);
+                            sess.user.premium = ruser.rows[0].premium;
+                            res.render('index.ejs', {recettes: recettes, ateliers: ateliers});
+                        });
+                    }
+                    else
+                        res.render('index.ejs', {recettes: recettes, ateliers: ateliers});
                 });
             });
             db_password.on('end', () => {
@@ -667,6 +687,10 @@ module.exports = {
 						   db_password = client.query('UPDATE recette SET titre = $1 WHERE id = $2;', [req.body.titre, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
 						   });
+						 if (req.body.image)
+                                                   db_password = client.query('UPDATE recette SET image = $1 WHERE id = $2;', [req.body.image, req.body.id], function (err, result) {
+                                                       if (err) console.log('error happened during query', err);
+                                                   });
 					       
 					       if (req.body.type)
 						   db_password = client.query('UPDATE recette SET type = $1 WHERE id = $2;', [req.body.type, req.body.id], function (err, result) {
@@ -845,6 +869,11 @@ module.exports = {
 						   db_password = client.query('UPDATE atelier SET theme = $1 WHERE id = $2;', [req.body.theme, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
 						   });
+
+						if (req.body.image)
+                                                   db_password = client.query('UPDATE atelier SET image = $1 WHERE id = $2;', [req.body.image, req.body.id], function (err, result) {
+                                                       if (err) console.log('error happened during query', err);
+                                                   });
 					       
 					       if (req.body.description)
 						   db_password = client.query('UPDATE atelier SET description = $1 WHERE id = $2;', [req.body.description, req.body.id], function (err, result) {
