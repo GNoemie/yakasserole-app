@@ -536,6 +536,12 @@ module.exports = {
 		var db_password = client.query('SELECT * FROM utilisateur WHERE id = $1;',
 					       [req.query.id], function (err, result) {
 						   if (err) console.error('error happened during query', err);
+						   if (result.rowCount == 0)
+						   {
+						       sess.msgKO = "L'utilisateur n'existe pas.";
+						       return res.redirect('/index.html');
+						   }
+
 					       });
 		db_password.on('row', function(row) {
 		    if (sess.msgKO)
@@ -560,6 +566,12 @@ module.exports = {
 		var db_password = client.query('SELECT * FROM utilisateur WHERE mail = $1;',
 					       [sess.user.mail], function (err, result) {
 						   if (err) console.error('error happened during query', err);
+						   if (result.rowCount == 0)
+						   {
+						       sess.msgKO = "L'utilisateur n'existe pas.";
+						       return res.redirect('/index.html');
+						   }
+
 					       });
 		
 		db_password.on('row', function(row) {
@@ -1010,6 +1022,12 @@ module.exports = {
 	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('SELECT * FROM atelier WHERE titre = $1', [req.query.titre], function (err, result) {
 		if (err) console.error('error happened during query', err);
+		if (result.rowCount == 0)
+		{
+		    sess.msgKO = "L'atelier " + req.query.titre + " recherchée n'existe pas.";
+		    return res.redirect('/index.html');
+		}
+
 		client.query('SELECT * FROM utilisateur WHERE id = $1', [result.rows[0].chef], function (err, userchief) {
 		    if (err) console.error('error happened during query', err);
 		    client.query('SELECT * FROM commentaire_atelier WHERE atelier = $1;', [result.rows[0].id], function (err, resultcommentaire) {
