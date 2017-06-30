@@ -10,7 +10,9 @@
     <h1>Profil : </h1>
     <section>
       <p>Prénom : <%= row.prenom %>        Nom : <%= row.nom %></p>
+      <% if (user.id == row.id) { %>
       <p>Adresse Postale : <%= row.adresse_postale %> <%= row.code_postal %> <%= row.ville %> </p>
+      <% } %>
       <p>Adresse Mail : <%= row.mail %> </p>
       <p>Rôle : <%= row.role %> </p>
       </br>
