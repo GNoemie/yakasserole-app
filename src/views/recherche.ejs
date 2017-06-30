@@ -60,10 +60,10 @@
 		    <% for(var i =0 ; i < rol.rows.length; i++) { %>
 		      <li>
 		      <a href="/profil.html?id=<%= rol.rows[i].id %>">
-              <% if (role.rows[i].image == null) { %>
+              <% if (rol.rows[i].image == null) { %>
               <img src="resources/user.png" />
               <% } else { %>
-              <img src="<%= role.rows[i].image %>" />
+              <img src="<%= rol.rows[i].image %>" />
               <% } %>
 		      <div class="description">
 		      <h3>Chef <%= rol.rows[i].nom %></h3>
