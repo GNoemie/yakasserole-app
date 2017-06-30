@@ -130,11 +130,11 @@ module.exports = {
                                      {
                                         sess.msgKO = "Aucun document ne correpond aux termes de recherche spécifiés."
                                         console.log("Found Nothing");
-                                        res.redirect('/');
+                                        res.redirect('back');
                                      }
                                      else
                                      {
-                                        res.render('recherche.ejs', {search: search, ate: ate, rol: rol, cate: "t"});
+                                        res.render('recherche.ejs', {search: search, ate: ate, rol: rol, cate: req.body.cat});
                                      }
                                  });
 				 });
@@ -762,7 +762,7 @@ module.exports = {
 	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('INSERT INTO commentaire_recette VALUES (DEFAULT, $1, $2, $3, $4);', [sess.user.id, req.query.id, new Date(), req.body.commentaire], function (err, result) {
 		sess.msgOK = "COMMENTAIRE AJOUTE";
-		res.redirect('/recettes.html');
+		res.redirect('back');
 	    });
 	    db_password.on('end', () => {
 		return done();
@@ -984,7 +984,7 @@ module.exports = {
 	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('INSERT INTO commentaire_atelier VALUES (DEFAULT, $1, $2, $3, $4);', [sess.user.id, req.query.id, new Date(), req.body.commentaire], function (err, result) {
 		sess.msgOK = "COMMENTAIRE AJOUTE";
-		res.redirect('/ateliers.html');
+		res.redirect('back');
 	    });
 	    db_password.on('end', () => {
 		return done();
