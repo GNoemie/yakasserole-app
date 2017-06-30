@@ -9,49 +9,35 @@
     <% include include/header %>
     <h1>Profil : <%= user.prenom %></h1>
     <section>
-      <%
-	 if (user.role != "user") {
-	 %>
+      <% if (user.role != "user") { %>
       <table>
 	<tr>
-	  <th>ID</th>
-	  <th>Rôle</th>
-	  <th>Prenium</th>
-	  <th>Nom</th>
-	  <th>Prénom</th>
-	  <th>Adresse Postale</th>
-	  <th>Mail</th>
-	  <th>Date d'inscription</th>
+	  <th>ID </th>
+	  <th>Rôle </th>
+	  <th>Prenium </th>
+	  <th>Nom </th>
+	  <th>Prénom </th>
+	  <th>Adresse Postale </th>
+	  <th>Mail </th>
+	  <th>Date d'inscription </th>
 	</tr>
-	<%
-	   for(var i = 0 ; i < result.rows.length ; i++) {
-			       %>
+	<% for(var i = 0 ; i < result.rows.length ; i++) { %>
 	   <tr>
-	     <td><%= result.rows[i].id %></td>
-	     <td><%= result.rows[i].role %></td>
-	     <% if (result.rows[i].prenium) {
-		%>
-	     <td>Oui</td>
-	     <% }
-		else
-		{
-		%>
-	     <td>Non</td>
-	     <%
-		}
-		%>
-	     <td><%= result.rows[i].nom %></td>
-	     <td><%= result.rows[i].prenom %></td>
-	     <td><%= result.rows[i].adresse_postale %>, <%= result.rows[i].code_postal %> <%= result.rows[i].ville %></td>
-	     <td><%= result.rows[i].mail %></td>
-	     <td><%= result.rows[i].date_inscrit %></td>
+	     <td><%= result.rows[i].id %> </td>
+	     <td><%= result.rows[i].role %> </td>
+	     <% if (result.rows[i].prenium) { %>
+	     <td>Oui </td>
+	     <% } else { %>
+	     <td>Non </td>
+	     <% } %>
+	     <td><%= result.rows[i].nom %> </td>
+	     <td><%= result.rows[i].prenom %> </td>
+	     <td><%= result.rows[i].adresse_postale %>, <%= result.rows[i].code_postal %> <%= result.rows[i].ville %> </td>
+	     <td><%= result.rows[i].mail %> </td>
+	     <td><%= result.rows[i].date_inscrit %> </td>
 	   </tr>
-	  <%
-	     }
-	     %>
-      </table>
-      </br>
-      </br>
+	  <% } %>
+      </table></br></br>
       
       <button id="modifier">Modifier</button>
       <div id="change" style="display : none">
@@ -59,49 +45,38 @@
 	  <p>
 	    <label for="id">Si vous souhaitez modifier une(des) information(s) concernant un utilisateur, veuillez entrer l'id de l'utilisateur en question et ne remplir uniquement les cases des informations que vous voulez modifier :</label></br>
 	    <select name="id" id="id" required>
-	      <%
-		 for(var i = 0 ; i < result.rows.length ; i++) {
-				     %>
+	      <% for(var i = 0 ; i < result.rows.length ; i++) { %>
 		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
-		 <%
-		    }
-		    %>
-	    </select>	     
-          </br>
-	  </br>
+		 <% } %>
+	    </select></br></br>
 	  
-	  <label for="role">Rôle</label></br>
-	  <select name="role" id="role">
-	    <option value="user">Utilisateur</option>
-	    <option value="admin">Administrateur</option>
-	    <option value="respo_user">Responsable utilisateur</option>
-	    <option value="respo_atelier">Responsable atelier</option>
-	    <option value="chef_cuisinier">Chef cuisinier</option>
-	  </select>
-          </br>
+	    <label for="role">Rôle</label></br>
+	    <select name="role" id="role">
+	      <option value="user">Utilisateur</option>
+	      <option value="admin">Administrateur</option>
+	      <option value="respo_user">Responsable utilisateur</option>
+	      <option value="respo_atelier">Responsable atelier</option>
+	      <option value="chef_cuisinier">Chef cuisinier</option>
+	    </select></br>
 	  
-	  <label for="mail">Adresse Mail</label></br>
-	  <input type="email" id="mail" name="mail" placeholder="Adresse Mail" />
-          </br>
-	  </br>
+	    <label for="mail">Adresse Mail</label></br>
+	    <input type="email" id="mail" name="mail" placeholder="Adresse Mail" /></br></br>
 	  
-	  <label for="prenom">Prénom</label>
-	  <input type="text" id="prenom" name="prenom" size="18" placeholder="Prénom" />
+	    <label for="prenom">Prénom</label>
+	    <input type="text" id="prenom" name="prenom" size="18" placeholder="Prénom" />
+	    
+	    <label for="nom">Nom</label>
+	    <input type="text" id="nom" name="nom" size="18" placeholder="Nom" /></br>
 	  
-	  <label for="nom">Nom</label>
-	  <input type="text" id="nom" name="nom" size="18" placeholder="Nom" />
-          </br>
-	  
-	  <label for="adresse">Adresse</label></br>
-	  <input type="text" id="adresse" name="adresse" size="45" placeholder="Adresse" /></br>
-	  
-	  <input type="text" id="address_cmpl" name="address_cmpl" size="65" placeholder="Complément de l'adresse" /></br>
-	  
-	  <input type="text" id="cp" name="cp" maxlength="5" placeholder="Code Postal" />
-	  <input type="text" id="ville" name="ville" placeholder="Ville" /></br>
-	  
-          </br>
-	  <input type="submit" id="mu" name="mu" value="Valider Modification Utilisateur" />
+	    <label for="adresse">Adresse</label></br>
+	    <input type="text" id="adresse" name="adresse" size="45" placeholder="Adresse" /></br>
+	    
+	    <input type="text" id="address_cmpl" name="address_cmpl" size="65" placeholder="Complément de l'adresse" /></br>
+	    
+	    <input type="text" id="cp" name="cp" maxlength="5" placeholder="Code Postal" />
+	    <input type="text" id="ville" name="ville" placeholder="Ville" /></br></br>
+
+	    <input type="submit" id="mu" name="mu" value="Valider Modification Utilisateur" />
 
 	  </p>
 	</form>
@@ -115,9 +90,7 @@
 	document.querySelector("#change").style.display="none";
 	}
 	}
-      </script>
-      </br>
-      </br>
+      </script></br></br>
       
       <button id="supprimer">Supprimer</button>
       <div id="delete" style="display : none">
@@ -125,21 +98,15 @@
 	  <p>
 	    <label for="id">Si vous souhaitez supprimer un utilisateur, veuillez sélectionner l'id correspondant :</label></br>
 	    <select name="id" id="id" required>
-	      <%
-		 for(var i = 0 ; i < result.rows.length ; i++) {
-				     %>
+	      <% for(var i = 0 ; i < result.rows.length ; i++) { %>
 		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
-		 <%
-		    }
-		    %>
-	    </select>
-	  </br>
-	  </br>
+		 <% } %>
+	    </select></br></br>
 	  <input type="submit" id="su" name="su" value="Valider Suppresion Utilisateur" />
 	  
 	  </p>
 	</form>
-	</div>
+      </div>
       <script>
 	document.querySelector("#supprimer").onclick = function() {
 	if (window.getComputedStyle(document.querySelector('#delete')).display=='none'){
@@ -149,11 +116,8 @@
 	}
 	}
       </script>
-      <%
-	 }
-	 else {
-	 %>
-            <table>
+      <% } else { %>
+      <table>
 	<tr>
 	  <th>ID</th>
 	  <th>Rôle</th>
@@ -174,9 +138,7 @@
 	  <td><%= user.mail %></td>
 	  <td><%= user.date_inscrit %></td>
 	</tr>
-      </table>
-      </br>
-      </br>
+      </table></br></br>
       
       <button id="modifier">Modifier</button>
       <div id="change" style="display : none">
@@ -184,34 +146,27 @@
 	  <p>
 	    <label for="id">Si vous souhaitez modifier une(des) information(s) vous concernant, veuillez modifier uniquement les cases des informations que vous souhaitez modifier :</label></br>
 	    <select name="id" id="id" required>
-		 <option value="<%= user.id %>"><%= user.id %></option>
-	    </select>	     
-          </br>
-	  </br>
+	      <option value="<%= user.id %>"><%= user.id %></option>
+	    </select></br></br>
 
-	  <label for="mail">Adresse Mail</label></br>
-	  <input type="email" id="mail" name="mail" placeholder="Adresse Mail" value="<%= user.mail %>" />
-          </br>
-	  </br>
+	    <label for="mail">Adresse Mail</label></br>
+	    <input type="email" id="mail" name="mail" placeholder="Adresse Mail" value="<%= user.mail %>" /></br></br>
 	  
-	  <label for="prenom">Prénom</label>
-	  <input type="text" id="prenom" name="prenom" size="18" placeholder="Prénom" value="<%= user.prenom %>" />
+	    <label for="prenom">Prénom</label>
+	    <input type="text" id="prenom" name="prenom" size="18" placeholder="Prénom" value="<%= user.prenom %>" />
+	    
+	    <label for="nom">Nom</label>
+	    <input type="text" id="nom" name="nom" size="18" placeholder="Nom" value="<%= user.nom %>"/></br>
 	  
-	  <label for="nom">Nom</label>
-	  <input type="text" id="nom" name="nom" size="18" placeholder="Nom" value="<%= user.nom %>"/>
-          </br>
-	  
-	  <label for="adresse">Adresse</label></br>
-	  <input type="text" id="adresse" name="adresse" size="45" placeholder="Adresse" value="<%= user.adresse_postale %>" /></br>
-	  
-	  <input type="text" id="address_cmpl" name="address_cmpl" size="65" placeholder="Complément de l'adresse" /></br>
-	  
-	  <input type="text" id="cp" name="cp" maxlength="5" placeholder="Code Postal" value="<%= user.code_postal %>" />
-	  <input type="text" id="ville" name="ville" placeholder="Ville" value="<%= user.ville %>" /></br>
-	  
-          </br>
-	  <input type="submit" id="mu" name="mu" value="Valider Modification Utilisateur" />
+	    <label for="adresse">Adresse</label></br>
+	    <input type="text" id="adresse" name="adresse" size="45" placeholder="Adresse" value="<%= user.adresse_postale %>" /></br>
+	    
+	    <input type="text" id="address_cmpl" name="address_cmpl" size="65" placeholder="Complément de l'adresse" /></br>
+	    
+	    <input type="text" id="cp" name="cp" maxlength="5" placeholder="Code Postal" value="<%= user.code_postal %>" />
+	    <input type="text" id="ville" name="ville" placeholder="Ville" value="<%= user.ville %>" /></br></br>
 
+	    <input type="submit" id="mu" name="mu" value="Valider Modification Utilisateur" />
 	  </p>
 	</form>
 	
@@ -225,9 +180,7 @@
 	}
 	}
       </script>
-      <%
-	 }
-	 %>
+      <% } %>
     </section>
     <% include include/footer %>
   </body>

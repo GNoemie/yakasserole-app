@@ -9,46 +9,35 @@
     <% include include/header %>
     <h1>Carte Bancaire</h1>
     <section>
-      <% if (req.query.premium) {
-	 %>
+      <% if (req.query.premium) { %>
       <p>Vous vous apprêtez à payer le montant de 3,99€ pour souscrire à un abonnement premium d'un mois.</br>
-      Nous vous rappelons que les avantages du premium sont :</br>
+	Nous vous rappelons que les avantages du premium sont :</br>
 	- Possibilité d'inviter jusqu'à 4 personnes pour participer à un atelier.</br>
 	- Une réduction de 10% lors de la participation à un atelier.</p>
       <form action="/connexion.html" method="post" >
-	<%
-	   }
-	   %>
-	<% if (r) {
-	   if (user.premium == true) {
-	   %>
+	<% }
+	   if (r) {
+	   if (user.premium == true) { %>
 	<p>Vous vous apprêtez à réserver pour <%= nb %> personnes et ainsi payer le montant de <%= price %>€ (incluant la remise de 10% avec un prix de départ de <%= result.rows[0].prix %>€ par personne) pour votre participation à l'atelier <%= r %>.</p>
-	<%
-	   }
-	   if (user.premium == false) {
-	   %>
+	<% }
+	   if (user.premium == false) { %>
 	<p>Vous vous apprêtez à réserver pour 1 personne et ainsi payer le montant de <%= result.rows[0].prix %>€ pour votre participation à l'atelier <%= r %>.</p>
-	<%
-	   }
-	   %>
+	<% } %>
 	<form action="/ateliers.html?titre=<%= r %>" method="post" >
-	  <%
-	     }
-	     %>
-        <p>
-          <label for="cbnb">Numéro de Carte</label>
-          <input type="text" id="cbnb" name="cbnb" size="18" placeholder="0000 0000 0000 0000" minlength="16" maxlength="16" required />
-	  </br>
-	  <label for ="Date">Date</label>
-	  <select name="année" required>
+	  <% } %>
+          <p>
+            <label for="cbnb">Numéro de Carte</label>
+            <input type="text" id="cbnb" name="cbnb" size="18" placeholder="0000 0000 0000 0000" minlength="16" maxlength="16" required /></br>
+	    <label for ="Date">Date</label>
+	    <select name="année" required>
 	      <option value="2017">2017</option>
 	      <option value="2018">2018</option>
 	      <option value="2019">2019</option>	  
               <option value="2020">2020</option>
               <option value="2021">2021</option>
               <option value="2022">2022</option>
-          </select>
-	  <select name="mois" required>   
+            </select>
+	    <select name="mois" required>   
               <option value="01">Janvier</option>  
               <option value="02">Février</option>  
               <option value="03">Mars</option>
@@ -61,28 +50,20 @@
               <option value="10">Octobre</option>
               <option value="11">Novembre</option>
               <option value="02">Décembre</option> 
-          </select> 
-	  </br>
+            </select></br>
 	  
-          <label for="cvv">CVV</label>
-          <input type="text" id="cvv" name="cvv" size="18" placeholder="000" minlength="3" maxlength="3" required/>
-          </br>
-	  <% if (req.query.premium) {
-	     %>
-	  <input type="submit" id="abp" name="abp" value="Valider" />	    
-	    <%
-	       }
-	       %>
-	    <% if (r) {
-	       %>
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" name="cvv" size="18" placeholder="000" minlength="3" maxlength="3" required/></br>
+	    <% if (req.query.premium) { %>
+	    <input type="submit" id="abp" name="abp" value="Valider" />	    
+	    <% }
+	       if (r) { %>
 	    <input type="submit" id="vr" name="vr" value="Valider" />	      
-	      <%
-		 }
-		 %>
-        </p>
-      </form>
-   </section>
-   <% include include/footer %>
+	    <% } %>
+          </p>
+	</form>
+    </section>
+    <% include include/footer %>
   </body>
 
 </html>

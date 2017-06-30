@@ -9,16 +9,14 @@
     <% include include/header %>
     <h1>Chefs cuisiniers</h1>
     <section>
-      <% for (var i = 0; i < result.rowCount; i++) {
-			     if (result.rows[i].role == "chef_cuisinier") {
-			     %>
+      <% if (result.rowCount == 0) { %>
+      <p>Aucun chef cuisinier n'est actuellement dans notre base de donnée.</p>
+      <% } else {
+	 for (var i = 0; i < result.rowCount; i++) { %>
 	 <a href="/profil.html?id=<%= result.rows[i].id %>"><%= result.rows[i].prenom %> <%= result.rows[i].nom %></a>
-	 <%
-	    }
-	    }
-	    %>
-   </section>
-   <% include include/footer %>
+	 <% } } %>
+    </section>
+    <% include include/footer %>
   </body>
 
 </html>

@@ -1,98 +1,98 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <% include include/head %>
-        <title>YaKasserole</title>
-    </head>
+  <head>
+    <% include include/head %>
+    <title>YaKasserole</title>
+  </head>
 
-    <body>
-        <% include include/header %>
-        <div id="accueil">
-            <div id="prez">
-                <% if (!user) { %>
-                <a id="goto_inscription" href="/inscription.html">
-                    Rapide</br>et</br>gratuit</br>
-                    <span>S'inscrire maintenant</span>
-                </a>
-                <% } %>
-                
-                <% if (!user || (user && !user.premium)) { %>
-                <a id="premium" href="/premium.html">
-                    <h2>PREMIUM</h2>
-                        Abonnement</br>
-                        <div class="prem_block"><span class="big">10%</span></br>de reduction</div>
-                    <div class="prem_block">Ateliers jusque</br><span class="big">4</span></br>personnes</div>
-                </a>
-                <% } %>
+  <body>
+    <% include include/header %>
+    <div id="accueil">
+      <div id="prez">
+        <% if (!user) { %>
+        <a id="goto_inscription" href="/inscription.html">
+          Rapide</br>et</br>gratuit</br>
+          <span>S'inscrire maintenant</span>
+        </a>
+        <% } %>
+        
+        <% if (!user || (user && !user.premium)) { %>
+        <a id="premium" href="/premium.html">
+          <h2>PREMIUM</h2>
+          Abonnement</br>
+          <div class="prem_block"><span class="big">10%</span></br>de reduction</div>
+          <div class="prem_block">Ateliers jusque</br><span class="big">4</span></br>personnes</div>
+        </a>
+        <% } %>
 
-                <h2>Qui sommes-nous ?</h2>
-                <p>
-                    YaKasserole propose des ateliers cuisine. Inscrivez-vous et reservez en ligne pour apprendre la cuisine.</br>
-                    Devenez un as de la cuisine et impressionez votre famille et vos amis !
-                </p>
+        <h2>Qui sommes-nous ?</h2>
+        <p>
+          YaKasserole propose des ateliers cuisine. Inscrivez-vous et reservez en ligne pour apprendre la cuisine.</br>
+          Devenez un as de la cuisine et impressionez votre famille et vos amis !
+        </p>
 
-                <div id="buttons">
-                    <a class="button" id="button1" href="/recettes.html"><span class="title">Recettes</span></a>
-                    <a class="button" id="button2" href="/ateliers.html"><span class="title">Ateliers</span></a>
-                    <a class="button" id="button3" href="/chefs.html"><span class="title">Chefs</span></a>
-                </div>
-            </div>
-
-            <div class="title_block">
-                <h2>Dernieres Recettes</h2>
-                <% if (!recettes.rows.length) { %>
-                <p>Aucune recette</p>
-                <% } else { %>
-                <ul>
-                    <% for (i = 0; i < recettes.rows.length; i++) { %>
-                    <li>
-                        <a href="/recette.html?titre=<%= recettes.rows[i].titre %>">
-                            <% if (recettes.rows[i].image == null) { %>
-                            <img src="resources/recette.png" />
-                            <% } else { %>
-                            <img src="<%= recettes.rows[i].image %>" />
-                            <% } %>
-
-                            <div class="description">
-                                <h3><%= recettes.rows[i].titre %></h3>
-                                <%= recettes.rows[i].type %></br>
-                                Difficulte : <%= recettes.rows[i].difficulte %> / 5
-                            </div>
-                        </a>
-                    </li>
-                    <% } %>
-                </ul>
-                <a href="/recettes.html">Voir toutes</a>
-                <% } %>
-            </div>
-            <div class="title_block">
-                <h2>Prochains Ateliers</h2>
-                <% if (!ateliers.rows.length) { %>
-                <p>Aucun atelier</p>
-                <% } else { %>
-                <ul>
-                    <% for (i = 0; i < ateliers.rows.length; i++) { %>
-                    <li>
-                        <a href="/atelier.html?titre=<%= ateliers.rows[i].titre %>">
-                            <% if (ateliers.rows[i].image == null) { %>
-                            <img src="resources/chinois.png" />
-                            <% } else { %>
-                            <img src="<%= ateliers.rows[i].image %>" />
-                            <% } %>
-
-                            <div class="description">
-                                <h3><%= ateliers.rows[i].titre %></h3>
-                                <%= ateliers.rows[i].theme %>
-                                Situe a : <%= ateliers.rows[i].localisation %>
-                            </div>
-                        </a>
-                    </li>
-                    <% } %>
-                </ul>
-                <a href="/ateliers.html">Voir tous</a>
-                <% } %>
-            </div>
+        <div id="buttons">
+          <a class="button" id="button1" href="/recettes.html"><span class="title">Recettes</span></a>
+          <a class="button" id="button2" href="/ateliers.html"><span class="title">Ateliers</span></a>
+          <a class="button" id="button3" href="/chefs.html"><span class="title">Chefs</span></a>
         </div>
-        <% include include/footer %>
-    </body>
+      </div>
+
+      <div class="title_block">
+        <h2>Dernieres Recettes</h2>
+        <% if (!recettes.rows.length) { %>
+        <p>Aucune recette</p>
+        <% } else { %>
+        <ul>
+          <% for (i = 0; i < recettes.rows.length; i++) { %>
+             <li>
+               <a href="/recette.html?titre=<%= recettes.rows[i].titre %>">
+                 <% if (recettes.rows[i].image == null) { %>
+                 <img src="resources/recette.png" />
+                 <% } else { %>
+                 <img src="<%= recettes.rows[i].image %>" />
+                 <% } %>
+
+                 <div class="description">
+                   <h3><%= recettes.rows[i].titre %></h3>
+                   <%= recettes.rows[i].type %></br>
+                   Difficulte : <%= recettes.rows[i].difficulte %> / 5
+                 </div>
+               </a>
+             </li>
+             <% } %>
+        </ul>
+        <a href="/recettes.html">Voir toutes</a>
+        <% } %>
+      </div>
+      <div class="title_block">
+        <h2>Prochains Ateliers</h2>
+        <% if (!ateliers.rows.length) { %>
+        <p>Aucun atelier</p>
+        <% } else { %>
+        <ul>
+          <% for (i = 0; i < ateliers.rows.length; i++) { %>
+             <li>
+               <a href="/atelier.html?titre=<%= ateliers.rows[i].titre %>">
+                 <% if (ateliers.rows[i].image == null) { %>
+                 <img src="resources/chinois.png" />
+                 <% } else { %>
+                 <img src="<%= ateliers.rows[i].image %>" />
+                 <% } %>
+
+                 <div class="description">
+                   <h3><%= ateliers.rows[i].titre %></h3>
+                   <%= ateliers.rows[i].theme %>
+                   Situe a : <%= ateliers.rows[i].localisation %>
+                 </div>
+               </a>
+             </li>
+             <% } %>
+        </ul>
+        <a href="/ateliers.html">Voir tous</a>
+        <% } %>
+      </div>
+    </div>
+    <% include include/footer %>
+  </body>
 </html>
