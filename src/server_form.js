@@ -408,7 +408,14 @@ module.exports = {
 						       if (sess.user.id == req.body.id)
                                                            sess.user.mail = req.body.mail;
 						   });
-					       
+					        
+                                               if (req.body.image)
+                                                   db_password = client.query('UPDATE utilisateur SET image = $1 WHERE id = $2;', [req.body.image, req.body.id], function (err, result) {
+                                                       if (err) console.log('error happened during query', err);
+                                                       if (sess.user.id == req.body.id)
+                                                           sess.user.image = req.body.image;
+                                                   });
+						 
 					       if (req.body.prenom)
 						   db_password = client.query('UPDATE utilisateur SET prenom = $1 WHERE id = $2;', [req.body.prenom, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
@@ -682,6 +689,10 @@ module.exports = {
 						   db_password = client.query('UPDATE recette SET titre = $1 WHERE id = $2;', [req.body.titre, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
 						   });
+						 if (req.body.image)
+                                                   db_password = client.query('UPDATE recette SET image = $1 WHERE id = $2;', [req.body.image, req.body.id], function (err, result) {
+                                                       if (err) console.log('error happened during query', err);
+                                                   });
 					       
 					       if (req.body.type)
 						   db_password = client.query('UPDATE recette SET type = $1 WHERE id = $2;', [req.body.type, req.body.id], function (err, result) {
@@ -860,6 +871,11 @@ module.exports = {
 						   db_password = client.query('UPDATE atelier SET theme = $1 WHERE id = $2;', [req.body.theme, req.body.id], function (err, result) {
 						       if (err) console.log('error happened during query', err);
 						   });
+
+						if (req.body.image)
+                                                   db_password = client.query('UPDATE atelier SET image = $1 WHERE id = $2;', [req.body.image, req.body.id], function (err, result) {
+                                                       if (err) console.log('error happened during query', err);
+                                                   });
 					       
 					       if (req.body.description)
 						   db_password = client.query('UPDATE atelier SET description = $1 WHERE id = $2;', [req.body.description, req.body.id], function (err, result) {
