@@ -11,9 +11,13 @@
     <section id="recette">
       <p><span class="field">Auteur :</span> <%= resultauteur.rows[0].prenom %> <%= resultauteur.rows[0].nom %></p>
       <p><span class="field">Type :</span> <%= result.rows[0].type %></p>
+      <p>
+      <% for (j = 0; j < result.rows[0].difficulte; j++) { %>
+        <img src="resources/spatula.png" class="star"/>
+      <% } %>
+      </p>
       <p><span class="field">Ingrédients :</span> <%= result.rows[0].ingredients %></p>
       <p><span class="field">Description :</span> <%= result.rows[0].description %></p>	    
-      <p><span class="field">Difficulté :</span> <%= result.rows[0].difficulte %> / 5</p>
       <p class="date">Posté le : <%= result.rows[0].date_post %></p>
     </section>
 

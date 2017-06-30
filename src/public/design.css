@@ -641,8 +641,14 @@ footer a:hover
 
 .title_block img, .list img
 {
-    height: 113px;
+    height: 130px;
     border-left: 4px solid black;
+}
+
+.title_block .star, .list .star, .star
+{
+    height: 15px;
+    border: none;
 }
 
 
