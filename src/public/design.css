@@ -35,12 +35,12 @@ input
     padding-right: 10px;
     letter-spacing: 0.1em;
     color: black;
+    -webkit-transition: background-color 1s, color 1s;
+    transition: background-color 1s, color 1s;
 }
 
 input:hover, input:focus
 {
-    -webkit-transition: background-color 1s, color 1s;
-    transition: background-color 1s, color 1s;
     background-color: #bc3535;
     color: white;
 }
@@ -67,12 +67,12 @@ button
     color: black;
     letter-spacing: 0.1em;
     border: 1px solid #bc3535;
+    -webkit-transition: background-color 1s, color 1s;
+    transition: background-color 1s, color 1s;
 }
 
 button:hover
 {
-    -webkit-transition: background-color 1s, color 1s;
-    transition: background-color 1s, color 1s;
     background-color: #bc3535;
     color: white;
 }
@@ -181,7 +181,7 @@ header #logo:hover
     background: none;
     border: none;
     width: 400px;
-    padding: 3px;
+    padding: 0;
     text-align: left;
     -webkit-transition: none;
     transition: none;
@@ -189,18 +189,38 @@ header #logo:hover
 
 #research #search
 {
+    display: inline-block;
     border: 1px solid /*#dbbc3b*/ white;
     border-radius: 5px 0px 5px 0px;
     width: 300px;
-    height: 38px;
-    padding: 3px;
-    padding-left: 8px;
+    height: 40px;
+    padding-left: 5px;
     padding-right: 8px;
     background-color: rgba(255, 219, 69, 0.7);
     -webkit-transition: background-color 1s;
     transition: background-color 1s;
     outline: 0;
     color: white;
+}
+
+#research #search input, #research #search input, #research #search input:focus
+{
+    color: white;
+    background: none;
+    display: inline-block;
+    width: 180px;
+    outline: none;
+}
+
+#research #search select, #research #search select:focus
+{
+    margin: 0;
+    display: inline-block;
+    width: 90px;
+    background-color: rgba(231, 70, 70, 0.7);
+    border: 1px solid rgba(231, 70, 70, 0.7);
+    outline: 0px;
+    padding: 3px;
 }
 
 #research #search:focus
@@ -214,6 +234,7 @@ header #logo:hover
     outline: 0;
     width: 38px;
     height: 38px;
+    padding-bottom: 3px;
     border: 1px solid white;
     border-radius: 10px 10px 10px 10px;
     background-image: url(resources/search.png);
