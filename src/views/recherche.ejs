@@ -53,7 +53,11 @@
         	  <% for(var i = 0 ; i < ate.rows.length ; i++) { %>
         	    <li>
                     <a href="/atelier.html?titre=<%= ate.rows[i].titre %>">
-                    <img src="resources/atelier.png" />
+                    <% if (ate.rows[i].image == null) { %>
+                    <img src="resources/chinois.png" />
+                    <% } else { %>
+                    <img src="<%= ate.rows[i].image %>" />
+                    <% } %>
                     <div class="description">
                     <h3><%= ate.rows[i].titre %></h3>
                     Chef cuisinier : 
@@ -68,6 +72,11 @@
 		    <% for(var i =0 ; i < rol.rows.length; i++) { %>
 		      <li>
 		      <a href="/profil.html?id=<%= rol.rows[i].id %>">
+              <% if (role.rows[i].image == null) { %>
+              <img src="resources/user.png" />
+              <% } else { %>
+              <img src="<%= role.rows[i].image %>" />
+              <% } %>
 		      <div class="description">
 		      <h3>Chef <%= rol.rows[i].nom %></h3>
 	             </div>

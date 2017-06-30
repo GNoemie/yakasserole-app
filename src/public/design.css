@@ -8,7 +8,7 @@ body
     background-color: white;
     margin: auto;
     max-width: 1200px;
-    min-width: 940px;
+    min-width: 950px;
     border-left: 3px #eeeeee solid;
     border-right: 3px #eeeeee solid;
 }
@@ -203,7 +203,7 @@ header #logo:hover
     color: white;
 }
 
-#research #search input, #research #search input, #research #search input:focus
+#research #search input, #research #search input:focus
 {
     color: white;
     background: none;
