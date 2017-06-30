@@ -82,7 +82,7 @@ module.exports = {
 										from: "yakasserolehandle@gmail.com",
 										to: req.body.mail,
 										subject: "CONFIRMATION D'INSCRIPTION",
-										html: "Bienvenue sur YaKasserole,</br></br>Pour confirmer votre inscription, veuillez cliquer sur " + "<a href=\"http://localhost:8080/activation.html?key=" + random + "&mail=" + req.body.mail + "\">Confirmer</a> afin de confirmer votre compte sur le site YaKasserole.</br></br></br>--------------------</br>Ceci est un mail automatique, veuillez ne pas y répondre."
+										html: "Bienvenue sur YaKasserole,</br></br>Pour confirmer votre inscription, veuillez cliquer sur " + "<a href=\"https://localhost:8080/activation.html?key=" + random + "&mail=" + req.body.mail + "\">Confirmer</a> afin de confirmer votre compte sur le site YaKasserole.</br></br></br>--------------------</br>Ceci est un mail automatique, veuillez ne pas y répondre."
 									    }
 									    smtpTransport.sendMail(mail, function(error, response){
 										if (error) {
@@ -302,7 +302,7 @@ module.exports = {
 						       from: "yakasserolehandle@gmail.com",
 						       to: req.body.email,
 						       subject: "MOT DE PASSE OUBLIE",
-						       html: "Bonjour " + result.rows[0].prenom + " " + result.rows[0].nom + ",</br>Suite au signalement de l'oubli de votre mot de passe, nous vous proposons de rédéfinir un nouveau mot de passe en cliquant sur <a href=\"http://localhost:8080/changemdp.html?key=" + random + "&mail=" + req.body.email + "\">Définir son mot de passe</a></br></br></br>--------------------</br>Ceci est un mail automatique, veuillez ne pas y répondre."
+						       html: "Bonjour " + result.rows[0].prenom + " " + result.rows[0].nom + ",</br>Suite au signalement de l'oubli de votre mot de passe, nous vous proposons de rédéfinir un nouveau mot de passe en cliquant sur <a href=\"https://localhost:8080/changemdp.html?key=" + random + "&mail=" + req.body.email + "\">Définir son mot de passe</a></br></br></br>--------------------</br>Ceci est un mail automatique, veuillez ne pas y répondre."
 						   }
 						   smtpTransport.sendMail(mail, function(error, response){
 						       if (error) {
@@ -333,14 +333,15 @@ module.exports = {
 	m = "";
 	if (req.body.mdp.length < 6)
 	    m = "MOT DE PASSE INVALIDE";
-
+	    
 	var password = sha256(req.body.mdp);
 	var password2 = sha256(req.body.mdp1);
 
 	if (password != password2)
-	    m = "MOTS DE PASSES NON IDENTIQUES";	
+	    m = "MOTS DE PASSES NON IDENTIQUES";
+
 	if (m != "")
-	    res.render('changemdp.ejs', {m: m});
+	    return res.render('connexion.ejs');
 	pg.connect(config, function(err, client, done) {
 	    var db_password = client.query('SELECT * FROM mdprecup WHERE mail = $1;', [r.mail], function (err, result) {
 		if (result.rows[0].cle == r.key)
