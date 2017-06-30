@@ -6,14 +6,16 @@
         <div id="account">
             <form id="research"  action="recherche.html" method="post" />
                 <p>
-                    <input type="text" name="search" id="search" placeholder="Rechercher" required />
-    			<!-------<select name="Catégorie" size="1" id="cat">
-              		<option value="t">Tout</option>
-              		<option value="r">Recette</option>
-              		<option value="u">Utilisateur</option>
-              		<option value="a">Atelier</option>
-            	    </select>----------->
-		    <input type="submit" id="ok" name="ok" value=" "/>
+                    <div id="search">
+                        <input type="text" name="search" placeholder="Rechercher" required />
+    			        <select name="cat" size="1" id="cat">
+              		        <option value="t">Tout</option>
+              		        <option value="r">Recette</option>
+              		        <option value="u">Utilisateur</option>
+              		        <option value="a">Atelier</option>
+            	        </select>
+                    </div>
+		            <input type="submit" id="ok" name="ok" value=" "/>
                 </p>
             </form>
     <%
