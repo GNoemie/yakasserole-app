@@ -77,6 +77,15 @@ button:hover
     color: white;
 }
 
+.img
+{
+    float: left;
+    max-width: 400px;
+    height: 200px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
 /* HEADER */
 
 header
@@ -659,6 +668,7 @@ footer a:hover
     background-color: #ffdb45;
     padding: 20px;
     margin-bottom: 20px;
+    min-height: 250px;
 }
 
 #recette .date

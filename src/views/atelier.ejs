@@ -9,6 +9,7 @@
     <% include include/header %>
     <h1>Atelier : <%= result.rows[0].titre %></h1>
     <section id="atelier">
+      <img src="<%= result.rows[0].image %>" class="img" />
       <p><span class="field">Thème :</span> <%= result.rows[0].theme %></p>
       <p><span class="field">Chef cuisinier encadrant :</span> <a href="/profil.html?id=<%= userchief.rows[0].id %>"><%= userchief.rows[0].prenom %> <%= userchief.rows[0].nom %> </p></a>
       <p><span class="field">Description :</span> <%= result.rows[0].description %></p>
