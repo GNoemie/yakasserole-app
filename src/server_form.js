@@ -176,7 +176,7 @@ module.exports = {
 	    return res.redirect('/');
 	}
 	var regex2 = /\d{3}/;
-	if (!regex1.test(req.body.cvv))
+	if (!regex2.test(req.body.cvv))
 	{
 	    sess.msgKO = "Code de sécurité invalide.";
 	    return res.redirect('/');
@@ -1051,7 +1051,7 @@ module.exports = {
 			    return res.redirect('/');
 			}
 			var regex2 = /\d{3}/;
-			if (!regex1.test(req.body.cvv))
+			if (!regex2.test(req.body.cvv))
 			{
 			    sess.msgKO = "Code de sécurité invalide.";
 			    return res.redirect('/');

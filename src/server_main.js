@@ -344,14 +344,27 @@ app.post('/profil.html', function(req, res) {
   PRINT
 */
 
+app.get('/changeuser.html', function(req, res) {
+    return form.printusers(req, res);
+});
+
 app.post('/changeuser.html', function(req, res) {
     return form.printusers(req, res);
+});
+
+app.get('/changeatelier.html', function(req, res) {
+    return form.printateliers(req, res);
 });
 
 app.post('/changeatelier.html', function(req, res) {
     return form.printateliers(req, res);
 });
 
+app.get('/changerecette.html', function(req, res) {
+    return form.printrecettes(req, res);
+});
+
 app.post('/changerecette.html', function(req, res) {
     return form.printrecettes(req, res);
 })
+
