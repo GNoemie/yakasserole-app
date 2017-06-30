@@ -15,61 +15,42 @@
       <p>Rôle : <%= row.role %> </p>
       </br>
       <% if (user.id == row.id) {
-	 %>
-      <% if (row.premium == true) {
-	 %>
+	 if (row.premium == true) { %>
       <section>
 	<p>Les avantages du premium sont :</br>
 	  - Possibilité d'inviter jusqu'à 4 personnes pour participer à un atelier.</br>
 	  - Une réduction de 10% lors de la participation à un atelier.</p>
-	<p>Veuillez vous reconnecter après avoir validé votre désabonnement afin de confirmer ce dernier.</p>
 	<form action="/connexion.html" method="post" >
 	  <input type="submit" id="anp" name="anp" value="Annuler son abonnement premium" >
 	</form>
       </section>
-      <%
-	 }
-	 %>
-      <%
-	 if (row.premium == false) {
-	 %>
+      <% }
+	 if (row.premium == false) { %>
       <section>
 	<p>Les avantages du premium sont :</br>
 	  - Possibilité d'inviter jusqu'à 4 personnes pour participer à un atelier.</br>
 	  - Une réduction de 10% lors de la participation à un atelier.</p>
-	<p>Veuillez vous reconnecter après avoir validé votre paiement afin de confirmer votre abonnement premium.</p>
 	<form action="/cb.html?premium=non" method="post" >
 	  <input type="submit" value="Prendre un abonnement premium" >
 	</form>
-      </section>
-      <%
-	 }
-	 }
-	 %>
-      </br>
+      </section></br>
+      <% } } %>
+      
       <label for="atelier">Atelier(s) :</label>
       <table>
 	<tr>
 	  <th>ID</th>
 	  <th>Titre</th>
 	</tr>
-	<%
-	   for(var i = 0 ; i < reservationatelier.rows.length ; i++) {
+	<% for(var i = 0 ; i < reservationatelier.rows.length ; i++) {
 			       for(var j = 0; j < resultatelier.rows.length; j++) {
-						  if (reservationatelier.rows[i].atelier == resultatelier.rows[j].id) {
-			       %>
-	   <tr>
-	     <td><%= resultatelier.rows[j].id %></td>
-	     <td><a href="/atelier.html?titre=<%= resultatelier.rows[j].titre %>"><%= resultatelier.rows[j].titre %></a></td>
-	   </tr>
-	   <%
-	      }
-	      }
-	      }
-	      %>
-      </table>
-      </br>
-      </br>
+						  if (reservationatelier.rows[i].atelier == resultatelier.rows[j].id) { %>
+			       <tr>
+				 <td><%= resultatelier.rows[j].id %></td>
+				 <td><a href="/atelier.html?titre=<%= resultatelier.rows[j].titre %>"><%= resultatelier.rows[j].titre %></a></td>
+			       </tr>
+			       <% } } } %>
+      </table></br></br>
       
       <label for="recette">Recette(s) :</label>
       <table>
@@ -77,49 +58,35 @@
 	  <th>ID</th>
 	  <th>Titre</th>
 	</tr>
-	<%
-	   for(var i = 0 ; i < resultrecette.rows.length ; i++) {
-			       %>
+	<% for(var i = 0 ; i < resultrecette.rows.length ; i++) { %>
 	   <tr>
 	     <td><%= resultrecette.rows[i].id %></td>
 	     <td><a href="/recette.html?titre=<%= resultrecette.rows[i].titre %>"><%= resultrecette.rows[i].titre %></a></td>
 	   </tr>
-	   <%
-	      }
-	      %>
-      </table>
-      </br>
-      </br>
+	   <% } %>
+      </table></br></br>
       
-      <% if (user.id == row.id) {
-	 %>
+      <% if (user.id == row.id) { %>
       <button id="modifier">Modifier</button>
       <div id="change" style="display : none">
 	<form action="/admin.html" method="post" >
 	  <p>
 	    <select name="id" id="id" required>
 	      <option value="<%= user.id %>"><%= user.id %></option>
-	    </select>
-	    </br>
-	    </br>
+	    </select></br></br>
 	    
 	    <label for="mail">Adresse Mail</label></br>
-	    <input type="email" id="mail" name="mail" placeholder="Adresse Mail" />
-            </br>
-	  
+	    <input type="email" id="mail" name="mail" placeholder="Adresse Mail" /></br>
+	    
 	    <label for="mdp">Mot de Passe</label></br>
-	    <input type="password" id="mdp" name="mdp" placeholder="Mot de Passe"  />
-            </br>
-            </br>
-            </br>
+	    <input type="password" id="mdp" name="mdp" placeholder="Mot de Passe"  /></br></br></br>
 
 	    
 	    <label for="prenom">Prénom</label>
 	    <input type="text" id="prenom" name="prenom" size="18" placeholder="Prenom"  />
 
 	    <label for="nom">Nom</label>
-	    <input type="text" id="nom" name="nom" size="18" placeholder="Nom"  />
-            </br>
+	    <input type="text" id="nom" name="nom" size="18" placeholder="Nom"  /></br>
 
 	    <label for="adresse">Adresse</label></br>
 	    <input type="text" id="adresse" name="adresse" size="45" placeholder="Adresse" /></br>
@@ -127,9 +94,7 @@
 	    <input type="text" id="address_cmpl" name="address_cmpl" size="65" placeholder="Complément de l'adresse" /></br>
 
 	    <input type="text" id="cp" name="cp" maxlength="5" placeholder="Code Postal"  />
-	    <input type="text" id="ville" name="ville" placeholder="Ville" /></br>
-
-            </br>
+	    <input type="text" id="ville" name="ville" placeholder="Ville" /></br></br>
 	    
 	    <input type="submit" id="mu" name="mu" value="Valider Modification" />
 
@@ -146,9 +111,7 @@
 	}
       </script>
       
-      <%
-	 }
-	 %>
+      <% } %>
     </section>
     <% include include/footer %>
   </body>

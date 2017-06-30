@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <% include include/head %>
-        <title>Ajout de Recette</title>
-    </head>
+  <head>
+    <% include include/head %>
+    <title>Ajout de Recette</title>
+  </head>
 
-<body>
+  <body>
     <% include include/header %>
     <h1>Ajout de Recette</h1>
     <section>
-        <form action="/recettes.html" method="post" >
-            <p>
-                <label for="titre">Titre</label>
-                <input type="text" id="titre" name="titre" size="18" placeholder="Titre" required />
+      <form action="/recettes.html" method="post" >
+        <p>
+          <label for="titre">Titre</label>
+          <input type="text" id="titre" name="titre" size="18" placeholder="Titre" required />
 
-                <label for="type">Type</label>
-                <input type="text" id="type" name="type" size="18" placeholder="Type" required />
-                </br>
-                <label for="image">Image</label>
-                <input type="text" id="image" name="image" placeholder="Url to image" />
-                </br>
-
-		<label for="ingredients">Ingrédient(s)</label></br>
-		<label>Veuillez entrer les ingrédients que comporte votre recette sous le format suivant :</br>
-		  Ex :</br>
-		  Farine, 75g</br>
-		  Sel, 2g
-		</label></br>
-                <textarea id="ingredients" name="ingredients" placeholder="Ingrédient(s)" required >
-		</textarea>
-		</br>
-		
-                <label for="description">Description</label></br>
-                <textarea id="description" name="description" placeholder="Description" required >
-		</textarea>
-		</br>
-		
-		<label for="difficulte">Difficultée</label></br>
-		<input type="number" id="difficulte" name="difficulte" min="1" max="5" required />
-		</br>
-		
-                <input type="submit" value="Valider" />
-            </p>
-        </form>
+          <label for="type">Type</label>
+          <input type="text" id="type" name="type" size="18" placeholder="Type" required /></br>
+          <label for="image">Image</label>
+	  <div class="holdingDiv">
+	    <form action="/index.html" name="upload" class="dropzone dz-clickable" id="dropzoneArea" enctype="multipart/form-data" method = "post">
+	      <input  type="file" name="theFile" />
+	      <button id="uploadSubmitter" class="btn btn-primary btn-large" type="submit">Finished</button>
+	    </form>
+	    </div>
+	  <label for="ingredients">Ingrédient(s)</label></br>
+	  <label>Veuillez entrer les ingrédients que comporte votre recette sous le format suivant :</br>
+	    Ex :</br>
+	    Farine, 75g</br>
+	    Sel, 2g
+	  </label></br>
+          <textarea id="ingredients" name="ingredients" placeholder="Ingrédient(s)" required >
+	  </textarea></br>
+	  
+          <label for="description">Description</label></br>
+          <textarea id="description" name="description" placeholder="Description" required >
+	  </textarea></br>
+	  
+	  <label for="difficulte">Difficultée</label></br>
+	  <input type="number" id="difficulte" name="difficulte" min="1" max="5" required /></br>
+	  
+          <input type="submit" value="Valider" />
+        </p>
+      </form>
     </section>
     <% include include/footer %>
-</body>
-
+  </body>
+  
 </html>

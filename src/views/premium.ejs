@@ -14,32 +14,23 @@
 	- Une réduction de 10% lors de la participation à un atelier.</br>
 	Tous ces avantages sont pour une durée d'un mois pour seulement 3,99€.</p>
       <% if (user) {
-	 if (user.premium == false) {
-	 %>
+	 if (user.premium == false) { %>
       <p>Veuillez vous reconnecter après avoir validé votre paiement afin de confirmer votre abonnement premium.</p>
       <form action="/cb.html?premium=non" method="post" >
         <input type="submit" value="Prendre un abonnement premium" />
       </form>
-      <%
-	 }
-	 if (user.premium == true) {
-	 %>
+      <% }
+	 if (user.premium == true) { %>
       <p>Veuillez vous reconnecter après avoir validé votre désabonnement afin de confirmer ce dernier.</p>
       <form action="/connexion.html" method="post" >
 	<input type="submit" id="anp" name="anp" value="Annuler son abonnement premium" >
       </form>      
-      <%
-	 }
-	 }
-	 %>
-      <% if (!user) {
-	 %>
+      <% } }
+	 if (!user) { %>
       <p>Veuillez vous connecter ou vous inscrire afin de pouvoir prendre un abonnement premium.</p>
-      <%
-	 }
-	 %>
-   </section>
-   <% include include/footer %>
+      <% } %>
+    </section>
+    <% include include/footer %>
   </body>
-
+  
 </html>

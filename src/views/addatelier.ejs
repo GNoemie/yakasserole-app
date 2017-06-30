@@ -1,63 +1,54 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <% include include/head %>
-        <title>Ajout d'atelier</title>
-    </head>
+  <head>
+    <% include include/head %>
+    <title>Ajout d'atelier</title>
+  </head>
 
-<body>
+  <body>
     <% include include/header %>
     <h1>Ajout d'atelier</h1>
     <section>
-        <% if (result.rows.length == 0) { %>
-        <p> Aucun chef cuisinier inscrit. Impossible d'ajouter un atelier.</p>
-        <% } else { %>
-        <form action="/ateliers.html" method="post" >
-          <p>
-	    <label for="chef">Chef cuisinier</label>
-	    <select id="chef" name="chef" required />
-	    <%
-	       for(var i = 0 ; i < result.rows.length ; i++) { %>
+      <% if (result.rows.length == 0) { %>
+      <p> Aucun chef cuisinier inscrit. Impossible d'ajouter un atelier.</p>
+      <% } else { %>
+      <form action="/ateliers.html" method="post" >
+	<p>
+	  <label for="chef">Chef cuisinier</label>
+	  <select id="chef" name="chef" required >
+	    <% for(var i = 0 ; i < result.rows.length ; i++) { %>
                <label for="chef">Chef</label>
 	       <option value="<%= result.rows[i].id %>">Chef <%= result.rows[i].nom %></option>
-	       
 	       <% } %>
-		</select></br>
-                <label for="titre">Titre</label>
-                <input type="text" id="titre" name="titre" size="18" placeholder="Titre" required />
-                </br>
+	  </select></br>
+	  <label for="titre">Titre</label>
+	  <input type="text" id="titre" name="titre" size="18" placeholder="Titre" required /></br>
 
-		<label for="theme">Thème</label>
-                <input type="text" id="theme" name="theme" size="18" placeholder="Thème" required />
-                </br>
+	  <label for="theme">Thème</label>
+	  <input type="text" id="theme" name="theme" size="18" placeholder="Thème" required /></br>
 
-                <label for="description">Description</label></br>
-                <textarea id="description" name="description" placeholder="Description" required>
-		</textarea>
-		</br>
-		
-		<label for="localisation">Localisation</label>
-                <input type="text" id="localisation" name="localisation" size="18" placeholder="Localisation" required />
-                </br>
+	  <label for="description">Description</label></br>
+	  <textarea id="description" name="description" placeholder="Description" required>
+	  </textarea></br>
 
-		<label for="prix">Prix</label></br>
-		<input type="number" id="prix" name="prix" required />
-		</br>
+	  <label for="localisation">Localisation</label>
+	  <input type="text" id="localisation" name="localisation" size="18" placeholder="Localisation" required /></br>
 
-		<label for="date_debut">Date de début</label></br>
-		<input type="date" id="date_debut" name="date_debut" required />
-		</br>
+	  <label for="prix">Prix</label></br>
+	  <input type="number" id="prix" name="prix" required /></br>
 
-		<label for="date_fin">Date de fin</label></br>
-		<input type="date" id="date_fin" name="date_fin" required />
-		</br>
+	  <label for="date_debut">Date de début</label></br>
+	  <input type="date" id="date_debut" name="date_debut" required /></br>
 
-                <input type="submit" value="Valider" />
-            </p>
-        </form>
-        <% } %>
+	  <label for="date_fin">Date de fin</label></br>
+	  <input type="date" id="date_fin" name="date_fin" required /></br>
+
+	  <input type="submit" value="Valider" />
+	</p>
+      </form>
+      <% } %>
     </section>
     <% include include/footer %>
-</body>
+  </body>
 
 </html>

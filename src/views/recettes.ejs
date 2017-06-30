@@ -9,44 +9,47 @@
     <% include include/header %>
     <h1>Les Recettes</h1>
     <section>
-    <div class="list">
-    <% if (result.rows.length == 0) { %>
-        <p>Aucune recette</p>
-    <% } else { %>
-    <ul>
-	<% for(var i = 0 ; i < result.rows.length ; i++) { %>
-        <li>
-            <a href="/recette.html?titre=<%= result.rows[i].titre %>">
-                <% if (result.rows[i].image == null) { %>
-                <img src="resources/recette.png" />
-                <% } else { %>
-                <img src="<%= result.rows[i].image %>" />
-                <% } %>
-                <div class="description">
-                    <h3><%= result.rows[i].titre %></h3>
-                    <%= result.rows[i].type %></br>
-                    Difficulte : <%= result.rows[i].difficulte %> / 5</br>
+      <div class="list">
+	<% if (result.rows.length == 0) { %>
+	<p>Aucune recette n'existe actuellement.</p>
+	<% } else { %>
+	<ul>
+	  <% for(var i = 0 ; i < result.rows.length ; i++) { %>
+             <li>
+               <a href="/recette.html?titre=<%= result.rows[i].titre %>">
+                 <% if (result.rows[i].image == null) { %>
+                 <img src="resources/recette.png" />
+                 <% } else { %>
+                 <img src="<%= result.rows[i].image %>" />
+                 <% } %>
+                 <div class="description">
+                   <h3><%= result.rows[i].titre %></h3>
+                   <%= result.rows[i].type %></br>
+                   Difficulte : <%= result.rows[i].difficulte %> / 5</br>
                 
-                    Par :  
-	            <% for (var j = 0; j < resultuser.rows.length; j++) {
-				    if (resultuser.rows[j].id == result.rows[i].auteur) { %>
-		            <%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %>
-		        <% } } %>
-                </div>
-            </a>
-        </li>
+                   Par :  
+	           <% for (var j = 0; j < resultuser.rows.length; j++) {
+					  if (resultuser.rows[j].id == result.rows[i].auteur) { %>
+		      <%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %>
+		      <% } } %>
+                 </div>
+               </a>
+             </li>
+	     <% } %>
+	</ul>
     <% } %>
-    </ul>
-    <% } %>
-    </div>
+      </div>
       
       <% if (user.role == "user" || user.role == "admin" || user.role == "respo_user") {
 	 %>
       <form action="/addrecette.html" method="get" >
 	<input type="submit" value="Ajouter une recette" >
-      </form>
-      </br>
-			 
+      </form></br>
+
+      <% }
+	 if (user.role == "user" || user.role == "admin" || user.role == "respo_user") {
+	 if (result.rowCount != 0) {
+	 %>
       <button id="modifier">Modifier</button>
       <div id="change" style="display : none">
 	<form action="/admin.html" method="post">
@@ -56,28 +59,19 @@
 	      <%
 		 if (user.role == "user") {
 		 for(var i = 0 ; i < result.rows.length ; i++) {
-				     if (userid.id == result.rows[i].auteur) {
-				     %>
+				     if (userid.id == result.rows[i].auteur) { %>
 		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
 		 <%
-		    }
-		    }
-		    }
+		    } } }
 		    else {
-		    for(var i = 0 ; i < result.rows.length ; i++) {
-					%>
+		    for(var i = 0 ; i < result.rows.length ; i++) { %>
 		    <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
-		    <%
-		       }
-		       }
-		    %>
-	    </select>
-            </br>
-	    </br>
+		    <% } } %>
+	    </select></br></br>
 
 	    <label for="titre">Titre</label>
 	    <input type="text" id="titre" name="titre" size="18" placeholder="Titre" />
-
+	    
 	    <label for="type">Type</label>
 	    <input type="text" id="type" name="type" size="18" placeholder="Type" />
         </br>
@@ -93,21 +87,17 @@
 	      Sel, 2g
 	    </label></br>
 	    <textarea id="ingredients" name="ingredients" placeholder="Ingrédient(s)" >
-	    </textarea>
-	    </br>
+	    </textarea></br>
 	    
-
 	    <label for="description">Description</label></br>
 	    <textarea id="description" name="description" placeholder="Description"  >
-	    </textarea>
-            </br>
+	    </textarea></br>
 	    
 	    <label for="difficulte">Difficultée</label></br>
-	    <input type="number" id="difficulte" name="difficulte" min="1" max="5" />
-            </br>
+	    <input type="number" id="difficulte" name="difficulte" min="1" max="5" /></br>
 	
 	    <input type="submit" id="mr" name="mr" value="Valider Modification Recette" />
-    
+	    
 	  </p>
 	</form>
       </div>
@@ -119,38 +109,24 @@
 	document.querySelector("#change").style.display="none";
 	}
 	}
-      </script>
-
-
-      </br>
-      </br>
+      </script></br></br>
+      
       <button id="supprimer">Supprimer</button>
       <div id="delete" style="display : none">
 	<form action="/admin.html" method="post">
 	  <p>
 	    <label for="id">Si vous souhaitez supprimer une recette, veuillez sélectionner l'id correspondant :</label></br>
 	    <select name="id" id="id" required >
-	      <%
-		 if (user.role == "user") {
+	      <% if (user.role == "user") {
 		 for(var i = 0 ; i < result.rows.length ; i++) {
-				     if (userid.id == result.rows[i].auteur) {
-				     %>
+				     if (userid.id == result.rows[i].auteur) { %>
 		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
-		 <%
-		    }
-		    }
-		    }
+		 <% } } }
 		    else {
-		    for(var i = 0 ; i < result.rows.length ; i++) {
-					%>
+		    for(var i = 0 ; i < result.rows.length ; i++) { %>
 		    <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
-		    <%
-		       }
-		       }
-		       %>
-	    </select>
-	    </br>
-	    </br>
+		    <% } } %>
+	    </select></br></br>
 	    <input type="submit" id="sr" name="sr" value="Valider Suppresion Recette" />
 	    
 	  </p>
@@ -165,11 +141,9 @@
 	}
 	}
       </script>
-
+      
     </section>
-    <%
-       }
-       %>
+    <% } } %>
     <% include include/footer %>
   </body>
 

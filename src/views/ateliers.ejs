@@ -9,43 +9,43 @@
     <% include include/header %>
     <h1>Ateliers :</h1>
     <section>
-    <div class="list">
-    <% if (result.rows.length == 0) { %>
-        <p>Aucun atelier</p>
-    <% } else { %>
-    <ul>
-	<% for(var i = 0 ; i < result.rows.length ; i++) { %>
-        <li>
-            <a href="/atelier.html?titre=<%= result.rows[i].titre %>">
-                <% if (result.rows[i].image == null) { %>
-                <img src="resources/atelier.png" />
-                <% } else { %>
-                <img src="<%= result.rows[i].image %>" />
-                <% } %>
-
-                <div class="description">
-                    <h3><%= result.rows[i].titre %></h3>
-                    Chef cuisinier : 
-	                <% for (var j = 0; j < resultuser.rows.length; j++) {
-				        if (resultuser.rows[j].id == result.rows[i].chef) { %>
-		                    <%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %>
-		            <% } } %></br>
-	                <%= result.rows[i].prix %> €
-                </div>
-            </a>
-	    </li>
+      <div class="list">
+	<% if (result.rows.length == 0) { %>
+        <p>Aucun atelier n'existe actuellement.</p>
+	<% } else { %>
+	<ul>
+	  <% for(var i = 0 ; i < result.rows.length ; i++) { %>
+             <li>
+               <a href="/atelier.html?titre=<%= result.rows[i].titre %>">
+                 <% if (result.rows[i].image == null) { %>
+                 <img src="resources/atelier.png" />
+                 <% } else { %>
+                 <img src="<%= result.rows[i].image %>" />
+                 <% } %>
+		 
+                 <div class="description">
+                   <h3><%= result.rows[i].titre %></h3>
+                   Chef cuisinier :
+	           <% for (var j = 0; j < resultuser.rows.length; j++) {
+				          if (resultuser.rows[j].id == result.rows[i].chef) { %>
+		      <%= resultuser.rows[j].prenom %> <%= resultuser.rows[j].nom %>
+		      <% } } %></br>
+	              <%= result.rows[i].prix %> €
+                 </div>
+               </a>
+	     </li>
+	     <% } %>
+	</ul>
 	<% } %>
-    </ul>
-    <% } %>
-    </div>
-      <%
-	 if (user.role == "admin" || user.role == "respo_atelier") {
-	 %>
+      </div>
+      <% if (user.role == "admin" || user.role == "respo_atelier") { %>
       <form action="/addatelier.html" method="get" >
 	<input type="submit" value="Ajouter un atelier" >
-      </form>
-      </br>
-      
+      </form></br>
+      <% }
+	 if (user.role == "admin" || user.role == "respo_atelier") {
+	 if (result.rowCount != 0) {
+	 %>
       <button id="modifier">Modifier</button>
       <section>
 	<div id="change" style="display : none">
@@ -53,17 +53,11 @@
 	    <p>
 	      <label for="id">Si vous souhaitez modifier un atelier, veuillez sélectionner l'id correspondant et ne remplir uniquement les cases des informations que vous voulez modifier :</label></br>
 	      <select name="id" id="id" required >
-		<%
-		   for(var i = 0 ; i < result.rows.length ; i++) {
-				       %>
+		<% for(var i = 0 ; i < result.rows.length ; i++) { %>
 		   <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
-		   <%
-		      }
-		      %>
-	      </select>
-              </br>
-              </br>
-				      
+		   <% } %>
+	      </select></br></br>
+	      
 	      <label for="titre">Titre</label>
 	      <input type="text" id="titre" name="titre" size="18" placeholder="Titre" />
           </br>
@@ -73,32 +67,26 @@
           </br>
 
 	      <label for="theme">Thème</label>
-	      <input type="text" id="theme" name="theme" size="18" placeholder="Thème" />
-              </br>
-
+	      <input type="text" id="theme" name="theme" size="18" placeholder="Thème" /></br>
+	      
 	      <label for="description">Description</label></br>
 	      <textarea id="description" name="description" placeholder="Description">
-	      </textarea>
-              </br>
-
+	      </textarea></br>
+	      
 	      <label for="localisation">Localisation</label>
-	      <input type="text" id="localisation" name="localisation" size="18" placeholder="Localisation" />
-              </br>
+	      <input type="text" id="localisation" name="localisation" size="18" placeholder="Localisation" /></br>
 
 	      <label for="prix">Prix</label></br>
-	      <input type="number" id="prix" name="prix" />
-              </br>
+	      <input type="number" id="prix" name="prix" /></br>
 	      
 	      <label for="date_debut">Date de début</label></br>
-	      <input type="date" id="date_debut" name="date_debut" />
-              </br>
+	      <input type="date" id="date_debut" name="date_debut" /></br>
 
 	      <label for="date_fin">Date de fin</label></br>
-	      <input type="date" id="date_fin" name="date_fin" />
-              </br>
+	      <input type="date" id="date_fin" name="date_fin" /></br>
 
 	      <input type="submit" id="ma" name="ma" value="Valider Modification Atelier" />
-
+	      
 	    </p>
 	  </form>
 	</div>
@@ -110,21 +98,16 @@
 	  document.querySelector("#change").style.display="none";
 	  }
 	  }
-	</script>
-	</br>
+	</script></br>
 	<button id="supprimer">Supprimer</button>
 	<div id="delete" style="display : none">
 	  <form action="/admin.html" method="post">
 	    <p>
 	      <label for="id">Si vous souhaitez supprimer un atelier, veuillez sélectionner l'id correspondant :</label></br>
 	      <select id="id" name="id" required >
-	      <%		  
-		 for(var i = 0 ; i < result.rows.length ; i++) {
-				     %>
-		 <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
-		 <%
-		    }
-		    %>
+		<% for(var i = 0 ; i < result.rows.length ; i++) { %>
+		   <option value="<%= result.rows[i].id %>"><%= result.rows[i].id %></option>
+		   <% } %>
 	      </select>
 	      <input type="submit" id="sa" name="sa" value="Valider Suppresion Atelier" />
 	    </p>
@@ -139,11 +122,7 @@
 	  }
 	  }
 	</script>
-	<%
-	   }
-	   %>
-
-      	
+	<% } } %>
       </section>
       <% include include/footer %>
   </body>

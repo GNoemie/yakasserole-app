@@ -9,36 +9,24 @@
     <% include include/header %>
     <h1>Profil : <%= user.prenom %></h1>
     <section>
-      <%
-	 if (user.role == "admin" || user.role == "respo_user" || user.role == "user") {
-	 %>
+      <% if (user.role == "admin" || user.role == "respo_user" || user.role == "user") { %>
       <form action="/changeuser.html" method="post" >
 	<input type="submit" value="Modifier informations utilisateur" >
       </form>
       <form action="/changerecette.html" method="post" >
 	<input type="submit"  value="Modifier informations recette" >
       </form>
-      <%
-	 }
-	 %>
-      <%
-	 if (user.role == "admin" || user.role == "respo_atelier") {
-	 %>
+      <% }
+	 if (user.role == "admin" || user.role == "respo_atelier") { %>
       <form action="/changeatelier.html" method="post" >
 	<input type="submit" value="Modifier informations atelier" >
       </form>
-      <%
-	 }
-	 %>
-      <%
-	 if (user.role == "admin") {
-	 %>
+      <% }
+	 if (user.role == "admin") { %>
       <form action="/statistiques.html" method="post" >
 	<input type="submit" value="Afficher les statistiques" >
       </form>
-      <%
-	 }
-	 %>
+      <% } %>
     </section>
     <% include include/footer %>
   </body>
