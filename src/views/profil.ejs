@@ -9,6 +9,7 @@
     <% include include/header %>
     <h1>Votre profil</h1>
     <section id="profil_page">
+    <div id="profil_info">
       <% if (row.image) { %>
         <img src="<%= row.image %>" id="profil_img"/>
       <% } else { %>
@@ -41,6 +42,7 @@
 	</form>
       </section></br>
       <% } } %>
+      </div>
      
 
       <div class="title_block">
