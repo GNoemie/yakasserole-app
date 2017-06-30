@@ -40,16 +40,11 @@
     <% } %>
       </div>
       
-      <% if (user.role == "user" || user.role == "admin" || user.role == "respo_user") {
-	 %>
       <form action="/addrecette.html" method="get" >
 	<input type="submit" value="Ajouter une recette" >
       </form></br>
 
-      <% }
-	 if (user.role == "user" || user.role == "admin" || user.role == "respo_user") {
-	 if (result.rowCount != 0) {
-	 %>
+      <% if (result.rowCount != 0) { %>
       <button id="modifier">Modifier</button>
       <div id="change" style="display : none">
 	<form action="/admin.html" method="post">
@@ -143,7 +138,7 @@
       </script>
       
     </section>
-    <% } } %>
+    <% } %>
     <% include include/footer %>
   </body>
 
