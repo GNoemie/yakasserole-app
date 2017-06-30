@@ -25,10 +25,7 @@
       <form action="/admin.html" method="post">
 	<p>
 	  <label for="id">Si vous souhaitez modifier une recette, veuillez sélectionner l'id correspondant et ne remplir uniquement les cases des informations que vous voulez modifier :</label></br>
-	  <select name="id" id="id" required>
-	    <option value="<%= result.rows[0].id %>"><%= result.rows[0].id %></option>
-	  </select>
-	  </br>
+      <input type="hidden" name="id" value="<%= result.rows[0].id %>">
 	  </br>
 
 	  <label for="titre">Titre</label>
