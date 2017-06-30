@@ -230,7 +230,7 @@ app.get('/chefs.html', function(req, res) {
     if (sess)
 	return form.printchefs(req, res);
     else
-	res.redirect('/');
+	res.render('connexion.ejs');
 });
 
 
@@ -247,7 +247,7 @@ app.get('/recettes.html', function(req, res) {
     if (sess)
 	return form.printrecettes(req, res);
     else
-	res.redirect('/');
+	res.render('connexion.ejs');
 });
 
 app.get('/addrecette.html', function(req, res) {
@@ -255,7 +255,7 @@ app.get('/addrecette.html', function(req, res) {
     if (sess)
 	res.render('addrecette.ejs');
     else 
-	res.redirect('/');
+	res.render('connexion.ejs');
 });
 
 app.post('/recettes.html', function(req, res) {
@@ -284,7 +284,7 @@ app.get('/ateliers.html', function(req, res) {
     if (sess)
 	return form.printateliers(req, res);
     else
-	res.redirect('/');
+	res.render('connexion.ejs');
 });
 
 app.get('/addatelier.html', function(req, res) {
@@ -302,7 +302,7 @@ app.get('/addatelier.html', function(req, res) {
 	});
     }
     else
-	res.redirect('/');
+	res.render('connexion');
 });
 
 app.post('/ateliers.html', function(req, res) {
