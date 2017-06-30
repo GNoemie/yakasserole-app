@@ -52,7 +52,7 @@
             <% for (i = 0; i < resultatelier.rows.length; i++) { %>
             <li>
                 <a href="/atelier.html?titre=<%= resultatelier.rows[i].titre %>">
-                <% if (ateliers.rows[i].image == null) { %>
+                <% if (resultatelier.rows[i].image == null) { %>
                 <img src="resources/chinois.png" />
                 <% } else { %>
                 <img src="<%= resultatelier.rows[i].image %>" />
