@@ -4,15 +4,20 @@
 
 ## Description
 
-* Site web de recettes de cuisine
-* Gestion de comptes utilisateurs
-* Administration des recettes et des comptes
+* Cooking recipe website
+* User accounts handling
+* Administration of accounts and recipes
 
-## Utilisation
+## Usage
 
 ```
 node server_main.js
 ```
+
+## Dependencies
+
+You need to get the db working
+**https://github.com/GNoemie/yakasserole-db**
 
 ## Authors
 
